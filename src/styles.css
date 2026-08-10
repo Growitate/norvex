@@ -1,0 +1,137 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@theme inline {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Syne", "Cinzel", system-ui, sans-serif;
+  --font-gothic: "Cinzel", serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --tracking-wider2: 0.18em;
+  --tracking-widest2: 0.24em;
+
+  --ease-out-custom: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:root {
+  --background: oklch(0.06 0.005 270);
+  --foreground: oklch(0.98 0 0);
+  --ink: oklch(0.98 0 0);
+  --paper: oklch(0.11 0.005 270);
+  --muted: oklch(0.16 0.005 270);
+  --muted-foreground: oklch(0.68 0.01 270);
+  --border: oklch(0.24 0.01 270);
+  --primary: oklch(0.98 0 0);
+  --primary-foreground: oklch(0.06 0.005 270);
+  --secondary: oklch(0.14 0.005 270);
+  --secondary-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.90 0.01 270);
+  --accent-foreground: oklch(0.06 0.005 270);
+  --card: oklch(0.10 0.005 270);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.10 0.005 270);
+  --popover-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --input: oklch(0.24 0.01 270);
+  --ring: oklch(0.85 0.01 270);
+  --radius: 0;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+    -webkit-tap-highlight-color: transparent;
+  }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: #e4e4e7;
+    color: #000000;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-gothic {
+    font-family: var(--font-gothic);
+  }
+  .tracking-brand {
+    letter-spacing: 0.18em;
+  }
+  .tracking-brand-wide {
+    letter-spacing: 0.24em;
+  }
+
+  /* Marquee */
+  @keyframes marquee-x {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee-x 40s linear infinite;
+  }
+  .animate-marquee-slow {
+    animation: marquee-x 60s linear infinite;
+  }
+  .animate-marquee-fast {
+    animation: marquee-x 25s linear infinite;
+  }
+
+  /* Sweep button */
+  .btn-sweep {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: color 0.4s var(--ease-out-custom);
+  }
+  .btn-sweep::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    transform: translateX(-101%);
+    transition: transform 0.5s var(--ease-out-custom);
+    z-index: -1;
+  }
+  .btn-sweep:hover::before {
+    transform: translateX(0);
+  }
+  .btn-sweep.sweep-light:hover {
+    color: #000;
+  }
+  .btn-sweep.sweep-dark:hover {
+    color: #fff;
+  }
+}
