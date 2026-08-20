@@ -46,16 +46,13 @@ function Home() {
       {/* HERO BANNER / VIDEO SECTION */}
       <HeroSlider />
 
-      {/* FLUSH PRODUCT CAROUSEL DIRECTLY BELOW HERO BANNER (MATCHING REFERENCE DEMO) */}
+      {/* 1. PRODUCT CAROUSEL (NEW ARRIVALS) */}
       <ProductCarousel
         products={newArrivals.length > 0 ? newArrivals : products}
         flushTop={true}
       />
 
-      {/* 1. SHOP BY CATEGORY SECTION (Bags, Female Bags & Clothes, Male Clothes, Accessories) */}
-      <CategorySection />
-
-      {/* 3. BANNER 1 (IMAGE + TITLE + SHOP NOW) */}
+      {/* 2. BANNER 1 (IMAGE + TITLE + SHOP NOW) */}
       <CollectionBanner
         image={lifestyleBanner1}
         seasonLabel="FW2026 // DROP 01"
