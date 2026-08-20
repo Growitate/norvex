@@ -402,11 +402,25 @@ export function Footer() {
           </h1>
         </div>
 
-        {/* Thin Divider Line at the very bottom & Copyright / Back to top */}
-        <div className="border-t border-black/[0.08] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-sans text-zinc-500">
+        {/* Thin Divider Line at the very bottom & Copyright / Built by / Back to top */}
+        <div className="border-t border-black/[0.08] pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-sans text-zinc-500 text-center md:text-left">
           <div>
             © {new Date().getFullYear()} NØRVA STORE (JEVANI ENTERPRISES) — ALL RIGHTS RESERVED
           </div>
+
+          {/* Built by Growitate Credit Link */}
+          <div className="font-sans text-xs">
+            <span>Built by </span>
+            <a
+              href="https://growitate.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-zinc-800 hover:text-black underline underline-offset-4 decoration-black/25 hover:decoration-black transition-colors"
+            >
+              Growitate
+            </a>
+          </div>
+
           <button
             onClick={scrollToTop}
             className="group flex items-center gap-2 hover:text-zinc-900 transition-colors cursor-pointer"
