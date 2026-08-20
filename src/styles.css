@@ -3,9 +3,10 @@
 @import "tw-animate-css";
 
 @theme inline {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Syne", "Cinzel", system-ui, sans-serif;
-  --font-gothic: "Cinzel", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-gothic: "Plus Jakarta Sans", sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
