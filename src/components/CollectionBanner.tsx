@@ -36,12 +36,12 @@ export function CollectionBanner({
   return (
     <section className={`relative w-full overflow-hidden bg-black select-none ${className}`}>
       {/* Full-Width Background Lifestyle Image */}
-      <div className="relative w-full h-[480px] sm:h-[600px] md:h-[700px] lg:h-[780px]">
+      <div className="relative w-full h-[580px] xs:h-[640px] sm:h-[700px] md:h-[760px] lg:h-[840px]">
         <img
           src={image}
           alt={title}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-1000 ease-out hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-top sm:object-center pointer-events-none transition-transform duration-1000 ease-out hover:scale-105"
         />
 
         {/* Ambient Gradient Overlay for high-contrast readability */}

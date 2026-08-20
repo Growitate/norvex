@@ -25,12 +25,12 @@ export function BrandStatementBanner({
       className={`relative w-full overflow-hidden bg-black select-none border-t border-black/[0.08] ${className}`}
     >
       {/* Full-Bleed Background Lifestyle / Graphic Image */}
-      <div className="relative w-full h-[440px] sm:h-[540px] md:h-[640px] lg:h-[720px] flex items-center justify-center">
+      <div className="relative w-full h-[540px] xs:h-[600px] sm:h-[660px] md:h-[720px] lg:h-[780px] flex items-center justify-center">
         <img
           src={image}
           alt={statement}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-1000 ease-out hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-top sm:object-center pointer-events-none transition-transform duration-1000 ease-out hover:scale-105"
         />
 
         {/* Ambient Darkened Gradient Overlay */}
