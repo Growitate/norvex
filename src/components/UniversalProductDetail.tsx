@@ -163,20 +163,20 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
           
           {/* ========================================================================= */}
-          {/* MOBILE ONLY: SIDEWAYS / HORIZONTAL SWIPE CAROUSEL (Smooth 60fps Swipe)     */}
+          {/* MOBILE ONLY: SIDEWAYS / HORIZONTAL SWIPE CAROUSEL (Seamless Zero-Gap Stream)*/}
           {/* ========================================================================= */}
-          <div className="lg:hidden col-span-1 space-y-3 pb-2">
+          <div className="lg:hidden col-span-1 space-y-2.5 pb-2">
             <div
               ref={mobileScrollRef}
               onScroll={handleMobileScroll}
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 -mx-4 px-4 touch-pan-x"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-1.5 -mx-4 px-3 sm:px-4 touch-pan-x"
               style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
             >
               {gallery.map((imgSrc, idx) => (
                 <div
                   key={idx}
                   onClick={() => openLightbox(idx)}
-                  className="relative aspect-[3/4] w-[86vw] max-w-[420px] shrink-0 snap-center bg-zinc-50 rounded-2xl overflow-hidden border border-black/[0.08] shadow-xs cursor-zoom-in select-none"
+                  className="relative aspect-[3/4.4] w-[88vw] xs:w-[90vw] max-w-[480px] shrink-0 snap-center bg-zinc-100 rounded-2xl overflow-hidden border border-black/[0.08] shadow-xs cursor-zoom-in select-none"
                 >
                   {/* New Drop Pill */}
                   {idx === 0 && product.isNew && (
@@ -208,12 +208,12 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     />
                   </button>
 
-                  {/* Angle Tag */}
-                  <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-xs text-white text-[10px] font-sans px-2.5 py-1 rounded-full flex items-center gap-1 shadow-xs">
-                    <Layers className="h-2.5 w-2.5 text-zinc-300" />
-                    <span>Angle {idx + 1} of {gallery.length}</span>
+                  {/* Bottom-Left Minimal Counter Tag (Matching Bluorng Reference) */}
+                  <div className="absolute bottom-3.5 left-3.5 z-10 text-white font-sans text-xs font-bold tracking-wider drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] bg-black/45 backdrop-blur-xs px-2.5 py-0.5 rounded-md">
+                    {idx + 1} / {gallery.length}
                   </div>
 
+                  {/* Fully Filled Product Image */}
                   <img
                     src={imgSrc}
                     alt={`${product.name} — angle ${idx + 1}`}
@@ -226,7 +226,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
 
             {/* Pagination Dots Indicator */}
             {gallery.length > 1 && (
-              <div className="flex items-center justify-center gap-1.5 pt-1">
+              <div className="flex items-center justify-center gap-1.5 pt-0.5">
                 {gallery.map((_, i) => (
                   <button
                     key={i}

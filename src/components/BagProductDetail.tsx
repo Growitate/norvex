@@ -168,18 +168,18 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                 ))}
               </div>
 
-              {/* MOBILE: SMOOTH SWIPEABLE SNAP GALLERY WITH DOTS */}
-              <div className="lg:hidden space-y-3">
+              {/* MOBILE: SMOOTH SWIPEABLE SNAP GALLERY WITH SEAMLESS GAP */}
+              <div className="lg:hidden space-y-2.5">
                 <div
                   ref={mobileScrollRef}
                   onScroll={handleMobileScroll}
-                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 -mx-4 px-4"
+                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-1.5 -mx-4 px-3 sm:px-4 touch-pan-x"
                   style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
                 >
                   {galleryImages.map((imgSrc, idx) => (
                     <div
                       key={idx}
-                      className="w-[85vw] max-w-[360px] shrink-0 snap-center relative aspect-[3/4] bg-zinc-50 border border-black/[0.08] rounded-xs overflow-hidden"
+                      className="w-[88vw] xs:w-[90vw] max-w-[480px] shrink-0 snap-center relative aspect-[3/4.4] bg-zinc-100 border border-black/[0.08] rounded-2xl overflow-hidden select-none"
                     >
                       <img
                         src={imgSrc}
@@ -188,9 +188,9 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                         className="w-full h-full object-cover object-center"
                       />
                       {galleryImages.length > 1 && (
-                        <span className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[10px] font-sans px-2 py-0.5 rounded-xs">
+                        <div className="absolute bottom-3.5 left-3.5 z-10 text-white font-sans text-xs font-bold tracking-wider drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] bg-black/45 backdrop-blur-xs px-2.5 py-0.5 rounded-md">
                           {idx + 1} / {galleryImages.length}
-                        </span>
+                        </div>
                       )}
                     </div>
                   ))}
@@ -198,7 +198,7 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
 
                 {/* Mobile pagination indicators */}
                 {galleryImages.length > 1 && (
-                  <div className="flex justify-center items-center gap-1.5 pt-1">
+                  <div className="flex justify-center items-center gap-1.5 pt-0.5">
                     {galleryImages.map((_, i) => (
                       <span
                         key={i}
