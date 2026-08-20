@@ -15,6 +15,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Layers,
+  Plus,
 } from "lucide-react";
 import type { Product } from "@/lib/products";
 import { products } from "@/lib/products";
@@ -46,7 +47,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
   const handleMobileScroll = () => {
     if (mobileScrollRef.current) {
       const { scrollLeft, clientWidth } = mobileScrollRef.current;
-      const index = Math.round(scrollLeft / (clientWidth * 0.88));
+      const index = Math.round(scrollLeft / clientWidth);
       setActiveMobileIdx(Math.min(Math.max(index, 0), gallery.length - 1));
     }
   };
@@ -55,7 +56,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
     if (mobileScrollRef.current) {
       const clientWidth = mobileScrollRef.current.clientWidth;
       mobileScrollRef.current.scrollTo({
-        left: index * (clientWidth * 0.88 + 8),
+        left: index * clientWidth,
         behavior: "smooth",
       });
       setActiveMobileIdx(index);
@@ -156,15 +157,15 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
       {/* Main Grid Container */}
       <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 py-6 sm:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
-          
+
           {/* ========================================================================= */}
-          {/* MOBILE ONLY: SIDEWAYS SWIPE CAROUSEL (Exact Bluorng Rounded Cards Stream) */}
+          {/* MOBILE ONLY: 100% FULL-BLEED EDGE-TO-EDGE SIDEWAYS SWIPE CAROUSEL         */}
           {/* ========================================================================= */}
-          <div className="lg:hidden col-span-1 space-y-3 pb-3">
+          <div className="lg:hidden col-span-1 -mx-4 sm:-mx-6 space-y-3 pb-3">
             <div
               ref={mobileScrollRef}
               onScroll={handleMobileScroll}
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-2 -mx-4 px-4 touch-pan-x overscroll-x-contain"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-0 touch-pan-x overscroll-x-contain"
               style={{
                 scrollbarWidth: "none",
                 WebkitOverflowScrolling: "touch",
@@ -175,7 +176,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 <div
                   key={idx}
                   onClick={() => openLightbox(idx)}
-                  className="relative aspect-[3/4.1] w-[88vw] xs:w-[90vw] max-w-[460px] shrink-0 snap-center bg-zinc-950 rounded-2xl overflow-hidden shadow-xs cursor-zoom-in select-none"
+                  className="relative aspect-[3/4.2] w-screen shrink-0 snap-center bg-zinc-950 overflow-hidden cursor-zoom-in select-none"
                 >
                   {/* New Drop Pill */}
                   {idx === 0 && product.isNew && (
@@ -194,25 +195,23 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       setIsWishlisted(!isWishlisted);
                     }}
                     aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                    className={`absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-xs cursor-pointer ${
-                      isWishlisted
+                    className={`absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-xs cursor-pointer ${isWishlisted
                         ? "bg-black text-white"
                         : "bg-white/90 text-zinc-800 border border-black/10"
-                    }`}
+                      }`}
                   >
                     <Bookmark
-                      className={`h-4 w-4 ${
-                        isWishlisted ? "fill-white text-white" : "text-zinc-800"
-                      }`}
+                      className={`h-4 w-4 ${isWishlisted ? "fill-white text-white" : "text-zinc-800"
+                        }`}
                     />
                   </button>
 
-                  {/* Bottom-Left Minimal Counter Tag (Exact Bluorng Screenshot: "5 / 7") */}
-                  <div className="absolute bottom-3.5 left-3.5 z-10 text-white font-sans text-xs font-bold tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] select-none">
+                  {/* Bottom-Left Minimal Counter Tag (Exact Screenshot Style: "7 / 9") */}
+                  <div className="absolute bottom-4 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none">
                     {idx + 1} / {gallery.length}
                   </div>
 
-                  {/* Fully Filled Product Image */}
+                  {/* 100% Fully Filled Edge-to-Edge Product Image */}
                   <img
                     src={imgSrc}
                     alt={`${product.name} — angle ${idx + 1}`}
@@ -231,9 +230,8 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     key={i}
                     type="button"
                     onClick={() => scrollToMobileIndex(i)}
-                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeMobileIdx === i ? "w-6 bg-black" : "w-1.5 bg-black/20"
-                    }`}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${activeMobileIdx === i ? "w-6 bg-black" : "w-1.5 bg-black/20"
+                      }`}
                     aria-label={`View angle ${i + 1}`}
                   />
                 ))}
@@ -266,16 +264,14 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                   setIsWishlisted(!isWishlisted);
                 }}
                 aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                className={`absolute top-4 right-4 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${
-                  isWishlisted
+                className={`absolute top-4 right-4 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${isWishlisted
                     ? "bg-black text-white"
                     : "bg-white/90 hover:bg-white text-zinc-800 hover:scale-105 active:scale-95 border border-black/10"
-                }`}
+                  }`}
               >
                 <Bookmark
-                  className={`h-4 w-4 sm:h-4.5 sm:w-4.5 transition-transform ${
-                    isWishlisted ? "fill-white text-white scale-110" : "text-zinc-800"
-                  }`}
+                  className={`h-4 w-4 sm:h-4.5 sm:w-4.5 transition-transform ${isWishlisted ? "fill-white text-white scale-110" : "text-zinc-800"
+                    }`}
                 />
               </button>
 
@@ -362,9 +358,8 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                   className="p-1.5 text-zinc-800 hover:text-black transition-colors cursor-pointer"
                 >
                   <Bookmark
-                    className={`h-5 w-5 ${
-                      isWishlisted ? "fill-black text-black" : "text-zinc-700"
-                    }`}
+                    className={`h-5 w-5 ${isWishlisted ? "fill-black text-black" : "text-zinc-700"
+                      }`}
                   />
                 </button>
               </div>
@@ -399,11 +394,10 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                         key={color.name}
                         onClick={() => setSelectedColorIdx(idx)}
                         title={color.name}
-                        className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer ${
-                          isSelected
+                        className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer ${isSelected
                             ? "ring-2 ring-black ring-offset-2 scale-105"
                             : "hover:scale-105 opacity-80 hover:opacity-100"
-                        }`}
+                          }`}
                       >
                         <span
                           className="w-6 h-6 rounded-full border border-black/20 block"
@@ -441,13 +435,12 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       key={s}
                       disabled={isSoldOut}
                       onClick={() => setSelectedSize(s)}
-                      className={`h-11 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
-                        isSoldOut
+                      className={`h-11 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${isSoldOut
                           ? "opacity-30 line-through bg-zinc-100 border border-zinc-200 text-zinc-400 cursor-not-allowed"
                           : isSelected
                             ? "bg-[#18181b] text-white border border-[#18181b] shadow-xs"
                             : "bg-white text-zinc-800 border border-black/15 hover:border-black hover:bg-black/5"
-                      }`}
+                        }`}
                     >
                       {s}
                     </button>
@@ -505,31 +498,28 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
               <div className="flex border-b border-black/10">
                 <button
                   onClick={() => setActiveTab("details")}
-                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${
-                    activeTab === "details"
+                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${activeTab === "details"
                       ? "border-black text-zinc-950"
                       : "border-transparent text-zinc-400 hover:text-zinc-700"
-                  }`}
+                    }`}
                 >
                   Details & Description
                 </button>
                 <button
                   onClick={() => setActiveTab("washcare")}
-                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${
-                    activeTab === "washcare"
+                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${activeTab === "washcare"
                       ? "border-black text-zinc-950"
                       : "border-transparent text-zinc-400 hover:text-zinc-700"
-                  }`}
+                    }`}
                 >
                   Washcare
                 </button>
                 <button
                   onClick={() => setActiveTab("shipping")}
-                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${
-                    activeTab === "shipping"
+                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${activeTab === "shipping"
                       ? "border-black text-zinc-950"
                       : "border-transparent text-zinc-400 hover:text-zinc-700"
-                  }`}
+                    }`}
                 >
                   Shipping
                 </button>
@@ -606,25 +596,25 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                             <span>{item}</span>
                           </div>
                         )) || (
-                          <>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Cold machine wash reverse (30°C delicate cycle)</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Wash with similar dark colors only</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Do not iron directly over embroidery or prints</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Line dry flat in shade; do not tumble dry</span>
-                            </div>
-                          </>
-                        )}
+                            <>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>Cold machine wash reverse (30°C delicate cycle)</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>Wash with similar dark colors only</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>Do not iron directly over embroidery or prints</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>Line dry flat in shade; do not tumble dry</span>
+                              </div>
+                            </>
+                          )}
                       </div>
                     </motion.div>
                   )}
@@ -647,29 +637,132 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                             <span>{item}</span>
                           </div>
                         )) || (
-                          <>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Dispatches within 24–48 hours from studio</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Standard express courier delivery in 2–4 business days</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>7-day easy size exchange guarantee</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Prepaid and Cash on Delivery supported pan-India</span>
-                            </div>
-                          </>
-                        )}
+                            <>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>Dispatches within 24–48 hours from studio</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>Standard express courier delivery in 2–4 business days</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>7-day easy size exchange guarantee</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-zinc-400">•</span>
+                                <span>Prepaid and Cash on Delivery supported pan-India</span>
+                              </div>
+                            </>
+                          )}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
+              </div>
+            </div>
+
+            {/* ========================================================================= */}
+            {/* EXACT BLUORNG SECTIONS (IMAGE 1): 2-COL GRID, RECENTLY VIEWED, POPULAR SEARCHES */}
+            {/* ========================================================================= */}
+
+            {/* 1. 2-Column Recommended Clothes Grid */}
+            {related.length > 0 && (
+              <div className="pt-8 border-t border-black/10 space-y-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  {related.slice(0, 4).map((relProd) => (
+                    <Link
+                      key={relProd.id}
+                      to="/product/$id"
+                      params={{ id: relProd.id }}
+                      className="group flex flex-col cursor-pointer"
+                    >
+                      <div className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden bg-zinc-100 border border-black/[0.06] shadow-2xs">
+                        <img
+                          src={relProd.image}
+                          alt={relProd.name}
+                          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-103"
+                        />
+                        {/* Wishlist Bookmark Button */}
+                        <div className="absolute top-2.5 right-2.5 z-10">
+                          <span className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-zinc-700 shadow-2xs">
+                            <Bookmark className="h-3.5 w-3.5" />
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Product Name */}
+                      <h4 className="font-sans text-[12px] sm:text-xs font-bold text-zinc-900 mt-2 line-clamp-2 leading-snug group-hover:underline">
+                        {relProd.name}
+                      </h4>
+
+                      {/* Price & Add (+) Button */}
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="font-sans text-xs font-bold text-zinc-900">
+                          RS. {relProd.price.toLocaleString("en-IN")}
+                        </span>
+                        <span className="w-5 h-5 rounded-full border border-black/20 flex items-center justify-center text-zinc-800 text-xs font-bold hover:bg-black hover:text-white transition-colors">
+                          <Plus className="h-3 w-3" />
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 2. Recently Viewed Section */}
+            <div className="pt-8 border-t border-black/10 space-y-3">
+              <h3 className="font-sans text-xs sm:text-sm font-bold text-zinc-950 uppercase tracking-wide">
+                Recently viewed
+              </h3>
+              <div className="flex overflow-x-auto gap-3 scrollbar-none pb-1">
+                {products
+                  .filter((p) => !p.isBag && p.id !== product.id)
+                  .slice(4, 6)
+                  .map((recItem) => (
+                    <Link
+                      key={recItem.id}
+                      to="/product/$id"
+                      params={{ id: recItem.id }}
+                      className="w-[160px] sm:w-[180px] shrink-0 group flex flex-col cursor-pointer"
+                    >
+                      <div className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden bg-zinc-100 border border-black/[0.06] shadow-2xs">
+                        <img
+                          src={recItem.image}
+                          alt={recItem.name}
+                          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-103"
+                        />
+                      </div>
+                      <h4 className="font-sans text-[12px] font-bold text-zinc-900 mt-2 truncate group-hover:underline">
+                        {recItem.name}
+                      </h4>
+                      <span className="font-sans text-xs font-bold text-zinc-900 mt-0.5">
+                        RS. {recItem.price.toLocaleString("en-IN")}
+                      </span>
+                    </Link>
+                  ))}
+              </div>
+            </div>
+
+            {/* 3. Popular Searches Links */}
+            <div className="pt-6 border-t border-black/10 space-y-2 pb-4">
+              <p className="font-sans text-[11px] font-bold text-zinc-900 uppercase tracking-wide">
+                Popular searches
+              </p>
+              <div className="flex items-center gap-2 text-xs font-sans text-zinc-500 flex-wrap">
+                <Link to="/shop" className="hover:text-black underline underline-offset-2">
+                  Shop by category
+                </Link>
+                <span className="text-zinc-300">•</span>
+                <Link to="/shop" className="hover:text-black underline underline-offset-2">
+                  Shop by style
+                </Link>
+                <span className="text-zinc-300">•</span>
+                <Link to="/shop" className="hover:text-black underline underline-offset-2">
+                  Shop by color
+                </Link>
               </div>
             </div>
           </div>
@@ -730,9 +823,8 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       setLightboxIdx(idx);
                       setActiveHeroIdx(idx);
                     }}
-                    className={`w-14 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
-                      lightboxIdx === idx ? "border-white scale-105" : "border-white/20 opacity-60 hover:opacity-100"
-                    }`}
+                    className={`w-14 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${lightboxIdx === idx ? "border-white scale-105" : "border-white/20 opacity-60 hover:opacity-100"
+                      }`}
                   >
                     <img src={thumb} alt="" className="w-full h-full object-cover" />
                   </button>
