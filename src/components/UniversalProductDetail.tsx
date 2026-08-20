@@ -46,7 +46,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
   const handleMobileScroll = () => {
     if (mobileScrollRef.current) {
       const { scrollLeft, clientWidth } = mobileScrollRef.current;
-      const index = Math.round(scrollLeft / (clientWidth * 0.86));
+      const index = Math.round(scrollLeft / clientWidth);
       setActiveMobileIdx(Math.min(Math.max(index, 0), gallery.length - 1));
     }
   };
@@ -55,7 +55,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
     if (mobileScrollRef.current) {
       const clientWidth = mobileScrollRef.current.clientWidth;
       mobileScrollRef.current.scrollTo({
-        left: index * (clientWidth * 0.86 + 12),
+        left: index * clientWidth,
         behavior: "smooth",
       });
       setActiveMobileIdx(index);
@@ -73,7 +73,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
   const [selectedSize, setSelectedSize] = useState<string>(defaultSize);
 
   // Color Swatches
-  const colors = product.colors && product.colors.length > 0 ? product.colors : [];
+  const colors = product.colors || [];
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
 
   // States
@@ -88,11 +88,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
   const related = products.filter((p) => !p.isBag && p.id !== product.id).slice(0, 6);
 
   const handleAddToCart = () => {
-    if (soldOutSizes.includes(selectedSize)) return;
-
     addToCart({
-      id: `${product.id}-${selectedSize.toLowerCase()}`,
-      name: `${product.name} (${selectedSize})`,
+      id: product.id,
+      name: product.name,
       price: product.price,
       image: gallery[activeHeroIdx] || product.image,
       size: selectedSize,
@@ -100,15 +98,12 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
 
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
-    setTimeout(() => setCartOpen(true), 300);
   };
 
   const handleBuyNow = () => {
-    if (soldOutSizes.includes(selectedSize)) return;
-
     addToCart({
-      id: `${product.id}-${selectedSize.toLowerCase()}`,
-      name: `${product.name} (${selectedSize})`,
+      id: product.id,
+      name: product.name,
       price: product.price,
       image: gallery[activeHeroIdx] || product.image,
       size: selectedSize,
@@ -158,18 +153,18 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
         </div>
       </div>
 
-      {/* Main 3-Column Bluorng Grid Container */}
+      {/* Main Grid Container */}
       <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 py-6 sm:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
           
           {/* ========================================================================= */}
-          {/* MOBILE ONLY: SIDEWAYS / HORIZONTAL SWIPE CAROUSEL (Full-Bleed Smooth Stream)*/}
+          {/* MOBILE ONLY: 100% FULL-BLEED EDGE-TO-EDGE SIDEWAYS SWIPE CAROUSEL         */}
           {/* ========================================================================= */}
-          <div className="lg:hidden col-span-1 space-y-3 pb-2">
+          <div className="lg:hidden col-span-1 -mx-4 sm:-mx-6 space-y-3 pb-3">
             <div
               ref={mobileScrollRef}
               onScroll={handleMobileScroll}
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-2 -mx-4 px-3 sm:px-4 touch-pan-x overscroll-x-contain"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-0 touch-pan-x overscroll-x-contain"
               style={{
                 scrollbarWidth: "none",
                 WebkitOverflowScrolling: "touch",
@@ -180,7 +175,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 <div
                   key={idx}
                   onClick={() => openLightbox(idx)}
-                  className="relative aspect-[3/4.1] w-[91vw] xs:w-[92vw] sm:w-[93vw] max-w-[500px] shrink-0 snap-center bg-zinc-950 rounded-2xl overflow-hidden shadow-xs cursor-zoom-in select-none"
+                  className="relative aspect-[3/4.2] w-screen shrink-0 snap-center bg-zinc-950 overflow-hidden cursor-zoom-in select-none"
                 >
                   {/* New Drop Pill */}
                   {idx === 0 && product.isNew && (
@@ -217,7 +212,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     {idx + 1} / {gallery.length}
                   </div>
 
-                  {/* Fully Filled Product Image */}
+                  {/* 100% Fully Filled Edge-to-Edge Product Image */}
                   <img
                     src={imgSrc}
                     alt={`${product.name} — angle ${idx + 1}`}
