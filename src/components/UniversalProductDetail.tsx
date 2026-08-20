@@ -340,42 +340,31 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
           {/* ========================================================================= */}
           <div className="col-span-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 space-y-6 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-none pr-1">
             {/* Title, Bookmark & Price */}
-            <div className="space-y-2.5 border-b border-black/[0.08] pb-5">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <span className="font-display text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-400 block mb-1">
-                    NØRVA STUDIO // {product.category}
-                  </span>
-                  <h1 className="font-serif text-2xl sm:text-3xl font-bold uppercase tracking-tight text-zinc-950 leading-tight">
-                    {product.name}
-                  </h1>
-                </div>
+            <div className="space-y-3 border-b border-black/[0.08] pb-5">
+              {/* Category Tag & Bookmark */}
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-display text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-400 block">
+                  NØRVA STUDIO // {product.category}
+                </span>
 
-                {/* Inline Bookmark Icon & Size Guide Pill */}
-                <div className="flex items-center gap-2 shrink-0 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setSizeGuideOpen(true)}
-                    className="bg-zinc-100 hover:bg-black hover:text-white border border-zinc-200 text-zinc-900 text-[11px] font-bold tracking-wider px-3 py-1 rounded-full transition-all cursor-pointer uppercase shadow-2xs flex items-center gap-1"
-                  >
-                    <Ruler className="h-3 w-3" />
-                    <span>Size Guide</span>
-                  </button>
-
-                  <button
-                    onClick={() => setIsWishlisted(!isWishlisted)}
-                    aria-label="Wishlist"
-                    className="p-1.5 text-zinc-800 hover:text-black transition-colors cursor-pointer"
-                  >
-                    <Bookmark
-                      className={`h-5 w-5 ${isWishlisted ? "fill-black text-black" : "text-zinc-700"}`}
-                    />
-                  </button>
-                </div>
+                <button
+                  onClick={() => setIsWishlisted(!isWishlisted)}
+                  aria-label="Wishlist"
+                  className="p-1 text-zinc-800 hover:text-black transition-colors cursor-pointer"
+                >
+                  <Bookmark
+                    className={`h-5 w-5 ${isWishlisted ? "fill-black text-black" : "text-zinc-700"}`}
+                  />
+                </button>
               </div>
 
-              {/* Price */}
-              <div className="pt-1 flex items-baseline gap-2.5">
+              {/* Full Width Title */}
+              <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold uppercase tracking-tight text-zinc-950 leading-tight">
+                {product.name}
+              </h1>
+
+              {/* Price Row */}
+              <div className="pt-1 flex flex-wrap items-baseline gap-2 sm:gap-3">
                 <span className="font-sans text-xl sm:text-2xl font-black tracking-tight text-zinc-950">
                   RS. {product.price.toLocaleString("en-IN")}
                 </span>
@@ -424,6 +413,16 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-sans">
                 <span className="font-bold text-zinc-900 uppercase tracking-wider text-[11px]">Select Size</span>
+                
+                {/* Size Guide Pill Button */}
+                <button
+                  type="button"
+                  onClick={() => setSizeGuideOpen(true)}
+                  className="bg-zinc-100 hover:bg-black hover:text-white border border-zinc-200 text-zinc-900 text-[11px] font-bold tracking-wider px-3 py-1 rounded-full transition-all cursor-pointer uppercase shadow-2xs flex items-center gap-1"
+                >
+                  <Ruler className="h-3 w-3" />
+                  <span>Size Guide</span>
+                </button>
               </div>
 
               {/* 2-Row Pill Button Grid */}
