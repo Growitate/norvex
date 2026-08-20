@@ -108,10 +108,10 @@ export function HeroSlider() {
       allSlides.push(
         <div
           key={`clone-prev-${i}`}
-          className="hs-slide shrink-0 select-none relative overflow-hidden"
+          className="hs-slide shrink-0 select-none relative overflow-hidden h-full"
           style={{
             width: isDesktop ? `${SLIDE_W_DESKTOP}px` : "100vw",
-            height: isDesktop ? "750px" : "550px",
+            height: isDesktop ? "750px" : "100%",
           }}
           data-index={i}
         >
@@ -119,7 +119,7 @@ export function HeroSlider() {
             <img
               src={slide.image}
               alt={slide.alt}
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
             />
           </Link>
         </div>,
@@ -131,10 +131,10 @@ export function HeroSlider() {
       allSlides.push(
         <div
           key={`original-${i}`}
-          className="hs-slide shrink-0 select-none relative overflow-hidden"
+          className="hs-slide shrink-0 select-none relative overflow-hidden h-full"
           style={{
             width: isDesktop ? `${SLIDE_W_DESKTOP}px` : "100vw",
-            height: isDesktop ? "750px" : "550px",
+            height: isDesktop ? "750px" : "100%",
           }}
           data-index={i + total}
         >
@@ -142,7 +142,7 @@ export function HeroSlider() {
             <img
               src={slide.image}
               alt={slide.alt}
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
             />
           </Link>
         </div>,
@@ -154,10 +154,10 @@ export function HeroSlider() {
       allSlides.push(
         <div
           key={`clone-next-${i}`}
-          className="hs-slide shrink-0 select-none relative overflow-hidden"
+          className="hs-slide shrink-0 select-none relative overflow-hidden h-full"
           style={{
             width: isDesktop ? `${SLIDE_W_DESKTOP}px` : "100vw",
-            height: isDesktop ? "750px" : "550px",
+            height: isDesktop ? "750px" : "100%",
           }}
           data-index={i + total * 2}
         >
@@ -165,7 +165,7 @@ export function HeroSlider() {
             <img
               src={slide.image}
               alt={slide.alt}
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
             />
           </Link>
         </div>,
@@ -320,7 +320,7 @@ export function HeroSlider() {
   return (
     <div ref={containerRef} className="relative w-full overflow-hidden bg-white pt-0 pb-0">
       <div
-        className="hs-track-wrap relative w-full h-[460px] sm:h-[580px] md:h-[720px] overflow-hidden md:overflow-visible touch-pan-y"
+        className="hs-track-wrap relative w-full h-[580px] xs:h-[620px] sm:h-[680px] md:h-[750px] overflow-hidden md:overflow-visible touch-pan-y"
         onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
         onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
         onTouchEnd={handleDragEnd}
