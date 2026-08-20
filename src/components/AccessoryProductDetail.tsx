@@ -661,7 +661,7 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
       </div>
 
       {/* ========================================================= */}
-      {/* MODAL 1: CHOOSE YOUR BRAND (Exact Video Screenshot Style)  */}
+      {/* MODAL 1: CHOOSE YOUR BRAND (Sleek Clean Monochrome Style)  */}
       {/* ========================================================= */}
       <AnimatePresence>
         {brandModalOpen && (
@@ -670,7 +670,7 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-xs cursor-pointer"
+              className="fixed inset-0 bg-black/60 backdrop-blur-xs cursor-pointer"
               onClick={() => setBrandModalOpen(false)}
             />
 
@@ -679,29 +679,29 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-              className="relative w-full max-w-lg bg-[#181628] text-white rounded-t-2xl sm:rounded-2xl max-h-[82vh] flex flex-col z-10 shadow-2xl overflow-hidden border border-[#2c284a]"
+              className="relative w-full max-w-lg bg-white text-zinc-900 rounded-t-2xl sm:rounded-2xl max-h-[82vh] flex flex-col z-10 shadow-2xl overflow-hidden border border-black/10"
             >
               {/* Drag Handle */}
-              <div className="pt-2.5 pb-1 flex justify-center bg-[#181628]">
-                <div className="w-10 h-1 bg-zinc-600/70 rounded-full" />
+              <div className="pt-2.5 pb-1 flex justify-center bg-zinc-50">
+                <div className="w-10 h-1 bg-zinc-300 rounded-full" />
               </div>
 
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#292542] bg-[#141222]">
-                <h3 className="font-sans text-base font-medium text-white tracking-wide">
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-black/10 bg-zinc-50">
+                <h3 className="font-display text-sm font-bold uppercase tracking-wider text-zinc-900">
                   Choose Your Brand
                 </h3>
                 <button
                   onClick={() => setBrandModalOpen(false)}
-                  className="p-1.5 text-zinc-400 hover:text-white rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+                  className="p-1.5 text-zinc-500 hover:text-black rounded-full hover:bg-black/5 transition-colors cursor-pointer"
                   aria-label="Close brand selector"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              {/* Brand Options List (matching screenshot dark list & radio styles) */}
-              <div className="overflow-y-auto divide-y divide-[#25213b] scrollbar-none">
+              {/* Brand Options List */}
+              <div className="overflow-y-auto divide-y divide-black/[0.06] scrollbar-none">
                 {PHONE_BRANDS.map((brand) => {
                   const isSelected = selectedBrand === brand.name;
                   return (
@@ -710,16 +710,16 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                       onClick={() => handleBrandSelect(brand.name)}
                       className={`w-full flex items-center justify-between py-4 px-5 transition-colors text-left cursor-pointer ${
                         isSelected
-                          ? "bg-[#232038] text-white font-medium"
-                          : "text-[#e2e8f0] hover:bg-white/5 active:bg-white/10"
+                          ? "bg-zinc-100 text-zinc-950 font-bold"
+                          : "text-zinc-800 hover:bg-zinc-50 active:bg-zinc-100 font-medium"
                       }`}
                     >
                       <span className="text-[15px] font-sans tracking-wide">{brand.name}</span>
                       <div
                         className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                           isSelected
-                            ? "border-purple-400 bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.4)]"
-                            : "border-[#524d73] bg-transparent"
+                            ? "border-black bg-black shadow-xs"
+                            : "border-zinc-300 bg-white"
                         }`}
                       >
                         {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
@@ -734,7 +734,7 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
       </AnimatePresence>
 
       {/* ========================================================= */}
-      {/* MODAL 2: CHOOSE YOUR MODEL (Exact Matching Style)          */}
+      {/* MODAL 2: CHOOSE YOUR MODEL (Sleek Clean Monochrome Style)  */}
       {/* ========================================================= */}
       <AnimatePresence>
         {modelModalOpen && (
@@ -743,7 +743,7 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-xs cursor-pointer"
+              className="fixed inset-0 bg-black/60 backdrop-blur-xs cursor-pointer"
               onClick={() => setModelModalOpen(false)}
             />
 
@@ -752,21 +752,21 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-              className="relative w-full max-w-lg bg-[#181628] text-white rounded-t-2xl sm:rounded-2xl max-h-[82vh] flex flex-col z-10 shadow-2xl overflow-hidden border border-[#2c284a]"
+              className="relative w-full max-w-lg bg-white text-zinc-900 rounded-t-2xl sm:rounded-2xl max-h-[82vh] flex flex-col z-10 shadow-2xl overflow-hidden border border-black/10"
             >
               {/* Drag Handle */}
-              <div className="pt-2.5 pb-1 flex justify-center bg-[#181628]">
-                <div className="w-10 h-1 bg-zinc-600/70 rounded-full" />
+              <div className="pt-2.5 pb-1 flex justify-center bg-zinc-50">
+                <div className="w-10 h-1 bg-zinc-300 rounded-full" />
               </div>
 
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#292542] bg-[#141222]">
-                <h3 className="font-sans text-base font-medium text-white tracking-wide">
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-black/10 bg-zinc-50">
+                <h3 className="font-display text-sm font-bold uppercase tracking-wider text-zinc-900">
                   Choose {selectedBrand} Model
                 </h3>
                 <button
                   onClick={() => setModelModalOpen(false)}
-                  className="p-1.5 text-zinc-400 hover:text-white rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+                  className="p-1.5 text-zinc-500 hover:text-black rounded-full hover:bg-black/5 transition-colors cursor-pointer"
                   aria-label="Close model selector"
                 >
                   <X className="h-5 w-5" />
@@ -774,7 +774,7 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
               </div>
 
               {/* Models List */}
-              <div className="overflow-y-auto divide-y divide-[#25213b] scrollbar-none">
+              <div className="overflow-y-auto divide-y divide-black/[0.06] scrollbar-none">
                 {currentBrandData.models.map((model) => {
                   const isSelected = selectedModel === model;
                   return (
@@ -783,16 +783,16 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                       onClick={() => handleModelSelect(model)}
                       className={`w-full flex items-center justify-between py-4 px-5 transition-colors text-left cursor-pointer ${
                         isSelected
-                          ? "bg-[#232038] text-white font-medium"
-                          : "text-[#e2e8f0] hover:bg-white/5 active:bg-white/10"
+                          ? "bg-zinc-100 text-zinc-950 font-bold"
+                          : "text-zinc-800 hover:bg-zinc-50 active:bg-zinc-100 font-medium"
                       }`}
                     >
                       <span className="text-[15px] font-sans tracking-wide">{model}</span>
                       <div
                         className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                           isSelected
-                            ? "border-purple-400 bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.4)]"
-                            : "border-[#524d73] bg-transparent"
+                            ? "border-black bg-black shadow-xs"
+                            : "border-zinc-300 bg-white"
                         }`}
                       >
                         {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
