@@ -46,7 +46,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
   const handleMobileScroll = () => {
     if (mobileScrollRef.current) {
       const { scrollLeft, clientWidth } = mobileScrollRef.current;
-      const index = Math.round(scrollLeft / clientWidth);
+      const index = Math.round(scrollLeft / (clientWidth * 0.88));
       setActiveMobileIdx(Math.min(Math.max(index, 0), gallery.length - 1));
     }
   };
@@ -55,7 +55,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
     if (mobileScrollRef.current) {
       const clientWidth = mobileScrollRef.current.clientWidth;
       mobileScrollRef.current.scrollTo({
-        left: index * clientWidth,
+        left: index * (clientWidth * 0.88 + 8),
         behavior: "smooth",
       });
       setActiveMobileIdx(index);
@@ -158,13 +158,13 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
           
           {/* ========================================================================= */}
-          {/* MOBILE ONLY: 100% FULL-BLEED EDGE-TO-EDGE SIDEWAYS SWIPE CAROUSEL         */}
+          {/* MOBILE ONLY: SIDEWAYS SWIPE CAROUSEL (Exact Bluorng Rounded Cards Stream) */}
           {/* ========================================================================= */}
-          <div className="lg:hidden col-span-1 -mx-4 sm:-mx-6 space-y-3 pb-3">
+          <div className="lg:hidden col-span-1 space-y-3 pb-3">
             <div
               ref={mobileScrollRef}
               onScroll={handleMobileScroll}
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-0 touch-pan-x overscroll-x-contain"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-2 -mx-4 px-4 touch-pan-x overscroll-x-contain"
               style={{
                 scrollbarWidth: "none",
                 WebkitOverflowScrolling: "touch",
@@ -175,7 +175,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 <div
                   key={idx}
                   onClick={() => openLightbox(idx)}
-                  className="relative aspect-[3/4.2] w-screen shrink-0 snap-center bg-zinc-950 overflow-hidden cursor-zoom-in select-none"
+                  className="relative aspect-[3/4.1] w-[88vw] xs:w-[90vw] max-w-[460px] shrink-0 snap-center bg-zinc-950 rounded-2xl overflow-hidden shadow-xs cursor-zoom-in select-none"
                 >
                   {/* New Drop Pill */}
                   {idx === 0 && product.isNew && (
@@ -207,12 +207,12 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     />
                   </button>
 
-                  {/* Bottom-Left Minimal Counter Tag (Exact Screenshot Style: "7 / 9") */}
-                  <div className="absolute bottom-4 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none">
+                  {/* Bottom-Left Minimal Counter Tag (Exact Bluorng Screenshot: "5 / 7") */}
+                  <div className="absolute bottom-3.5 left-3.5 z-10 text-white font-sans text-xs font-bold tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] select-none">
                     {idx + 1} / {gallery.length}
                   </div>
 
-                  {/* 100% Fully Filled Edge-to-Edge Product Image */}
+                  {/* Fully Filled Product Image */}
                   <img
                     src={imgSrc}
                     alt={`${product.name} — angle ${idx + 1}`}
