@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -38,6 +38,29 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
 
   // Active Hero Image Index (defaults to first image, changes on click)
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
+
+  // Mobile Sideways Carousel State
+  const [activeMobileIdx, setActiveMobileIdx] = useState(0);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+
+  const handleMobileScroll = () => {
+    if (mobileScrollRef.current) {
+      const { scrollLeft, clientWidth } = mobileScrollRef.current;
+      const index = Math.round(scrollLeft / (clientWidth * 0.86));
+      setActiveMobileIdx(Math.min(Math.max(index, 0), gallery.length - 1));
+    }
+  };
+
+  const scrollToMobileIndex = (index: number) => {
+    if (mobileScrollRef.current) {
+      const clientWidth = mobileScrollRef.current.clientWidth;
+      mobileScrollRef.current.scrollTo({
+        left: index * (clientWidth * 0.86 + 12),
+        behavior: "smooth",
+      });
+      setActiveMobileIdx(index);
+    }
+  };
 
   // Fullscreen Lightbox Modal State
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -140,9 +163,89 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
           
           {/* ========================================================================= */}
+          {/* MOBILE ONLY: SIDEWAYS / HORIZONTAL SWIPE CAROUSEL (Smooth 60fps Swipe)     */}
+          {/* ========================================================================= */}
+          <div className="lg:hidden col-span-1 space-y-3 pb-2">
+            <div
+              ref={mobileScrollRef}
+              onScroll={handleMobileScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 -mx-4 px-4 touch-pan-x"
+              style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+            >
+              {gallery.map((imgSrc, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => openLightbox(idx)}
+                  className="relative aspect-[3/4] w-[86vw] max-w-[420px] shrink-0 snap-center bg-zinc-50 rounded-2xl overflow-hidden border border-black/[0.08] shadow-xs cursor-zoom-in select-none"
+                >
+                  {/* New Drop Pill */}
+                  {idx === 0 && product.isNew && (
+                    <div className="absolute top-3.5 left-3.5 z-10">
+                      <span className="inline-flex items-center gap-1 bg-black text-white px-2.5 py-1 font-display text-[9px] uppercase tracking-brand font-semibold rounded-full shadow-xs">
+                        <Sparkles className="h-2.5 w-2.5 text-zinc-300" />
+                        New Drop
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Wishlist Bookmark Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsWishlisted(!isWishlisted);
+                    }}
+                    aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                    className={`absolute top-3.5 right-3.5 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-xs cursor-pointer ${
+                      isWishlisted
+                        ? "bg-black text-white"
+                        : "bg-white/90 text-zinc-800 border border-black/10"
+                    }`}
+                  >
+                    <Bookmark
+                      className={`h-4 w-4 ${
+                        isWishlisted ? "fill-white text-white" : "text-zinc-800"
+                      }`}
+                    />
+                  </button>
+
+                  {/* Angle Tag */}
+                  <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-xs text-white text-[10px] font-sans px-2.5 py-1 rounded-full flex items-center gap-1 shadow-xs">
+                    <Layers className="h-2.5 w-2.5 text-zinc-300" />
+                    <span>Angle {idx + 1} of {gallery.length}</span>
+                  </div>
+
+                  <img
+                    src={imgSrc}
+                    alt={`${product.name} — angle ${idx + 1}`}
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination Dots Indicator */}
+            {gallery.length > 1 && (
+              <div className="flex items-center justify-center gap-1.5 pt-1">
+                {gallery.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => scrollToMobileIndex(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      activeMobileIdx === i ? "w-6 bg-black" : "w-1.5 bg-black/20"
+                    }`}
+                    aria-label={`View angle ${i + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ========================================================================= */}
           {/* COLUMN 1: LEFT PRIMARY FULL HERO LOOK (STATIC & FIXED TO GALLERY[0])       */}
           {/* ========================================================================= */}
-          <div className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 lg:self-start">
+          <div className="hidden lg:block lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 lg:self-start">
             <div
               onClick={() => openLightbox(0)}
               className="relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4.2] w-full bg-zinc-50 rounded-2xl overflow-hidden border border-black/[0.08] shadow-sm group select-none cursor-zoom-in"
@@ -208,7 +311,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
           {/* ========================================================================= */}
           {/* COLUMN 2: CENTER VERTICAL STREAM OF SECONDARY ANGLES (STARTS FROM ANGLE 2) */}
           {/* ========================================================================= */}
-          <div className="lg:col-span-4 xl:col-span-4 space-y-4 sm:space-y-6">
+          <div className="hidden lg:block lg:col-span-4 xl:col-span-4 space-y-4 sm:space-y-6">
             {secondaryAngles.length > 0 ? (
               secondaryAngles.map((imgSrc, idx) => {
                 const angleNumber = idx + 2;
@@ -240,7 +343,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
           {/* ========================================================================= */}
           {/* COLUMN 3: RIGHT STICKY PURCHASE PANEL (Exact Bluorng / Img 2 Style)        */}
           {/* ========================================================================= */}
-          <div className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 space-y-6 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-none pr-1">
+          <div className="col-span-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 space-y-6 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-none pr-1">
             {/* Title, Bookmark & Price */}
             <div className="space-y-2 border-b border-black/[0.08] pb-5">
               <div className="flex items-start justify-between gap-3">
