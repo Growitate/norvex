@@ -125,36 +125,43 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-import Lenis from "lenis";
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
-    });
-
+    let lenisInstance: any = null;
     let animationFrameId: number;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
+    import("lenis")
+      .then(({ default: Lenis }) => {
+        lenisInstance = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: "vertical",
+          gestureOrientation: "vertical",
+          smoothWheel: true,
+          wheelMultiplier: 1.0,
+          touchMultiplier: 1.5,
+        });
 
-    animationFrameId = requestAnimationFrame(raf);
+        function raf(time: number) {
+          if (lenisInstance) {
+            lenisInstance.raf(time);
+            animationFrameId = requestAnimationFrame(raf);
+          }
+        }
+
+        animationFrameId = requestAnimationFrame(raf);
+      })
+      .catch((err) => {
+        console.warn("Lenis smooth scroll initialization skipped:", err);
+      });
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      lenis.destroy();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      if (lenisInstance) lenisInstance.destroy();
     };
   }, []);
 
