@@ -1,46 +1,136 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useSearch, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
-import { products } from "@/lib/products";
+import { products, type Product } from "@/lib/products";
 
-const CATEGORIES = ["All Bags", "Shoulder Bags", "Crossbody", "Totes & Backpacks", "Mini Bags"] as const;
+const CATEGORIES = [
+  "All",
+  "Bags",
+  "Female Bags & Clothes",
+  "Male Clothes",
+  "Accessories",
+  "Shoulder Bags",
+  "Crossbody",
+  "Totes & Backpacks",
+  "Mini Bags",
+] as const;
+
 type Cat = (typeof CATEGORIES)[number];
 
+type ShopSearch = {
+  category?: string;
+  q?: string;
+};
+
 export const Route = createFileRoute("/shop")({
+  validateSearch: (search: Record<string, unknown>): ShopSearch => {
+    return {
+      category: (search.category as string) || undefined,
+      q: (search.q as string) || undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Catalog — Nørva Store" },
       {
         name: "description",
         content:
-          "Explore Nørva Store's curated collection of Y2K, gothic, and dark aesthetic bags. Limited-edition statement pieces.",
+          "Explore Nørva Store's curated collection of statement bags, women's drops, heavyweight streetwear, and dark aesthetic accessories.",
       },
       { property: "og:title", content: "Catalog — Nørva Store" },
-      { property: "og:description", content: "Statement Y2K & Gothic Bags. Express your individuality." },
+      {
+        property: "og:description",
+        content: "Statement Bags, Streetwear & Gothic Accessories. Express your individuality.",
+      },
     ],
   }),
   component: Shop,
 });
 
+function matchesCategory(product: Product, selectedCategory: Cat): boolean {
+  if (selectedCategory === "All") return true;
+
+  if (selectedCategory === "Bags") {
+    return product.isBag;
+  }
+
+  if (selectedCategory === "Female Bags & Clothes") {
+    return product.department === "female" || product.isBag;
+  }
+
+  if (selectedCategory === "Male Clothes") {
+    return product.department === "male";
+  }
+
+  if (selectedCategory === "Accessories") {
+    return product.category === "Accessories";
+  }
+
+  return product.category === selectedCategory;
+}
+
 function Shop() {
-  const [cat, setCat] = useState<Cat>("All Bags");
-  const filtered = cat === "All Bags" ? products : products.filter((p) => p.category === cat);
+  const search = useSearch({ from: "/shop" });
+  const navigate = useNavigate();
+  const [cat, setCat] = useState<Cat>("All");
+
+  useEffect(() => {
+    if (search.category) {
+      const decoded = decodeURIComponent(search.category);
+      const matched = CATEGORIES.find(
+        (c) => c.toLowerCase() === decoded.toLowerCase() || c.toLowerCase() === search.category?.toLowerCase(),
+      );
+      if (matched) {
+        setCat(matched);
+      } else if (search.category.toLowerCase().includes("all")) {
+        setCat("All");
+      } else if (search.category.toLowerCase().includes("bag")) {
+        setCat("Bags");
+      }
+    } else {
+      setCat("All");
+    }
+  }, [search.category]);
+
+  const handleCategoryChange = (newCat: Cat) => {
+    setCat(newCat);
+    navigate({
+      to: "/shop",
+      search: {
+        category: newCat === "All" ? undefined : newCat,
+        q: search.q || undefined,
+      },
+      replace: true,
+    });
+  };
+
+  const query = (search.q || "").toLowerCase().trim();
+
+  const filtered = products.filter((p) => {
+    const matchesCat = matchesCategory(p, cat);
+    const matchesQuery =
+      !query ||
+      p.name.toLowerCase().includes(query) ||
+      p.description.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query);
+    return matchesCat && matchesQuery;
+  });
 
   return (
-    <section className="bg-[#09090b] pt-28 sm:pt-40 text-white md:pt-48 min-h-screen">
+    <section className="bg-white pt-24 sm:pt-36 text-zinc-900 md:pt-40 min-h-screen pb-20">
       <div className="mx-auto max-w-[1600px] px-4 md:px-8">
-        <header className="border-b border-white/15 pb-6 sm:pb-8">
-          <p className="font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide text-zinc-400">
-            All Products · {products.length} Statement Pieces
+        <header className="border-b border-black/10 pb-6 sm:pb-8">
+          <p className="font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide text-zinc-500 font-semibold">
+            Catalog · {filtered.length} Statement Pieces
           </p>
-          <h1 className="mt-2 sm:mt-3 font-display text-3xl uppercase tracking-tight sm:text-7xl md:text-8xl text-white font-semibold">
-            The Collection
+          <h1 className="mt-2 sm:mt-3 font-display text-3xl uppercase tracking-tight sm:text-6xl md:text-7xl text-zinc-900 font-black">
+            {cat === "All" ? "The Collection" : cat}
           </h1>
         </header>
 
-        {/* Filters */}
+        {/* Filter Pills */}
         <div
-          className="sticky top-[56px] sm:top-[80px] z-20 -mx-4 flex gap-2 overflow-x-auto border-b border-white/10 bg-[#09090b]/95 backdrop-blur-md px-4 py-3 sm:py-4 md:-mx-8 md:px-8 scrollbar-none whitespace-nowrap"
+          className="sticky top-[56px] sm:top-[64px] z-20 -mx-4 flex gap-2 overflow-x-auto border-b border-black/10 bg-white/95 backdrop-blur-md px-4 py-3 sm:py-4 md:-mx-8 md:px-8 scrollbar-none whitespace-nowrap"
           style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
         >
           {CATEGORIES.map((c) => {
@@ -48,11 +138,11 @@ function Shop() {
             return (
               <button
                 key={c}
-                onClick={() => setCat(c)}
-                className={`shrink-0 border px-4 sm:px-5 py-2 font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide transition-colors cursor-pointer min-h-[38px] flex items-center justify-center ${
+                onClick={() => handleCategoryChange(c)}
+                className={`shrink-0 rounded-full border px-4 sm:px-5 py-2 font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide transition-all cursor-pointer min-h-[38px] flex items-center justify-center ${
                   active
-                    ? "border-white bg-white text-black font-bold"
-                    : "border-white/20 text-zinc-300 hover:border-white hover:text-white active:bg-white/10"
+                    ? "border-black bg-black text-white font-bold shadow-xs"
+                    : "border-black/15 text-zinc-700 hover:border-black hover:text-black active:bg-black/5 font-semibold bg-white"
                 }`}
               >
                 {c}
@@ -61,16 +151,25 @@ function Shop() {
           })}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-14 py-12 md:grid-cols-3 md:gap-x-6 md:py-16">
+        {/* Product Cards Grid */}
+        <div className="grid grid-cols-2 gap-x-4 gap-y-12 py-10 md:grid-cols-3 md:gap-x-6 md:py-14">
           {filtered.map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <p className="py-32 text-center text-xs uppercase tracking-brand text-zinc-400">
-            No items found — check back soon for new drops
-          </p>
+          <div className="py-24 text-center">
+            <p className="text-xs font-display uppercase tracking-brand text-zinc-500 font-semibold">
+              No items found in this category
+            </p>
+            <button
+              onClick={() => handleCategoryChange("All")}
+              className="mt-4 px-6 py-2.5 bg-black text-white text-xs font-display uppercase tracking-wider rounded-full hover:bg-zinc-800 transition-colors cursor-pointer font-bold"
+            >
+              View All Products
+            </button>
+          </div>
         )}
       </div>
     </section>

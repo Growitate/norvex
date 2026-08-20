@@ -17,19 +17,19 @@ export function Marquee({
     speed === "slow" ? "animate-marquee-slow" : speed === "fast" ? "animate-marquee-fast" : "animate-marquee";
   const sizeCls =
     size === "lg"
-      ? "text-5xl md:text-7xl lg:text-8xl"
+      ? "text-2xl sm:text-3xl font-bold tracking-[0.2em]"
       : size === "md"
-        ? "text-2xl md:text-4xl"
-        : "text-xs";
+        ? "text-sm sm:text-base font-semibold tracking-[0.2em]"
+        : "text-[11px] sm:text-xs font-semibold tracking-[0.25em]";
 
   const loop = [...items, ...items, ...items, ...items];
   return (
-    <div className={`relative overflow-hidden ${className}`}>
-      <div className={`flex w-max ${speedCls} font-display uppercase tracking-brand ${sizeCls}`}>
+    <div className={`relative overflow-hidden w-full flex items-center ${className}`}>
+      <div className={`flex w-max items-center ${speedCls} font-display uppercase text-zinc-900 ${sizeCls}`}>
         {loop.map((t, i) => (
-          <span key={i} className="flex shrink-0 items-center pr-8">
-            {t}
-            <span className="pl-8 opacity-60">{separator}</span>
+          <span key={i} className="inline-flex shrink-0 items-center gap-6 pr-6">
+            <span>{t}</span>
+            <span className="text-zinc-400 font-normal text-[10px] sm:text-xs">{separator}</span>
           </span>
         ))}
       </div>

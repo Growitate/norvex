@@ -1,51 +1,35 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Search, ShoppingBag, Menu, X, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Search,
+  ShoppingBag,
+  X,
+  ArrowRight,
+  User,
+  Heart,
+  MessageCircle,
+  Mail,
+  Instagram,
+} from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "@/lib/cart";
 import { CartDrawer } from "./CartDrawer";
 import { SearchModal } from "./SearchModal";
-import { MobileBottomNav } from "./MobileBottomNav";
-
-type SubMenuItem = {
-  label: string;
-  to: string;
-};
-
-type MenuItem = {
-  label: string;
-  to: string;
-  submenu?: SubMenuItem[];
-};
-
-const MENU_ITEMS: MenuItem[] = [
-  { label: "HOME", to: "/" },
-  { label: "CATALOG", to: "/shop" },
-  {
-    label: "FEATURED COLLECTIONS",
-    to: "/shop",
-    submenu: [
-      { label: "SHOULDER BAGS", to: "/shop" },
-      { label: "CROSSBODY BAGS", to: "/shop" },
-      { label: "HARNESS TOTES", to: "/shop" },
-      { label: "MINI SATCHELS", to: "/shop" },
-    ],
-  },
-  { label: "ABOUT US", to: "/about" },
-  { label: "CONTACT US", to: "/contact" },
-];
+import { WrittenLogo } from "./WrittenLogo";
 
 export function Header() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
-  
+  const [drawerSearch, setDrawerSearch] = useState("");
+
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const count = useCart((s) => s.items.reduce((n, i) => n + i.qty, 0));
   const setCartOpen = useCart((s) => s.setOpen);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 15);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -55,61 +39,84 @@ export function Header() {
     setMenuOpen(false);
   }, [pathname]);
 
-  const toggleSubmenu = (label: string) => {
-    setOpenSubmenus((prev) => ({
-      ...prev,
-      [label]: !prev[label],
-    }));
-  };
+  // Prevent background scrolling when menu drawer is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
-  const bgCls = scrolled
-    ? "bg-[#09090b]/95 backdrop-blur-md border-b border-white/10 text-white shadow-xl"
-    : "bg-[#09090b] text-white border-b border-white/10";
+  const handleDrawerSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (drawerSearch.trim()) {
+      setMenuOpen(false);
+      navigate({
+        to: "/shop",
+        search: { q: drawerSearch.trim() },
+      });
+      setDrawerSearch("");
+    }
+  };
 
   return (
     <>
+      {/* Main Navbar */}
       <header
-        className={`fixed inset-x-0 top-0 z-40 h-16 sm:h-20 transition-all duration-300 ${bgCls}`}
+        className={`fixed inset-x-0 top-0 z-40 transition-all duration-200 ${
+          scrolled
+            ? "bg-white/95 backdrop-blur-md border-b border-black/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
+            : "bg-white border-b border-black/[0.06]"
+        }`}
       >
-        <div className="mx-auto grid h-full max-w-[1600px] grid-cols-[60px_1fr_80px] sm:grid-cols-[80px_1fr_120px] items-center px-3 sm:px-6 md:px-8">
-          {/* Left: Always-visible Hamburger menu trigger */}
-          <div className="flex justify-start">
+        <div className="mx-auto grid grid-cols-3 items-center h-14 sm:h-16 px-4 sm:px-6 md:px-8 max-w-[1600px]">
+          {/* Left: 3-line hamburger menu icon */}
+          <div className="flex items-center justify-start">
             <button
-              className="flex items-center justify-center p-2.5 rounded-full hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer min-w-[44px] min-h-[44px]"
-              aria-label="Open menu"
               onClick={() => setMenuOpen(true)}
+              aria-label="Open navigation menu"
+              className="group flex items-center justify-center p-2.5 -ml-2.5 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-900 cursor-pointer"
             >
-              <Menu className="h-6 w-6 text-white" />
+              <div className="w-[19px] h-[13px] flex flex-col justify-between py-[0.5px]">
+                <span className="block w-full h-[1.75px] bg-zinc-900 rounded-full transition-transform duration-200 group-hover:scale-x-110 group-hover:origin-left" />
+                <span className="block w-full h-[1.75px] bg-zinc-900 rounded-full transition-transform duration-200" />
+                <span className="block w-full h-[1.75px] bg-zinc-900 rounded-full transition-transform duration-200 group-hover:scale-x-110 group-hover:origin-left" />
+              </div>
             </button>
           </div>
 
-          {/* Center: Logo */}
-          <div className="flex justify-center text-center">
-            <Link to="/" className="flex items-center group">
-              <span className="font-display font-bold text-base sm:text-2xl tracking-[0.2em] sm:tracking-[0.25em] uppercase text-white group-hover:text-zinc-300 transition-colors whitespace-nowrap">
-                NØRVA <span className="font-light text-zinc-400 text-xs sm:text-lg">STORE</span>
-              </span>
+          {/* Center: Brand Logo centered */}
+          <div className="flex items-center justify-center text-center">
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center group focus:outline-none transition-opacity hover:opacity-80"
+            >
+              <WrittenLogo size="md" />
             </Link>
           </div>
 
-          {/* Right: Icons (Search, Cart) */}
-          <div className="flex items-center justify-end gap-1 sm:gap-3">
+          {/* Right: Search and Cart icons */}
+          <div className="flex items-center justify-end gap-1 sm:gap-2 -mr-1.5">
             <button
-              aria-label="Search"
+              aria-label="Search catalog"
               onClick={() => setSearchOpen(true)}
-              className="flex items-center justify-center p-2.5 rounded-full hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer min-w-[44px] min-h-[44px]"
+              className="flex items-center justify-center p-2.5 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-900 cursor-pointer"
             >
-              <Search className="h-5 w-5 text-white" />
+              <Search className="h-[18px] w-[18px] stroke-[1.75] text-zinc-900" />
             </button>
 
             <button
-              aria-label="Cart"
-              className="relative flex items-center justify-center p-2.5 rounded-full hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer min-w-[44px] min-h-[44px]"
+              aria-label="Shopping bag"
               onClick={() => setCartOpen(true)}
+              className="relative flex items-center justify-center p-2.5 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-900 cursor-pointer"
             >
-              <ShoppingBag className="h-5 w-5 text-white" />
+              <ShoppingBag className="h-[18px] w-[18px] stroke-[1.75] text-zinc-900" />
               {count > 0 && (
-                <span className="absolute right-0 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-white text-[10px] font-bold leading-none text-black ring-2 ring-black px-1">
+                <span className="absolute top-1 right-1 grid h-4 min-w-4 place-items-center rounded-full bg-zinc-900 text-[10px] font-bold leading-none text-white ring-2 ring-white px-1">
                   {count}
                 </span>
               )}
@@ -118,100 +125,318 @@ export function Header() {
         </div>
       </header>
 
-      {/* Slide-out Menu Drawer from the Left */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-50 flex">
-          {/* Overlay backdrop */}
-          <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer transition-opacity duration-300"
-            onClick={() => setMenuOpen(false)}
-          />
+      {/* ========================================================================= */}
+      {/* NUDE-PROJECT INSPIRED MENU DRAWER WITH STORE CATEGORIES & BRAND NAVIGATION */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {menuOpen && (
+          <div className="fixed inset-0 z-50 flex select-none">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-xs cursor-pointer"
+              onClick={() => setMenuOpen(false)}
+            />
 
-          {/* Drawer content panel */}
-          <div className="relative w-[85vw] max-w-[360px] h-full bg-[#0c0c0e] text-white flex flex-col border-r border-white/10 shadow-2xl transition-transform duration-300 translate-x-0 z-10">
-            {/* Header close button */}
-            <div className="flex h-16 items-center justify-between border-b border-white/10 px-6">
-              <span className="font-display font-medium text-sm tracking-widest uppercase text-zinc-400">
-                Menu
-              </span>
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Close menu"
-              >
-                <X className="h-5 w-5 text-zinc-400" />
-              </button>
-            </div>
+            {/* Slide-out Drawer Panel */}
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="relative w-[92vw] max-w-[400px] h-full bg-white text-zinc-900 flex flex-col border-r border-black/[0.08] shadow-2xl z-10 overflow-hidden"
+            >
+              {/* 1. TOP HEADER BAR: (X Close, Logo, Action Icons Row) */}
+              <div className="flex h-14 sm:h-16 items-center justify-between px-5 sm:px-6 border-b border-black/[0.06] bg-white shrink-0">
+                {/* Close (X) Icon */}
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Close menu"
+                  className="p-2 -ml-2 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-900 cursor-pointer"
+                >
+                  <X className="h-5 w-5 stroke-[1.75]" />
+                </button>
 
-            {/* Navigation links */}
-            <nav className="flex-1 overflow-y-auto px-6 py-8">
-              <ul className="flex flex-col gap-6">
-                {MENU_ITEMS.map((item) => {
-                  const hasSubmenu = item.submenu && item.submenu.length > 0;
-                  const isSubOpen = !!openSubmenus[item.label];
+                {/* Brand Logo */}
+                <Link
+                  to="/"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center hover:opacity-85 transition-opacity px-2"
+                >
+                  <WrittenLogo size="sm" />
+                </Link>
 
-                  return (
-                    <li key={item.label} className="border-b border-white/5 pb-4">
-                      {hasSubmenu ? (
-                        <div>
-                          <button
-                            onClick={() => toggleSubmenu(item.label)}
-                            className="w-full flex items-center justify-between font-display text-xl font-medium tracking-wide uppercase py-1 hover:text-zinc-300 transition-colors cursor-pointer text-left"
-                          >
-                            <span>{item.label}</span>
-                            {isSubOpen ? (
-                              <ChevronUp className="h-5 w-5 text-zinc-500" />
-                            ) : (
-                              <ChevronDown className="h-5 w-5 text-zinc-500" />
-                            )}
-                          </button>
-                          
-                          {/* Collapsible Submenu */}
-                          {isSubOpen && (
-                            <ul className="mt-3 ml-4 flex flex-col gap-3 border-l-2 border-white/10 pl-4 py-1">
-                              {item.submenu!.map((subItem) => (
-                                <li key={subItem.label}>
-                                  <Link
-                                    to={subItem.to}
-                                    className="block font-display text-sm tracking-widest uppercase py-1 text-zinc-400 hover:text-white transition-colors"
-                                    onClick={() => setMenuOpen(false)}
-                                  >
-                                    {subItem.label}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      ) : (
-                        <Link
-                          to={item.to}
-                          className="block font-display text-xl font-medium tracking-wide uppercase py-1 hover:text-zinc-300 transition-colors"
-                          onClick={() => setMenuOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      )}
+                {/* Right Action Icons Row: Search, Account, Wishlist, Bag */}
+                <div className="flex items-center gap-1 sm:gap-1.5 -mr-2">
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setSearchOpen(true);
+                    }}
+                    aria-label="Search"
+                    className="p-2 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-800 cursor-pointer"
+                  >
+                    <Search className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[1.75]" />
+                  </button>
+
+                  <Link
+                    to="/contact"
+                    onClick={() => setMenuOpen(false)}
+                    aria-label="Account"
+                    className="p-2 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-800 cursor-pointer"
+                  >
+                    <User className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[1.75]" />
+                  </Link>
+
+                  <Link
+                    to="/shop"
+                    onClick={() => setMenuOpen(false)}
+                    aria-label="Wishlist"
+                    className="p-2 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-800 cursor-pointer"
+                  >
+                    <Heart className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[1.75]" />
+                  </Link>
+
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setCartOpen(true);
+                    }}
+                    aria-label="Shopping bag"
+                    className="relative p-2 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-800 cursor-pointer"
+                  >
+                    <ShoppingBag className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[1.75]" />
+                    {count > 0 && (
+                      <span className="absolute top-1 right-1 grid h-3.5 min-w-3.5 place-items-center rounded-full bg-black text-[9px] font-bold leading-none text-white ring-2 ring-white px-0.5">
+                        {count}
+                      </span>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* 2. SEARCH BAR (Directly Below Top Header) */}
+              <div className="border-b border-black/[0.08] px-5 sm:px-6 py-2.5 bg-zinc-50/60 shrink-0">
+                <form onSubmit={handleDrawerSearchSubmit} className="relative flex items-center">
+                  <input
+                    type="text"
+                    value={drawerSearch}
+                    onChange={(e) => setDrawerSearch(e.target.value)}
+                    placeholder="Type to Search"
+                    className="w-full bg-transparent font-sans text-xs sm:text-[13px] text-zinc-900 placeholder:text-zinc-400 placeholder:italic focus:outline-none py-1"
+                  />
+                  {drawerSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setDrawerSearch("")}
+                      className="text-zinc-400 hover:text-zinc-700 p-1 text-xs"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </form>
+              </div>
+
+              {/* 3. MAIN SCROLLABLE CONTENT */}
+              <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-6 sm:py-8 flex flex-col justify-between scrollbar-none space-y-8">
+                <div className="space-y-7">
+                  {/* LARGE EDITORIAL HEADING AREA (Matching Img 2) */}
+                  <div className="space-y-0.5">
+                    <Link
+                      to="/shop"
+                      onClick={() => setMenuOpen(false)}
+                      className="block font-serif text-[32px] sm:text-[36px] font-bold text-[#2a1711] hover:text-black tracking-tight leading-[1.08] transition-colors"
+                    >
+                      New Arrivals
+                    </Link>
+                    <Link
+                      to="/shop"
+                      search={{ category: "Female Bags & Clothes" }}
+                      onClick={() => setMenuOpen(false)}
+                      className="block font-serif text-[32px] sm:text-[36px] font-bold text-[#2a1711] hover:text-black tracking-tight leading-[1.08] transition-colors"
+                    >
+                      Women's Exclusive
+                    </Link>
+                  </div>
+
+                  {/* 4. PRODUCT CATEGORIES (With Right Arrows →) */}
+                  <ul className="space-y-4 pt-1">
+                    <li>
+                      <Link
+                        to="/shop"
+                        search={{ category: "Bags" }}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
+                      >
+                        <span>Bags & Leather</span>
+                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
+                      </Link>
                     </li>
-                  );
-                })}
-              </ul>
-            </nav>
+
+                    <li>
+                      <Link
+                        to="/shop"
+                        search={{ category: "Female Bags & Clothes" }}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
+                      >
+                        <span>Female Bags & Clothes</span>
+                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        to="/shop"
+                        search={{ category: "Male Clothes" }}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
+                      >
+                        <span>Male Clothes</span>
+                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        to="/shop"
+                        search={{ category: "Accessories" }}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
+                      >
+                        <span>Accessories</span>
+                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        to="/shop"
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
+                      >
+                        <span>Most Wanted</span>
+                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
+                      </Link>
+                    </li>
+                  </ul>
+
+                  {/* 5. LOWER SECTION: BRAND & ESSENTIAL NAVIGATION */}
+                  <div className="space-y-3.5 pt-6 border-t border-black/[0.06]">
+                    <ul className="space-y-3.5">
+                      <li>
+                        <Link
+                          to="/"
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center justify-between group py-0.5 text-zinc-800 hover:text-black font-sans text-sm sm:text-[15px] font-normal tracking-tight transition-colors"
+                        >
+                          <span>Home</span>
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/shop"
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center justify-between group py-0.5 text-zinc-800 hover:text-black font-sans text-sm sm:text-[15px] font-normal tracking-tight transition-colors"
+                        >
+                          <span>Full Catalog</span>
+                          <ArrowRight className="h-3.5 w-3.5 stroke-[1.5] text-zinc-500 transition-transform duration-200 group-hover:translate-x-1" />
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/about"
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center justify-between group py-0.5 text-zinc-800 hover:text-black font-sans text-sm sm:text-[15px] font-normal tracking-tight transition-colors"
+                        >
+                          <span>About Us</span>
+                          <ArrowRight className="h-3.5 w-3.5 stroke-[1.5] text-zinc-500 transition-transform duration-200 group-hover:translate-x-1" />
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/contact"
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center justify-between group py-0.5 text-zinc-800 hover:text-black font-sans text-sm sm:text-[15px] font-normal tracking-tight transition-colors"
+                        >
+                          <span>Contact Us</span>
+                          <ArrowRight className="h-3.5 w-3.5 stroke-[1.5] text-zinc-500 transition-transform duration-200 group-hover:translate-x-1" />
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/about"
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center justify-between group py-0.5 text-zinc-800 hover:text-black font-sans text-sm sm:text-[15px] font-normal tracking-tight transition-colors"
+                        >
+                          <span>Norva Members</span>
+                          <span className="text-[10px] uppercase font-display font-semibold tracking-wider text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-full">
+                            VIP
+                          </span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* 6. DRAWER FOOTER & SUPPORT INFO */}
+                <div className="space-y-4 pt-6 border-t border-black/[0.08]">
+                  <div className="flex items-center justify-between text-[11px] font-display uppercase tracking-wider text-zinc-500 font-semibold">
+                    <span>Customer Support</span>
+                    <span className="text-zinc-800">IN · INR (₹)</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5">
+                    <a
+                      href="https://wa.me/919971303047"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 py-2 px-3 rounded-md text-[11px] font-display uppercase tracking-wider font-semibold transition-colors shadow-xs"
+                    >
+                      <MessageCircle className="h-3.5 w-3.5" />
+                      <span>WhatsApp</span>
+                    </a>
+                    <a
+                      href="mailto:norvastorex@gmail.com"
+                      className="flex-1 flex items-center justify-center gap-2 border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 py-2 px-3 rounded-md text-[11px] font-display uppercase tracking-wider font-semibold transition-colors shadow-xs"
+                    >
+                      <Mail className="h-3.5 w-3.5" />
+                      <span>Email</span>
+                    </a>
+                    <a
+                      href="https://instagram.com/norvaxstore"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Instagram"
+                      className="flex items-center justify-center border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 p-2 rounded-md transition-colors shadow-xs"
+                    >
+                      <Instagram className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+
+                  <div className="text-[10px] font-sans text-zinc-400 flex items-center justify-between pt-1">
+                    <span>NØRVA STORE © 2026</span>
+                    <span className="text-zinc-500 font-medium">All Rights Reserved</span>
+                  </div>
+                </div>
+              </div>
+            </motion.aside>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* Cart Drawer */}
       <CartDrawer />
 
       {/* Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-
-      {/* Mobile Bottom Navigation Bar */}
-      <MobileBottomNav
-        onOpenSearch={() => setSearchOpen(true)}
-        onOpenMenu={() => setMenuOpen(true)}
-      />
     </>
   );
 }

@@ -1,12 +1,22 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronRight, Sparkles } from "lucide-react";
 
 type NavTab = {
   label: string;
   to: string;
   glow?: boolean;
   glowColors?: { inactive: string; active: string };
+  hasDropdown?: boolean;
 };
+
+const FEATURED_SUBCATEGORIES = [
+  { label: "SHOULDER BAGS", to: "/shop", category: "Shoulder Bags" },
+  { label: "CROSSBODY BAGS", to: "/shop", category: "Crossbody" },
+  { label: "HARNESS TOTES", to: "/shop", category: "Totes & Backpacks" },
+  { label: "MINI SATCHELS", to: "/shop", category: "Mini Bags" },
+  { label: "ALL STATEMENT DROPS", to: "/shop", category: "All Bags" },
+];
 
 const TABS: NavTab[] = [
   { label: "HOME", to: "/" },
@@ -15,12 +25,9 @@ const TABS: NavTab[] = [
     label: "FEATURED COLLECTIONS⚡️",
     to: "/shop",
     glow: true,
-    glowColors: { inactive: "#ffffff", active: "#ffffff" },
+    glowColors: { inactive: "#18181b", active: "#18181b" },
+    hasDropdown: true,
   },
-  { label: "SHOULDER BAGS", to: "/shop" },
-  { label: "CROSSBODY BAGS", to: "/shop" },
-  { label: "HARNESS TOTES", to: "/shop" },
-  { label: "MINI SATCHELS", to: "/shop" },
   { label: "ABOUT US", to: "/about" },
   { label: "CONTACT US", to: "/contact" },
 ];
@@ -28,18 +35,46 @@ const TABS: NavTab[] = [
 export function CategoryNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [activeIdx, setActiveIdx] = useState(0);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Update active index based on route
   useEffect(() => {
     if (pathname === "/") {
       setActiveIdx(0);
     } else if (pathname.startsWith("/shop")) {
-      // For demo, if we click other tabs, we will just make them active internally for presentation
-      // but they all point to /shop.
+      setActiveIdx(1);
+    } else if (pathname.startsWith("/about")) {
+      setActiveIdx(3);
+    } else if (pathname.startsWith("/contact")) {
+      setActiveIdx(4);
     }
   }, [pathname]);
+
+  // Click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 200);
+  };
 
   // Center active tab
   useEffect(() => {
@@ -47,7 +82,6 @@ export function CategoryNav() {
     const activeTab = tabsRef.current[activeIdx];
     if (!bar || !activeTab) return;
 
-    // Use requestAnimationFrame for correct layout dimensions
     requestAnimationFrame(() => {
       const barW = bar.offsetWidth;
       const tabLeft = activeTab.offsetLeft;
@@ -60,46 +94,104 @@ export function CategoryNav() {
   }, [activeIdx]);
 
   return (
-    <div className="w-full bg-[#09090b] border-b border-white/10 py-1">
-      <div className="mx-auto max-w-[1600px] px-4 md:px-8">
-        <div
-          ref={barRef}
-          className="flex overflow-x-auto overflow-y-hidden overscroll-x-contain scrollbar-none border-b-0 whitespace-nowrap"
-          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
-        >
-          {TABS.map((tab, idx) => {
-            const isActive = activeIdx === idx;
+    <div className="w-full flex items-center justify-center">
+      <div
+        ref={barRef}
+        className="flex items-center overflow-x-auto md:overflow-visible scrollbar-none whitespace-nowrap justify-center gap-1 sm:gap-2"
+        style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+      >
+        {TABS.map((tab, idx) => {
+          const isActive = activeIdx === idx;
+
+          if (tab.hasDropdown) {
             return (
-              <Link
+              <div
                 key={tab.label + idx}
-                to={tab.to}
-                ref={(el) => {
-                  tabsRef.current[idx] = el;
-                }}
-                onClick={() => setActiveIdx(idx)}
-                className={`relative shrink-0 text-center py-2.5 sm:py-3 px-3 sm:px-4 font-display text-[11px] sm:text-[12px] font-medium tracking-wide uppercase transition-all duration-300 border-b-2 hover:text-white ${
-                  isActive
-                    ? "text-white border-white font-semibold"
-                    : "text-zinc-400 border-transparent"
-                } ${tab.glow ? "cat-nav-tab--glow" : ""}`}
-                style={
-                  tab.glow && tab.glowColors
-                    ? ({
-                        "--glow-inactive-color": tab.glowColors.inactive,
-                        "--glow-active-color": tab.glowColors.active,
-                        isolation: "isolate",
-                      } as React.CSSProperties)
-                    : {}
-                }
+                ref={dropdownRef}
+                className="relative shrink-0"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
-                {tab.label}
-                {isActive && (
-                  <span className="absolute bottom-[-2px] left-0 right-0 h-[2px] bg-white" />
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDropdownOpen((prev) => !prev);
+                  }}
+                  className={`relative flex items-center gap-1.5 shrink-0 text-center py-5 sm:py-6 px-3.5 sm:px-5 font-display text-[11px] sm:text-[12px] font-semibold tracking-widest uppercase transition-all duration-200 hover:text-black cursor-pointer ${isActive || dropdownOpen
+                    ? "text-black"
+                    : "text-zinc-600"
+                    } ${tab.glow ? "cat-nav-tab--glow" : ""}`}
+                >
+                  <span>FEATURED COLLECTIONS</span>
+                  <Sparkles className="h-3.5 w-3.5 text-zinc-900 shrink-0" />
+                  <ChevronDown
+                    className={`h-3.5 w-3.5 transition-transform duration-300 ${dropdownOpen ? "rotate-180 text-black font-bold" : "text-zinc-500"
+                      }`}
+                  />
+                  {(isActive || dropdownOpen) && (
+                    <span className="absolute bottom-0 left-3.5 right-3.5 h-[2px] bg-zinc-900" />
+                  )}
+                </button>
+
+                {/* Clean Category Dropdown Modal matching reference image */}
+                {dropdownOpen && (
+                  <div
+                    className="absolute top-full left-0 mt-0 min-w-[240px] bg-white border border-black/15 shadow-2xl rounded-2xl p-5 z-[100] transition-all duration-200 animate-in fade-in zoom-in-95 pointer-events-auto"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="border-l-2 border-zinc-400/80 pl-4 flex flex-col gap-3.5 py-1">
+                      {FEATURED_SUBCATEGORIES.map((sub) => (
+                        <Link
+                          key={sub.label}
+                          to={sub.to}
+                          search={{ category: sub.category }}
+                          onClick={() => {
+                            setActiveIdx(idx);
+                            setDropdownOpen(false);
+                          }}
+                          className="font-display text-xs font-medium tracking-widest text-zinc-700 hover:text-black transition-colors text-left uppercase cursor-pointer block"
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 )}
-              </Link>
+              </div>
             );
-          })}
-        </div>
+          }
+
+          return (
+            <Link
+              key={tab.label + idx}
+              to={tab.to}
+              ref={(el) => {
+                tabsRef.current[idx] = el;
+              }}
+              onClick={() => setActiveIdx(idx)}
+              className={`relative shrink-0 text-center py-5 sm:py-6 px-3.5 sm:px-5 font-display text-[11px] sm:text-[12px] font-semibold tracking-widest uppercase transition-all duration-200 hover:text-black ${isActive
+                ? "text-black"
+                : "text-zinc-600"
+                } ${tab.glow ? "cat-nav-tab--glow" : ""}`}
+              style={
+                tab.glow && tab.glowColors
+                  ? ({
+                    "--glow-inactive-color": tab.glowColors.inactive,
+                    "--glow-active-color": tab.glowColors.active,
+                    isolation: "isolate",
+                  } as React.CSSProperties)
+                  : {}
+              }
+            >
+              {tab.label}
+              {isActive && (
+                <span className="absolute bottom-0 left-3.5 right-3.5 h-[2px] bg-zinc-900" />
+              )}
+            </Link>
+          );
+        })}
       </div>
 
       <style>{`

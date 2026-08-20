@@ -107,24 +107,24 @@ function LegalPage() {
   const c = Route.useLoaderData() as LegalContent;
 
   return (
-    <section className="bg-[#09090b] pt-40 text-white md:pt-48 min-h-screen">
+    <section className="bg-white pt-40 text-zinc-900 md:pt-48 min-h-screen">
       <article className="mx-auto max-w-3xl px-4 pb-24 md:px-8 md:pb-32">
-        <p className="font-display text-[11px] uppercase tracking-brand-wide text-zinc-400">
+        <p className="font-display text-[11px] uppercase tracking-brand-wide text-zinc-500 font-semibold">
           Legal Policy
         </p>
-        <h1 className="mt-3 font-display text-4xl uppercase tracking-tight sm:text-6xl text-white">
+        <h1 className="mt-3 font-display text-4xl uppercase tracking-tight sm:text-6xl text-zinc-900 font-bold">
           {c.title}
         </h1>
-        <p className="mt-6 text-lg leading-relaxed text-zinc-300">{c.intro}</p>
-        <div className="mt-12 space-y-10 border-t border-white/15 pt-10">
+        <p className="mt-6 text-lg leading-relaxed text-zinc-700 font-medium">{c.intro}</p>
+        <div className="mt-12 space-y-10 border-t border-black/15 pt-10">
           {c.sections.map((s: { heading: string; body: string }) => (
             <section key={s.heading}>
-              <h2 className="font-display text-sm uppercase tracking-brand-wide text-white">{s.heading}</h2>
-              <p className="mt-3 leading-relaxed text-zinc-300">{s.body}</p>
+              <h2 className="font-display text-sm uppercase tracking-brand-wide text-zinc-900 font-bold">{s.heading}</h2>
+              <p className="mt-3 leading-relaxed text-zinc-700">{s.body}</p>
             </section>
           ))}
         </div>
-        <p className="mt-16 text-xs uppercase tracking-brand text-zinc-500">
+        <p className="mt-16 text-xs uppercase tracking-brand text-zinc-500 font-semibold">
           Nørva Store (Jevani Enterprises) · Contact: norvastorex@gmail.com
         </p>
       </article>
