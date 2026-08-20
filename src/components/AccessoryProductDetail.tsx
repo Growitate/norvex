@@ -391,74 +391,88 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
           </div>
 
           {/* ========================================================= */}
-          {/* RIGHT: BUY BOX & BRAND/MODEL SELECTOR (Img 2, 3, 4 Style)  */}
+          {/* RIGHT: BUY BOX & BRAND/MODEL SELECTOR (Professional Luxury Style) */}
           {/* ========================================================= */}
-          <div className="lg:col-span-6 bg-white p-5 sm:p-8 rounded-lg border border-black/10 shadow-xs space-y-6">
+          <div className="lg:col-span-6 bg-white p-6 sm:p-8 rounded-2xl border border-black/10 shadow-xs space-y-6">
             {/* Title, Category & Ratings */}
-            <div className="space-y-2 border-b border-black/[0.08] pb-5">
-              <span className="text-[11px] font-sans uppercase tracking-widest text-zinc-500 font-semibold">
-                PREMIUM UV EMBOSSED COVER
+            <div className="space-y-3 border-b border-black/[0.08] pb-5">
+              <span className="text-[10px] sm:text-[11px] font-sans font-bold uppercase tracking-[0.24em] text-zinc-400 block">
+                NØRVA ACCESSORIES // EMBOSSED SILICONE
               </span>
 
-              <h1 className="font-display text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-tight text-zinc-950 leading-tight">
+              <h1 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-tight text-zinc-950 leading-tight">
                 {product.name}
               </h1>
 
-              {/* Price Row matching Img 2: Strikethrough + Bold Red/Dark Sale Price */}
-              <div className="flex items-center gap-3 pt-1">
+              {/* Price Row: Strikethrough + Bold Price + Monochrome Luxury Badge */}
+              <div className="flex flex-wrap items-baseline gap-3 pt-1">
+                <span className="text-2xl sm:text-3xl font-black font-sans text-zinc-950 tracking-tight">
+                  ₹{basePrice.toFixed(2)}
+                </span>
                 <span className="text-sm sm:text-base text-zinc-400 line-through font-sans">
                   ₹{originalPrice.toFixed(2)}
                 </span>
-                <span className="text-2xl sm:text-3xl font-black font-sans text-zinc-950">
-                  ₹{basePrice.toFixed(2)}
-                </span>
-                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-sm border border-emerald-200">
-                  Save ₹{originalPrice - basePrice}
+                <span className="text-[10px] font-bold text-white bg-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-2xs font-mono">
+                  SAVE ₹{originalPrice - basePrice}
                 </span>
               </div>
 
               {/* Review Stars Bar */}
               <div className="flex items-center gap-2 pt-1">
-                <div className="flex text-amber-500">
+                <div className="flex text-black">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    <Star key={i} className="h-3.5 w-3.5 fill-black text-black" />
                   ))}
                 </div>
                 <span className="text-xs font-sans text-zinc-600 font-medium">
-                  <strong>(4.9/5)</strong> 3,645 Ratings & 168 Reviews
+                  <strong>4.9 ★</strong> (3,645 Verified Ratings & 168 Reviews)
                 </span>
               </div>
             </div>
 
-            {/* Feature Highlights List with Icons (matching Img 2 exactly) */}
-            <div className="space-y-2.5 text-xs sm:text-[13px] font-sans text-zinc-700 bg-zinc-50/80 p-4 rounded-md border border-black/[0.06]">
-              <div className="flex items-center gap-2.5">
-                <span className="text-base">✒️</span>
-                <span>Thin & Soft Shockproof Silicone Rubber case</span>
+            {/* Feature Highlights List with Vector Icons (Clean Luxury Spec Box) */}
+            <div className="space-y-3 text-xs sm:text-[13px] font-sans text-zinc-700 bg-zinc-50 border border-black/[0.08] p-4 sm:p-5 rounded-2xl shadow-2xs">
+              <div className="flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full bg-white border border-black/10 flex items-center justify-center text-zinc-900 shrink-0 shadow-2xs">
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                </span>
+                <span className="font-medium text-zinc-800">Thin & Soft Shockproof Silicone Rubber Case</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <span className="text-base">⭐️</span>
-                <span>Half edge smooth matte finish with precision camera bezel</span>
+
+              <div className="flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full bg-white border border-black/10 flex items-center justify-center text-zinc-900 shrink-0 shadow-2xs">
+                  <Sparkles className="h-3.5 w-3.5" />
+                </span>
+                <span className="font-medium text-zinc-800">Half-Edge Smooth Matte Finish with Precision Camera Bezel</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <span className="text-base">📸</span>
-                <span>Photo-realistic high-density UV embossed print quality</span>
+
+              <div className="flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full bg-white border border-black/10 flex items-center justify-center text-zinc-900 shrink-0 shadow-2xs">
+                  <Tag className="h-3.5 w-3.5" />
+                </span>
+                <span className="font-medium text-zinc-800">Photo-Realistic High-Density 3D UV Embossed Print Quality</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <span className="text-base">🔄</span>
-                <span>Hassle-free replacements on fitting issues</span>
+
+              <div className="flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full bg-white border border-black/10 flex items-center justify-center text-zinc-900 shrink-0 shadow-2xs">
+                  <RotateCcw className="h-3.5 w-3.5" />
+                </span>
+                <span className="font-medium text-zinc-800">Hassle-Free Replacement Guarantee on Fitting Issues</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <span className="text-base">🚚</span>
-                <span>Express courier delivery in 3–5 working days</span>
+
+              <div className="flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full bg-white border border-black/10 flex items-center justify-center text-zinc-900 shrink-0 shadow-2xs">
+                  <Truck className="h-3.5 w-3.5" />
+                </span>
+                <span className="font-medium text-zinc-800">Express Courier Delivery in 3–5 Working Days</span>
               </div>
             </div>
 
             {/* ========================================================= */}
-            {/* BRAND & MODEL SELECTORS (Img 2 & Img 3 Style)             */}
+            {/* BRAND & MODEL SELECTORS                                    */}
             {/* ========================================================= */}
             <div className="space-y-3 pt-1">
-              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-800">
+              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-900">
                 Select Your Device
               </label>
 
@@ -467,15 +481,15 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                 <button
                   type="button"
                   onClick={() => setBrandModalOpen(true)}
-                  className="w-full flex items-center justify-between p-3.5 bg-zinc-50 hover:bg-zinc-100 border border-black/20 rounded-md transition-colors text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between p-4 bg-white hover:bg-zinc-50 border border-black/15 hover:border-black rounded-xl transition-all text-left cursor-pointer group shadow-2xs"
                 >
                   <div>
-                    <span className="text-[10px] text-zinc-500 uppercase font-semibold block">Brand</span>
-                    <span className="text-sm font-bold text-zinc-900">{selectedBrand}</span>
+                    <span className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider block">Brand</span>
+                    <span className="text-sm font-bold text-zinc-950">{selectedBrand}</span>
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-zinc-600 group-hover:text-black font-semibold">
                     <span>Change Brand</span>
-                    <ChevronDown className="h-4 w-4 text-zinc-500" />
+                    <ChevronDown className="h-4 w-4 text-zinc-500 group-hover:text-black" />
                   </div>
                 </button>
               </div>
@@ -485,15 +499,15 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                 <button
                   type="button"
                   onClick={() => setModelModalOpen(true)}
-                  className="w-full flex items-center justify-between p-3.5 bg-zinc-50 hover:bg-zinc-100 border border-black/20 rounded-md transition-colors text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between p-4 bg-white hover:bg-zinc-50 border border-black/15 hover:border-black rounded-xl transition-all text-left cursor-pointer group shadow-2xs"
                 >
                   <div>
-                    <span className="text-[10px] text-zinc-500 uppercase font-semibold block">Model</span>
-                    <span className="text-sm font-bold text-zinc-900">{selectedModel}</span>
+                    <span className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider block">Model</span>
+                    <span className="text-sm font-bold text-zinc-950">{selectedModel}</span>
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-zinc-600 group-hover:text-black font-semibold">
                     <span>Change Model</span>
-                    <ChevronDown className="h-4 w-4 text-zinc-500" />
+                    <ChevronDown className="h-4 w-4 text-zinc-500 group-hover:text-black" />
                   </div>
                 </button>
               </div>
