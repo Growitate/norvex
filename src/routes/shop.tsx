@@ -5,14 +5,10 @@ import { products, type Product } from "@/lib/products";
 
 const CATEGORIES = [
   "All",
-  "Bags",
-  "Female Bags & Clothes",
-  "Male Clothes",
+  "Clothing",
   "Accessories",
-  "Shoulder Bags",
-  "Crossbody",
-  "Totes & Backpacks",
-  "Mini Bags",
+  "Women exclusive",
+  "Mens exclusive",
 ] as const;
 
 type Cat = (typeof CATEGORIES)[number];
@@ -47,26 +43,42 @@ export const Route = createFileRoute("/shop")({
   component: Shop,
 });
 
-function matchesCategory(product: Product, selectedCategory: Cat): boolean {
-  if (selectedCategory === "All") return true;
+function matchesCategory(product: Product, selectedCategory: Cat | string): boolean {
+  if (!selectedCategory || selectedCategory === "All") return true;
 
-  if (selectedCategory === "Bags") {
-    return product.isBag;
+  const catLower = selectedCategory.toLowerCase().trim();
+
+  if (catLower === "clothing" || catLower === "clothes") {
+    return !product.isBag && product.category !== "Accessories";
   }
 
-  if (selectedCategory === "Female Bags & Clothes") {
-    return product.department === "female" || product.isBag;
-  }
-
-  if (selectedCategory === "Male Clothes") {
-    return product.department === "male";
-  }
-
-  if (selectedCategory === "Accessories") {
+  if (catLower === "accessories") {
     return product.category === "Accessories";
   }
 
-  return product.category === selectedCategory;
+  if (
+    catLower === "women exclusive" ||
+    catLower === "womens exclusive" ||
+    catLower === "female bags & clothes" ||
+    catLower === "female"
+  ) {
+    return product.department === "female";
+  }
+
+  if (
+    catLower === "mens exclusive" ||
+    catLower === "men exclusive" ||
+    catLower === "male clothes" ||
+    catLower === "male"
+  ) {
+    return product.department === "male";
+  }
+
+  if (catLower === "bags") {
+    return product.isBag;
+  }
+
+  return product.category.toLowerCase() === catLower;
 }
 
 function Shop() {

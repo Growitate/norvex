@@ -243,22 +243,23 @@ export function Header() {
               {/* 3. MAIN SCROLLABLE CONTENT */}
               <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-6 sm:py-8 flex flex-col justify-between scrollbar-none space-y-8">
                 <div className="space-y-7">
-                  {/* LARGE EDITORIAL HEADING AREA (Matching Img 2) */}
+                  {/* LARGE EDITORIAL HEADING AREA */}
                   <div className="space-y-0.5">
                     <Link
                       to="/shop"
+                      search={{ category: "Clothing" }}
                       onClick={() => setMenuOpen(false)}
                       className="block font-serif text-[32px] sm:text-[36px] font-bold text-[#2a1711] hover:text-black tracking-tight leading-[1.08] transition-colors"
                     >
-                      New Arrivals
+                      Clothing
                     </Link>
                     <Link
                       to="/shop"
-                      search={{ category: "Female Bags & Clothes" }}
+                      search={{ category: "Women exclusive" }}
                       onClick={() => setMenuOpen(false)}
                       className="block font-serif text-[32px] sm:text-[36px] font-bold text-[#2a1711] hover:text-black tracking-tight leading-[1.08] transition-colors"
                     >
-                      Women's Exclusive
+                      Women exclusive
                     </Link>
                   </div>
 
@@ -267,35 +268,11 @@ export function Header() {
                     <li>
                       <Link
                         to="/shop"
-                        search={{ category: "Bags" }}
+                        search={{ category: "Clothing" }}
                         onClick={() => setMenuOpen(false)}
                         className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
                       >
-                        <span>Bags & Leather</span>
-                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        to="/shop"
-                        search={{ category: "Female Bags & Clothes" }}
-                        onClick={() => setMenuOpen(false)}
-                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
-                      >
-                        <span>Female Bags & Clothes</span>
-                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        to="/shop"
-                        search={{ category: "Male Clothes" }}
-                        onClick={() => setMenuOpen(false)}
-                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
-                      >
-                        <span>Male Clothes</span>
+                        <span>Clothing</span>
                         <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
                       </Link>
                     </li>
@@ -315,10 +292,23 @@ export function Header() {
                     <li>
                       <Link
                         to="/shop"
+                        search={{ category: "Women exclusive" }}
                         onClick={() => setMenuOpen(false)}
                         className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
                       >
-                        <span>Most Wanted</span>
+                        <span>Women exclusive</span>
+                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        to="/shop"
+                        search={{ category: "Mens exclusive" }}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
+                      >
+                        <span>Mens exclusive</span>
                         <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
                       </Link>
                     </li>

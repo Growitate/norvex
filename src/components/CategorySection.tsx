@@ -7,46 +7,22 @@ import caseGothicClaw from "@/assets/case_gothic_claw.png";
 import { products } from "@/lib/products";
 
 export function CategorySection() {
-  const bagCount = products.filter((p) => p.isBag).length;
-  const femaleCount = products.filter(
-    (p) => p.department === "female" || p.isBag,
-  ).length;
-  const maleCount = products.filter((p) => p.department === "male").length;
+  const clothingCount = products.filter((p) => !p.isBag && p.category !== "Accessories").length;
   const accessoriesCount = products.filter((p) => p.category === "Accessories").length;
+  const femaleCount = products.filter((p) => p.department === "female").length;
+  const maleCount = products.filter((p) => p.department === "male").length;
 
   const categories = [
     {
-      id: "bags",
-      title: "Bags",
-      tag: "SIGNATURE LEATHER",
-      subtitle: "Shoulder Bags, Crossbody & Harness Totes",
-      count: `${bagCount} Styles`,
-      image: bagShoulderChain,
-      link: "/shop",
-      categoryParam: "Bags",
-      badge: "Iconic Drops",
-    },
-    {
-      id: "female",
-      title: "Female Bags & Clothes",
-      tag: "WOMEN'S EDIT",
-      subtitle: "Y2K Chrome Baby Tees, Skirts & Bags",
-      count: `${femaleCount} Styles`,
-      image: femaleTopDrop,
-      link: "/shop",
-      categoryParam: "Female Bags & Clothes",
-      badge: "Trending Now",
-    },
-    {
-      id: "male",
-      title: "Male Clothes",
-      tag: "MEN'S STREETWEAR",
-      subtitle: "500 GSM Hoodies, Boxy Chaos Tees & Cargos",
-      count: `${maleCount} Styles`,
+      id: "clothing",
+      title: "Clothing",
+      tag: "STREETWEAR & APPAREL",
+      subtitle: "500 GSM French Terry Hoodies, Tees & Cargos",
+      count: `${clothingCount} Styles`,
       image: maleHoodieDrop,
       link: "/shop",
-      categoryParam: "Male Clothes",
-      badge: "Heavyweight",
+      categoryParam: "Clothing",
+      badge: "Featured Drops",
     },
     {
       id: "accessories",
@@ -58,6 +34,28 @@ export function CategorySection() {
       link: "/shop",
       categoryParam: "Accessories",
       badge: "New Release",
+    },
+    {
+      id: "female",
+      title: "Women exclusive",
+      tag: "WOMEN'S EDIT",
+      subtitle: "Y2K Chrome Baby Tees, Pleated Skirts & Hoodies",
+      count: `${femaleCount} Styles`,
+      image: femaleTopDrop,
+      link: "/shop",
+      categoryParam: "Women exclusive",
+      badge: "Trending Now",
+    },
+    {
+      id: "male",
+      title: "Mens exclusive",
+      tag: "MEN'S STREETWEAR",
+      subtitle: "Boxy Graphic Tees, Tactical Cargos & Zip Hoodies",
+      count: `${maleCount} Styles`,
+      image: maleHoodieDrop,
+      link: "/shop",
+      categoryParam: "Mens exclusive",
+      badge: "Heavyweight",
     },
   ];
 
