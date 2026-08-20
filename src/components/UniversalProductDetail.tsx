@@ -340,37 +340,47 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
           {/* ========================================================================= */}
           <div className="col-span-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 space-y-6 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-none pr-1">
             {/* Title, Bookmark & Price */}
-            <div className="space-y-2 border-b border-black/[0.08] pb-5">
+            <div className="space-y-2.5 border-b border-black/[0.08] pb-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <span className="font-display text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-400 block mb-1">
-                    NORVEX // {product.category}
+                    NØRVA STUDIO // {product.category}
                   </span>
-                  <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-zinc-950 leading-tight">
+                  <h1 className="font-serif text-2xl sm:text-3xl font-bold uppercase tracking-tight text-zinc-950 leading-tight">
                     {product.name}
                   </h1>
                 </div>
 
-                {/* Inline Bookmark Icon matching Bluorng Header */}
-                <button
-                  onClick={() => setIsWishlisted(!isWishlisted)}
-                  aria-label="Wishlist"
-                  className="p-1.5 text-zinc-800 hover:text-black transition-colors cursor-pointer"
-                >
-                  <Bookmark
-                    className={`h-5 w-5 ${isWishlisted ? "fill-black text-black" : "text-zinc-700"
-                      }`}
-                  />
-                </button>
+                {/* Inline Bookmark Icon & Size Guide Pill */}
+                <div className="flex items-center gap-2 shrink-0 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setSizeGuideOpen(true)}
+                    className="bg-zinc-100 hover:bg-black hover:text-white border border-zinc-200 text-zinc-900 text-[11px] font-bold tracking-wider px-3 py-1 rounded-full transition-all cursor-pointer uppercase shadow-2xs flex items-center gap-1"
+                  >
+                    <Ruler className="h-3 w-3" />
+                    <span>Size Guide</span>
+                  </button>
+
+                  <button
+                    onClick={() => setIsWishlisted(!isWishlisted)}
+                    aria-label="Wishlist"
+                    className="p-1.5 text-zinc-800 hover:text-black transition-colors cursor-pointer"
+                  >
+                    <Bookmark
+                      className={`h-5 w-5 ${isWishlisted ? "fill-black text-black" : "text-zinc-700"}`}
+                    />
+                  </button>
+                </div>
               </div>
 
               {/* Price */}
-              <div className="pt-1 flex items-baseline gap-3">
-                <span className="font-sans text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">
-                  Rs. {product.price.toLocaleString("en-IN")}.00
+              <div className="pt-1 flex items-baseline gap-2.5">
+                <span className="font-sans text-xl sm:text-2xl font-black tracking-tight text-zinc-950">
+                  RS. {product.price.toLocaleString("en-IN")}
                 </span>
-                <span className="text-[11px] font-sans text-zinc-500">
-                  (MRP incl. of all taxes)
+                <span className="text-[11px] font-sans text-zinc-400">
+                  (MRP incl. of all taxes & free express delivery)
                 </span>
               </div>
             </div>
@@ -410,22 +420,14 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
               </div>
             )}
 
-            {/* Size Selector as Pill Buttons (Matching Bluorng 2-Row Grid) */}
+            {/* Size Selector as Luxury Oval Pill Buttons */}
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-sans">
-                <span className="font-semibold text-zinc-900">Select Size</span>
-                <button
-                  type="button"
-                  onClick={() => setSizeGuideOpen(true)}
-                  className="text-zinc-600 hover:text-black font-semibold flex items-center gap-1 transition-colors cursor-pointer text-[11px] underline underline-offset-2"
-                >
-                  <Ruler className="h-3 w-3" />
-                  <span>Size Guide</span>
-                </button>
+                <span className="font-bold text-zinc-900 uppercase tracking-wider text-[11px]">Select Size</span>
               </div>
 
               {/* 2-Row Pill Button Grid */}
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                 {sizes.map((s) => {
                   const isSoldOut = soldOutSizes.includes(s);
                   const isSelected = selectedSize === s && !isSoldOut;
@@ -436,10 +438,10 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       disabled={isSoldOut}
                       onClick={() => setSelectedSize(s)}
                       className={`h-11 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${isSoldOut
-                          ? "opacity-30 line-through bg-zinc-100 border border-zinc-200 text-zinc-400 cursor-not-allowed"
+                          ? "opacity-35 line-through bg-zinc-100/80 border border-zinc-200 text-zinc-400 cursor-not-allowed"
                           : isSelected
-                            ? "bg-[#18181b] text-white border border-[#18181b] shadow-xs"
-                            : "bg-white text-zinc-800 border border-black/15 hover:border-black hover:bg-black/5"
+                            ? "bg-black text-white border border-black shadow-md ring-2 ring-black/20 ring-offset-1 scale-[1.02]"
+                            : "bg-white text-zinc-900 border border-black/15 hover:border-black hover:bg-black/5 active:scale-95 shadow-2xs"
                         }`}
                     >
                       {s}
@@ -449,13 +451,13 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
               </div>
             </div>
 
-            {/* Stacked CTAs: ADD TO BAG (Outline) + BUY NOW (Solid Black) */}
+            {/* Stacked Luxury CTAs: ADD TO BAG (Outline) + BUY NOW (Solid Black) */}
             <div className="space-y-2.5 pt-2">
               {/* ADD TO BAG Outline Pill */}
               <button
                 onClick={handleAddToCart}
                 disabled={soldOutSizes.includes(selectedSize)}
-                className="w-full h-12 rounded-full border border-black bg-white text-black hover:bg-black hover:text-white font-display text-xs sm:text-[13px] font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-2xs active:scale-[0.99]"
+                className="w-full h-13 rounded-full border-2 border-black bg-white text-black hover:bg-black hover:text-white font-sans text-xs sm:text-[13px] font-extrabold uppercase tracking-[0.18em] transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-xs active:scale-[0.99] group"
               >
                 {isAdded ? (
                   <>
@@ -464,7 +466,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                   </>
                 ) : (
                   <>
-                    <ShoppingBag className="h-4 w-4" />
+                    <ShoppingBag className="h-4 w-4 transition-transform group-hover:scale-110" />
                     <span>Add To Bag</span>
                   </>
                 )}
@@ -474,9 +476,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
               <button
                 onClick={handleBuyNow}
                 disabled={soldOutSizes.includes(selectedSize)}
-                className="w-full h-12 rounded-full bg-black text-white hover:bg-zinc-800 font-display text-xs sm:text-[13px] font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-[0.99]"
+                className="w-full h-13 rounded-full bg-black text-white hover:bg-zinc-800 font-sans text-xs sm:text-[13px] font-extrabold uppercase tracking-[0.18em] transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.99] group"
               >
-                <Zap className="h-4 w-4 fill-white" />
+                <Zap className="h-4 w-4 fill-white transition-transform group-hover:scale-110" />
                 <span>Buy It Now</span>
               </button>
             </div>
@@ -493,12 +495,12 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
               </div>
             </div>
 
-            {/* Tabs: Details & Description | Washcare | Shipping (Bluorng exact style) */}
-            <div className="space-y-4 pt-1">
+            {/* Premium Encapsulated Tabs Box (Details & Description | Washcare | Shipping) */}
+            <div className="bg-[#f8f8f8] border border-black/[0.08] rounded-2xl p-5 sm:p-6 shadow-2xs space-y-4">
               <div className="flex border-b border-black/10">
                 <button
                   onClick={() => setActiveTab("details")}
-                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${activeTab === "details"
+                  className={`pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer pr-4 text-left ${activeTab === "details"
                       ? "border-black text-zinc-950"
                       : "border-transparent text-zinc-400 hover:text-zinc-700"
                     }`}
@@ -507,7 +509,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 </button>
                 <button
                   onClick={() => setActiveTab("washcare")}
-                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${activeTab === "washcare"
+                  className={`pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer px-4 text-left ${activeTab === "washcare"
                       ? "border-black text-zinc-950"
                       : "border-transparent text-zinc-400 hover:text-zinc-700"
                     }`}
@@ -516,7 +518,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 </button>
                 <button
                   onClick={() => setActiveTab("shipping")}
-                  className={`flex-1 pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer text-left ${activeTab === "shipping"
+                  className={`pb-2.5 font-sans text-xs font-bold transition-all border-b-2 cursor-pointer pl-4 text-left ${activeTab === "shipping"
                       ? "border-black text-zinc-950"
                       : "border-transparent text-zinc-400 hover:text-zinc-700"
                     }`}
@@ -536,44 +538,44 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -3 }}
                       transition={{ duration: 0.15 }}
-                      className="space-y-4"
+                      className="space-y-4 text-xs font-sans text-zinc-700"
                     >
                       {/* Specifications List */}
-                      <div className="space-y-1.5 text-xs font-sans text-zinc-700">
-                        <p className="font-bold text-zinc-900 mb-1">Details</p>
+                      <div className="space-y-2">
+                        <p className="font-bold text-zinc-950 text-xs uppercase tracking-wider">Details</p>
                         {product.details ? (
                           product.details.map((item, idx) => (
-                            <div key={idx} className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>{item}</span>
+                            <div key={idx} className="flex items-start gap-2.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
+                              <span className="text-zinc-700 leading-snug">{item}</span>
                             </div>
                           ))
                         ) : (
                           <>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>100% bio-washed cotton French terry</span>
+                            <div className="flex items-start gap-2.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
+                              <span className="text-zinc-700 leading-snug">100% bio-washed cotton French terry</span>
                             </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Weight - 280 gsm dense weave</span>
+                            <div className="flex items-start gap-2.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
+                              <span className="text-zinc-700 leading-snug">Weight - 280 gsm dense weave</span>
                             </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>High-density gothic embroidery & screenprint</span>
+                            <div className="flex items-start gap-2.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
+                              <span className="text-zinc-700 leading-snug">High-density gothic embroidery & screenprint</span>
                             </div>
-                            <div className="flex items-start gap-2">
-                              <span className="text-zinc-400">•</span>
-                              <span>Oversize drop-shoulder fit</span>
+                            <div className="flex items-start gap-2.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
+                              <span className="text-zinc-700 leading-snug">Oversize drop-shoulder fit</span>
                             </div>
                           </>
                         )}
                       </div>
 
                       {/* Description Paragraph */}
-                      <div className="pt-2 border-t border-black/5 text-xs font-sans text-zinc-600 leading-relaxed space-y-2">
-                        <p className="font-bold text-zinc-900">Description</p>
-                        <p>{product.description}</p>
+                      <div className="pt-3 border-t border-black/10 space-y-2">
+                        <p className="font-bold text-zinc-950 text-xs uppercase tracking-wider">Description</p>
+                        <p className="text-zinc-600 leading-relaxed text-xs font-normal">{product.description}</p>
                       </div>
                     </motion.div>
                   )}
@@ -586,31 +588,31 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -3 }}
                       transition={{ duration: 0.15 }}
-                      className="space-y-3"
+                      className="space-y-3 text-xs font-sans text-zinc-700"
                     >
-                      <p className="font-bold text-zinc-900 text-xs">Care Instructions</p>
+                      <p className="font-bold text-zinc-950 text-xs uppercase tracking-wider">Care Instructions</p>
                       <div className="space-y-2 font-sans text-xs text-zinc-600">
                         {product.washcare?.map((item, idx) => (
-                          <div key={idx} className="flex items-start gap-2">
-                            <span className="text-zinc-400">•</span>
+                          <div key={idx} className="flex items-start gap-2.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                             <span>{item}</span>
                           </div>
                         )) || (
                             <>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>Cold machine wash reverse (30°C delicate cycle)</span>
                               </div>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>Wash with similar dark colors only</span>
                               </div>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>Do not iron directly over embroidery or prints</span>
                               </div>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>Line dry flat in shade; do not tumble dry</span>
                               </div>
                             </>
@@ -627,31 +629,31 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -3 }}
                       transition={{ duration: 0.15 }}
-                      className="space-y-3"
+                      className="space-y-3 text-xs font-sans text-zinc-700"
                     >
-                      <p className="font-bold text-zinc-900 text-xs">Delivery & Return Policies</p>
+                      <p className="font-bold text-zinc-950 text-xs uppercase tracking-wider">Delivery & Return Policies</p>
                       <div className="space-y-2 font-sans text-xs text-zinc-600">
                         {product.shippingInfo?.map((item, idx) => (
-                          <div key={idx} className="flex items-start gap-2">
-                            <span className="text-zinc-400">•</span>
+                          <div key={idx} className="flex items-start gap-2.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                             <span>{item}</span>
                           </div>
                         )) || (
                             <>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>Dispatches within 24–48 hours from studio</span>
                               </div>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>Standard express courier delivery in 2–4 business days</span>
                               </div>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>7-day easy size exchange guarantee</span>
                               </div>
-                              <div className="flex items-start gap-2">
-                                <span className="text-zinc-400">•</span>
+                              <div className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0 mt-1.5" />
                                 <span>Prepaid and Cash on Delivery supported pan-India</span>
                               </div>
                             </>
