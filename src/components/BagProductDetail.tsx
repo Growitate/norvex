@@ -168,27 +168,31 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                 ))}
               </div>
 
-              {/* MOBILE: SMOOTH SWIPEABLE SNAP GALLERY WITH SEAMLESS GAP */}
-              <div className="lg:hidden space-y-2.5">
+              {/* MOBILE: SMOOTH SWIPEABLE SNAP GALLERY (Full-Bleed Smooth Stream) */}
+              <div className="lg:hidden space-y-3">
                 <div
                   ref={mobileScrollRef}
                   onScroll={handleMobileScroll}
-                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-1.5 -mx-4 px-3 sm:px-4 touch-pan-x"
-                  style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-2 -mx-4 px-3 sm:px-4 touch-pan-x overscroll-x-contain"
+                  style={{
+                    scrollbarWidth: "none",
+                    WebkitOverflowScrolling: "touch",
+                    scrollBehavior: "smooth",
+                  }}
                 >
                   {galleryImages.map((imgSrc, idx) => (
                     <div
                       key={idx}
-                      className="w-[88vw] xs:w-[90vw] max-w-[480px] shrink-0 snap-center relative aspect-[3/4.4] bg-zinc-100 border border-black/[0.08] rounded-2xl overflow-hidden select-none"
+                      className="w-[91vw] xs:w-[92vw] sm:w-[93vw] max-w-[500px] shrink-0 snap-center relative aspect-[3/4.1] bg-zinc-950 rounded-2xl overflow-hidden shadow-xs select-none"
                     >
                       <img
                         src={imgSrc}
                         alt={`${product.name} — view ${idx + 1}`}
                         loading={idx === 0 ? "eager" : "lazy"}
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover object-center pointer-events-none"
                       />
                       {galleryImages.length > 1 && (
-                        <div className="absolute bottom-3.5 left-3.5 z-10 text-white font-sans text-xs font-bold tracking-wider drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] bg-black/45 backdrop-blur-xs px-2.5 py-0.5 rounded-md">
+                        <div className="absolute bottom-4 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none">
                           {idx + 1} / {galleryImages.length}
                         </div>
                       )}

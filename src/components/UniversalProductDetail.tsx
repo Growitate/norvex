@@ -163,25 +163,29 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
           
           {/* ========================================================================= */}
-          {/* MOBILE ONLY: SIDEWAYS / HORIZONTAL SWIPE CAROUSEL (Seamless Zero-Gap Stream)*/}
+          {/* MOBILE ONLY: SIDEWAYS / HORIZONTAL SWIPE CAROUSEL (Full-Bleed Smooth Stream)*/}
           {/* ========================================================================= */}
-          <div className="lg:hidden col-span-1 space-y-2.5 pb-2">
+          <div className="lg:hidden col-span-1 space-y-3 pb-2">
             <div
               ref={mobileScrollRef}
               onScroll={handleMobileScroll}
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-1.5 -mx-4 px-3 sm:px-4 touch-pan-x"
-              style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-2 -mx-4 px-3 sm:px-4 touch-pan-x overscroll-x-contain"
+              style={{
+                scrollbarWidth: "none",
+                WebkitOverflowScrolling: "touch",
+                scrollBehavior: "smooth",
+              }}
             >
               {gallery.map((imgSrc, idx) => (
                 <div
                   key={idx}
                   onClick={() => openLightbox(idx)}
-                  className="relative aspect-[3/4.4] w-[88vw] xs:w-[90vw] max-w-[480px] shrink-0 snap-center bg-zinc-100 rounded-2xl overflow-hidden border border-black/[0.08] shadow-xs cursor-zoom-in select-none"
+                  className="relative aspect-[3/4.1] w-[91vw] xs:w-[92vw] sm:w-[93vw] max-w-[500px] shrink-0 snap-center bg-zinc-950 rounded-2xl overflow-hidden shadow-xs cursor-zoom-in select-none"
                 >
                   {/* New Drop Pill */}
                   {idx === 0 && product.isNew && (
-                    <div className="absolute top-3.5 left-3.5 z-10">
-                      <span className="inline-flex items-center gap-1 bg-black text-white px-2.5 py-1 font-display text-[9px] uppercase tracking-brand font-semibold rounded-full shadow-xs">
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="inline-flex items-center gap-1 bg-black/80 backdrop-blur-xs text-white px-2.5 py-1 font-display text-[9px] uppercase tracking-brand font-semibold rounded-full shadow-xs">
                         <Sparkles className="h-2.5 w-2.5 text-zinc-300" />
                         New Drop
                       </span>
@@ -195,7 +199,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       setIsWishlisted(!isWishlisted);
                     }}
                     aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                    className={`absolute top-3.5 right-3.5 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-xs cursor-pointer ${
+                    className={`absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-xs cursor-pointer ${
                       isWishlisted
                         ? "bg-black text-white"
                         : "bg-white/90 text-zinc-800 border border-black/10"
@@ -208,8 +212,8 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     />
                   </button>
 
-                  {/* Bottom-Left Minimal Counter Tag (Matching Bluorng Reference) */}
-                  <div className="absolute bottom-3.5 left-3.5 z-10 text-white font-sans text-xs font-bold tracking-wider drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] bg-black/45 backdrop-blur-xs px-2.5 py-0.5 rounded-md">
+                  {/* Bottom-Left Minimal Counter Tag (Exact Screenshot Style: "7 / 9") */}
+                  <div className="absolute bottom-4 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none">
                     {idx + 1} / {gallery.length}
                   </div>
 
@@ -218,7 +222,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     src={imgSrc}
                     alt={`${product.name} — angle ${idx + 1}`}
                     loading={idx === 0 ? "eager" : "lazy"}
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full object-cover object-center pointer-events-none"
                   />
                 </div>
               ))}
