@@ -589,10 +589,10 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                   </button>
                 </div>
 
-                {/* Primary Add To Cart Button (Amber/Gold or Solid Black) */}
+                {/* Primary Add To Cart Button (Luxury Monochrome Outline Button) */}
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 h-12 bg-[#eab308] hover:bg-[#ca8a04] text-zinc-950 font-display text-xs sm:text-sm font-black uppercase tracking-wider rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-98"
+                  className="flex-1 h-12 bg-white hover:bg-black text-black hover:text-white border-2 border-black font-display text-xs sm:text-sm font-bold uppercase tracking-wider rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-98"
                 >
                   {isAdded ? (
                     <>
@@ -608,10 +608,10 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                 </button>
               </div>
 
-              {/* Instant Buy Now Button */}
+              {/* Instant Buy Now Button (Solid Black Button) */}
               <button
                 onClick={handleBuyNow}
-                className="w-full h-12 bg-black hover:bg-zinc-800 text-white font-display text-xs sm:text-sm font-bold uppercase tracking-wider rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                className="w-full h-12 bg-black hover:bg-zinc-800 text-white font-display text-xs sm:text-sm font-bold uppercase tracking-wider rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-98"
               >
                 <Zap className="h-4 w-4 fill-white" />
                 <span>Instant Buy Now</span>
@@ -619,38 +619,38 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
             </div>
 
             {/* ========================================================= */}
-            {/* DISCOUNT & COUPON OFFERS STRIP (Img 4 Style)              */}
+            {/* DISCOUNT & COUPON OFFERS STRIP (Sleek Monochrome Aesthetic)*/}
             {/* ========================================================= */}
             <div className="bg-zinc-50 border border-black/10 rounded-md p-4 space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-800">
-                <Tag className="h-3.5 w-3.5 text-red-500" />
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-900">
+                <Tag className="h-3.5 w-3.5 text-zinc-900" />
                 <span>Available Offers & Coupons</span>
               </div>
 
               <div className="space-y-2 text-xs font-sans">
-                <div className="flex items-center justify-between p-2 rounded bg-white border border-black/5">
+                <div className="flex items-center justify-between p-2.5 rounded-md bg-white border border-black/10 shadow-2xs">
                   <span className="text-zinc-700">
-                    Order ₹399 & Above — <strong>Get Free Shipping</strong>
+                    Order ₹399 & Above — <strong className="text-zinc-950 font-semibold">Get Free Shipping</strong>
                   </span>
-                  <span className="bg-[#0f766e] text-white px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span className="bg-zinc-100 text-zinc-900 border border-black/15 px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider">
                     No Code Needed
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-2 rounded bg-white border border-black/5">
+                <div className="flex items-center justify-between p-2.5 rounded-md bg-white border border-black/10 shadow-2xs">
                   <span className="text-zinc-700">
-                    Order ₹599 & Above — <strong>Extra ₹100 OFF</strong>
+                    Order ₹599 & Above — <strong className="text-zinc-950 font-semibold">Extra ₹100 OFF</strong>
                   </span>
-                  <span className="bg-[#78350f] text-white px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span className="bg-black text-white px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider border border-black shadow-2xs">
                     NORVA100
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-2 rounded bg-white border border-black/5">
+                <div className="flex items-center justify-between p-2.5 rounded-md bg-white border border-black/10 shadow-2xs">
                   <span className="text-zinc-700">
-                    Order ₹799 & Above — <strong>Extra ₹150 OFF</strong>
+                    Order ₹799 & Above — <strong className="text-zinc-950 font-semibold">Extra ₹150 OFF</strong>
                   </span>
-                  <span className="bg-[#78350f] text-white px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span className="bg-black text-white px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider border border-black shadow-2xs">
                     NORVA150
                   </span>
                 </div>
