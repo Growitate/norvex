@@ -52,6 +52,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="mt-3 text-xs uppercase tracking-brand text-zinc-600 font-semibold">
           even the unconventional makes mistakes.
         </p>
+        {error?.message && (
+          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-left text-xs font-mono text-red-700 overflow-auto max-h-40">
+            {error.message}
+          </div>
+        )}
         <div className="mt-8 flex justify-center gap-3">
           <button
             onClick={() => {

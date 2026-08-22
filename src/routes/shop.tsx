@@ -151,11 +151,10 @@ function Shop() {
               <button
                 key={c}
                 onClick={() => handleCategoryChange(c)}
-                className={`shrink-0 rounded-full border px-4 sm:px-5 py-2 font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide transition-all cursor-pointer min-h-[38px] flex items-center justify-center ${
-                  active
+                className={`shrink-0 rounded-full border px-4 sm:px-5 py-2 font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide transition-all cursor-pointer min-h-[38px] flex items-center justify-center ${active
                     ? "border-black bg-black text-white font-bold shadow-xs"
                     : "border-black/15 text-zinc-700 hover:border-black hover:text-black active:bg-black/5 font-semibold bg-white"
-                }`}
+                  }`}
               >
                 {c}
               </button>
