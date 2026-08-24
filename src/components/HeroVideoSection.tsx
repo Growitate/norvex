@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import heroVideo from "@/assets/hero banner vdo.mp4";
 
@@ -22,50 +21,16 @@ export function HeroVideoSection({
   ctaTo = "/shop",
   ctaLabel = "SHOP HERE",
 }: HeroVideoSectionProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Check if video is already ready
-    if (video.readyState >= 2) {
-      setIsReady(true);
-    }
-
-    const handlePlay = () => setIsReady(true);
-    video.addEventListener("playing", handlePlay);
-    video.addEventListener("loadeddata", handlePlay);
-    video.addEventListener("canplay", handlePlay);
-
-    // Force play on mount to ensure immediate playback on route transition
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => setIsReady(true)).catch(() => {});
-    }
-
-    return () => {
-      video.removeEventListener("playing", handlePlay);
-      video.removeEventListener("loadeddata", handlePlay);
-      video.removeEventListener("canplay", handlePlay);
-    };
-  }, [videoSrc]);
-
   return (
     <section data-header-theme="dark" className="relative w-full h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] min-h-[560px] max-h-[1080px] overflow-hidden bg-black select-none">
-      {/* Background Video Only - Smooth Fade-In */}
+      {/* Background Video Only - No Poster Image */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
         <video
-          ref={videoRef}
           src={videoSrc}
           autoPlay
           loop
           muted
           playsInline
-          onLoadedData={() => setIsReady(true)}
-          onCanPlay={() => setIsReady(true)}
-          onPlaying={() => setIsReady(true)}
           className="w-full h-full object-cover object-center scale-[1.01] pointer-events-none"
         >
           <source src={videoSrc} type="video/mp4" />

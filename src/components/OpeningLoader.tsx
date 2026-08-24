@@ -3,17 +3,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import splashLogo from "@/assets/norva_splash_logo.png";
 
 const SPLASH_KEY = "norva_splash_shown";
+let hasShownSplash = false;
 
 export function OpeningLoader() {
   const [visible, setVisible] = useState(() => {
+    if (hasShownSplash) return false;
     if (typeof window !== "undefined") {
-      return !sessionStorage.getItem(SPLASH_KEY);
+      const alreadyShown = sessionStorage.getItem(SPLASH_KEY);
+      if (alreadyShown) {
+        hasShownSplash = true;
+        return false;
+      }
     }
     return true;
   });
 
   useEffect(() => {
     if (!visible) return;
+    hasShownSplash = true;
     if (typeof window !== "undefined") {
       sessionStorage.setItem(SPLASH_KEY, "true");
       window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
