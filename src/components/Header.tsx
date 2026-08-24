@@ -32,7 +32,7 @@ export function Header() {
   const setCartOpen = useCart((s) => s.setOpen);
 
   useEffect(() => {
-    const checkScroll = () => {
+    const onScroll = () => {
       setScrolled(window.scrollY > 15);
 
       if (pathname === "/") {
@@ -56,30 +56,13 @@ export function Header() {
       }
     };
 
-    checkScroll();
-    window.addEventListener("scroll", checkScroll, { passive: true });
-    return () => window.removeEventListener("scroll", checkScroll);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
   useEffect(() => {
     setMenuOpen(false);
-    
-    // Instant scroll reset for both window and Lenis smoothly on route change
-    if (typeof window !== "undefined") {
-      if ((window as any).__lenis) {
-        (window as any).__lenis.scrollTo(0, { immediate: true });
-      }
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }
-    
-    // Force scrolled to false immediately on navigation to home page
-    if (pathname === "/") {
-      setScrolled(false);
-    } else {
-      setScrolled((window.scrollY || document.documentElement.scrollTop || 0) > 15);
-    }
   }, [pathname]);
 
   // Prevent background scrolling when menu drawer is open
@@ -104,16 +87,15 @@ export function Header() {
   };
 
   const isHomePage = pathname === "/";
-  // On home page, ensure header is transparent when near top (preventing state glitches)
-  const isTransparentHero = isHomePage && (!scrolled || (typeof window !== "undefined" && (window.scrollY || document.documentElement.scrollTop || 0) < 25));
+  const isTransparentHero = isHomePage && !scrolled;
 
   return (
     <>
       {/* Main Navbar */}
       <header
         className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${isTransparentHero
-            ? "bg-transparent border-none text-white"
-            : "bg-white/45 backdrop-blur-xl border-b border-black/[0.06] text-zinc-950 shadow-[0_4px_24px_rgba(0,0,0,0.03)]"
+          ? "bg-transparent border-none text-white"
+          : "bg-white/45 backdrop-blur-xl border-b border-black/[0.06] text-zinc-950 shadow-[0_4px_24px_rgba(0,0,0,0.03)]"
           }`}
       >
         <div className="mx-auto grid grid-cols-3 items-center h-14 sm:h-16 px-4 sm:px-6 md:px-8 max-w-[1600px]">

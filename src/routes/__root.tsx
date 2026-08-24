@@ -155,7 +155,6 @@ function RootComponent() {
           touchMultiplier: 1.0,
           syncTouch: false,
         });
-        (window as any).__lenis = lenisInstance;
 
         let lastTime = 0;
         function raf(time: number) {
@@ -173,10 +172,7 @@ function RootComponent() {
 
     return () => {
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      if (lenisInstance) {
-        lenisInstance.destroy();
-        delete (window as any).__lenis;
-      }
+      if (lenisInstance) lenisInstance.destroy();
     };
   }, []);
 
