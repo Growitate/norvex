@@ -5,16 +5,25 @@ import splashLogo from "@/assets/norva_splash_logo.png";
 const SPLASH_KEY = "norva_splash_shown";
 
 export function OpeningLoader() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !sessionStorage.getItem(SPLASH_KEY);
+    }
+    return true;
+  });
 
   useEffect(() => {
+    if (!visible) return;
     if (typeof window !== "undefined") {
+      sessionStorage.setItem(SPLASH_KEY, "true");
       window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
     }
     // 1400ms slow flicker, then 800ms fade exit = ~2.2s total
     const t = setTimeout(() => setVisible(false), 1400);
     return () => clearTimeout(t);
-  }, []);
+  }, [visible]);
+
+  if (!visible) return null;
 
   return (
     <AnimatePresence>

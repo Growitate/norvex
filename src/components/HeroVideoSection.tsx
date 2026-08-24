@@ -66,9 +66,7 @@ export function HeroVideoSection({
           onLoadedData={() => setIsReady(true)}
           onCanPlay={() => setIsReady(true)}
           onPlaying={() => setIsReady(true)}
-          className={`w-full h-full object-cover object-center scale-[1.01] pointer-events-none transition-opacity duration-500 ease-out ${
-            isReady ? "opacity-100" : "opacity-0"
-          }`}
+          className="w-full h-full object-cover object-center scale-[1.01] pointer-events-none"
         >
           <source src={videoSrc} type="video/mp4" />
         </video>
