@@ -3,35 +3,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import splashLogo from "@/assets/norva_splash_logo.png";
 
 const SPLASH_KEY = "norva_splash_shown";
-let hasShownSplash = false;
 
 export function OpeningLoader() {
-  const [shouldRender] = useState(() => {
-    if (hasShownSplash) return false;
-    if (typeof window !== "undefined") {
-      const alreadyShown = sessionStorage.getItem(SPLASH_KEY);
-      if (alreadyShown) {
-        hasShownSplash = true;
-        return false;
-      }
-    }
-    return true;
-  });
-
-  const [visible, setVisible] = useState(shouldRender);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (!shouldRender) return;
-    hasShownSplash = true;
     if (typeof window !== "undefined") {
-      sessionStorage.setItem(SPLASH_KEY, "true");
       window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
     }
-    const t = setTimeout(() => setVisible(false), 1200);
+    // 1400ms slow flicker, then 800ms fade exit = ~2.2s total
+    const t = setTimeout(() => setVisible(false), 1400);
     return () => clearTimeout(t);
-  }, [shouldRender]);
-
-  if (!shouldRender) return null;
+  }, []);
 
   return (
     <AnimatePresence>
@@ -39,27 +22,17 @@ export function OpeningLoader() {
         <motion.div
           key="norva-splash"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] } }}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 100000,
-            backgroundColor: "#000",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            pointerEvents: "none",
-            userSelect: "none",
-          }}
+          exit={{ opacity: 0, transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] } }}
+          style={{ position: "fixed", inset: 0, zIndex: 100000, backgroundColor: "#000", display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", userSelect: "none" }}
         >
-          {/* norvastore logo */}
+          {/* norvastore logo: full → 30% (slow dim) → 70% (slightly faded, holds) → exit */}
           <motion.img
             src={splashLogo}
             alt="norvastore"
             initial={{ opacity: 1 }}
             animate={{ opacity: [1, 0.25, 0.7, 0.7] }}
             transition={{
-              duration: 1.4,
+              duration: 1.8,
               times: [0, 0.3, 0.6, 1],
               ease: [0.4, 0, 0.2, 1],
             }}
