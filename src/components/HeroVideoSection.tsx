@@ -1,16 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import heroPoster from "@/assets/model_banner_bag_1_1786114703183.png";
 import heroVideo from "@/assets/hero banner vdo.mp4";
 
 interface HeroVideoSectionProps {
   /**
-   * Background video source. Swap this out with your custom video file or URL.
+   * Background video source.
    */
   videoSrc?: string;
-  /**
-   * Poster image displayed while video loads or as fallback.
-   */
-  posterSrc?: string;
   /**
    * Target destination for the CTA button.
    */
@@ -23,21 +18,19 @@ interface HeroVideoSectionProps {
 
 export function HeroVideoSection({
   videoSrc = heroVideo,
-  posterSrc = heroPoster,
   ctaTo = "/shop",
   ctaLabel = "SHOP HERE",
 }: HeroVideoSectionProps) {
   return (
     <section data-header-theme="dark" className="relative w-full h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] min-h-[560px] max-h-[1080px] overflow-hidden bg-black select-none">
-      {/* Background Video with Poster Fallback */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
+      {/* Background Video Only - No Poster Image */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
         <video
           src={videoSrc}
           autoPlay
           loop
           muted
           playsInline
-          poster={posterSrc}
           className="w-full h-full object-cover object-center scale-[1.01] pointer-events-none"
         >
           <source src={videoSrc} type="video/mp4" />
