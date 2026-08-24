@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 interface WrittenLogoProps {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
+  variant?: "dark" | "light";
   /**
    * If true, types out the logo letter by letter on mount.
    */
@@ -16,6 +17,7 @@ const FULL_STORE = "STORE";
 export function WrittenLogo({
   className = "",
   size = "md",
+  variant = "dark",
   animateOnMount = false,
   onAnimationComplete,
 }: WrittenLogoProps) {
@@ -84,23 +86,36 @@ export function WrittenLogo({
     },
   }[size];
 
+  const colorStyles =
+    variant === "light"
+      ? {
+        norva: "text-white",
+        store: "text-white/80",
+        cursor: "bg-white",
+      }
+      : {
+        norva: "text-zinc-950",
+        store: "text-zinc-500",
+        cursor: "bg-zinc-900",
+      };
+
   return (
     <div className={`inline-flex items-center select-none ${sizeStyles.gap} ${className}`}>
-      {/* NØRVA Part (Bold Black) */}
-      <span className={`uppercase text-zinc-950 font-display transition-all ${sizeStyles.norva}`}>
+      {/* NØRVA Part */}
+      <span className={`uppercase font-display transition-all ${sizeStyles.norva} ${colorStyles.norva}`}>
         {norvaText || (isTyping ? "" : FULL_NORVA)}
       </span>
 
-      {/* STORE Part (Light Gray) */}
+      {/* STORE Part */}
       {(storeText || (!isTyping && FULL_STORE)) && (
-        <span className={`uppercase text-zinc-500 font-display transition-all ${sizeStyles.store}`}>
+        <span className={`uppercase font-display transition-all ${sizeStyles.store} ${colorStyles.store}`}>
           {storeText || (!isTyping ? FULL_STORE : "")}
         </span>
       )}
 
       {/* Typing cursor that blinks while typing and disappears when done */}
       {isTyping && (
-        <span className="inline-block -ml-1.5 w-[2px] h-[1.1em] bg-zinc-900 animate-pulse align-middle" />
+        <span className={`inline-block -ml-1.5 w-[2px] h-[1.1em] animate-pulse align-middle ${colorStyles.cursor}`} />
       )}
     </div>
   );

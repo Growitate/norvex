@@ -48,14 +48,15 @@ export function ProductCarousel({
 
   return (
     <section
+      data-header-theme="light"
       className={`w-full bg-white text-zinc-900 select-none ${
-        flushTop ? "pt-0 pb-10 sm:pb-14" : "py-10 sm:py-14"
+        flushTop ? "pt-0 pb-0" : "py-3 sm:py-4"
       } ${className}`}
     >
       {/* Optional Title Bar when title provided */}
       {title && (
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 mb-4">
-          <div className="flex items-end justify-between border-b border-black/[0.08] pb-4">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 mb-2">
+          <div className="flex items-end justify-between pb-1 sm:pb-1.5">
             <div className="space-y-1">
               {badge && (
                 <span className="inline-block font-display text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-400">
@@ -113,7 +114,7 @@ export function ProductCarousel({
       )}
 
       {/* Horizontally Scrollable Track (Nude Project full-bleed tight edge-to-edge layout) */}
-      <div className="relative border-t border-b border-black/[0.08] bg-zinc-50/50">
+      <div className="relative bg-zinc-50/50">
         <div
           ref={scrollContainerRef}
           onScroll={checkScroll}
@@ -122,7 +123,7 @@ export function ProductCarousel({
           {products.map((product) => (
             <div
               key={product.id}
-              className="w-[210px] sm:w-[250px] md:w-[280px] lg:w-[310px] shrink-0 snap-start bg-white"
+              className="w-[260px] xs:w-[295px] sm:w-[330px] md:w-[360px] lg:w-[390px] shrink-0 snap-start bg-white"
             >
               <NudeProductCard product={product} />
             </div>
@@ -216,8 +217,8 @@ function NudeProductCard({ product }: { product: Product }) {
 
   return (
     <div className="group flex flex-col h-full select-none bg-white">
-      {/* Product Image Container: flush, aspect-[4/5] */}
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-zinc-100/60">
+      {/* Product Image Container: flush, aspect-[3/4] for larger product photos */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-100/60">
         <Link
           to="/product/$id"
           params={{ id: product.id }}

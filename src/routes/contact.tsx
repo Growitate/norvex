@@ -32,7 +32,7 @@ function Contact() {
           {/* Header */}
           <header className="text-center max-w-2xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 text-white text-[11px] font-display font-semibold tracking-widest uppercase shadow-md">
-              <Sparkles className="h-3.5 w-3.5" /> GET IN TOUCH // CUSTOMER CARE
+              <Sparkles className="h-3.5 w-3.5" /> GET IN TOUCH • CUSTOMER CARE
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-zinc-900 leading-[1.1]">

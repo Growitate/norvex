@@ -3,10 +3,14 @@
 @import "tw-animate-css";
 
 @theme inline {
+  --font-clash: "Clash Display", "Anton", sans-serif;
+  --font-anton: "Anton", "Bebas Neue", sans-serif;
+  --font-space: "Space Grotesk", "Inter", sans-serif;
   --font-sans: "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-serif: "Fraunces", Georgia, serif;
-  --font-gothic: "Fraunces", Georgia, serif;
+  --font-display: "Clash Display", "Anton", "Bebas Neue", sans-serif;
+  --font-syne: "Syne", "Inter", sans-serif;
+  --font-serif: "Clash Display", "Anton", sans-serif;
+  --font-gothic: "Clash Display", "Anton", sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -125,14 +129,14 @@
     letter-spacing: 0.24em;
   }
 
-  /* Marquee */
+  /* Marquee with GPU transform acceleration */
   @keyframes marquee-x {
     from {
-      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
     }
 
     to {
-      transform: translateX(-50%);
+      transform: translate3d(-50%, 0, 0);
     }
   }
 
@@ -195,5 +199,19 @@
   .touch-target {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* GPU Hardware Acceleration & Smooth Composite Layering */
+  .gpu-layer {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Low-CPU Content-Visibility Rendering Optimization */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 400px;
   }
 }

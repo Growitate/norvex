@@ -14,7 +14,7 @@ interface BrandStatementBannerProps {
 
 export function BrandStatementBanner({
   image = brandBg,
-  tag = "NØRVA STORE // STATEMENT",
+  tag = "NØRVA STORE • STATEMENT",
   statement = "We Are Loud and Proud",
   buttonText = "Explore",
   buttonLink = "/shop",
@@ -22,10 +22,11 @@ export function BrandStatementBanner({
 }: BrandStatementBannerProps) {
   return (
     <section
+      data-header-theme="dark"
       className={`relative w-full overflow-hidden bg-black select-none border-t border-black/[0.08] ${className}`}
     >
       {/* Full-Bleed Background Lifestyle / Graphic Image */}
-      <div className="relative w-full h-[540px] xs:h-[600px] sm:h-[660px] md:h-[720px] lg:h-[780px] flex items-center justify-center">
+      <div className="relative w-full h-[640px] xs:h-[750px] sm:h-[85vh] md:h-[90vh] lg:h-[95vh] min-h-[680px] max-h-[1100px] flex items-center justify-center">
         <img
           src={image}
           alt={statement}
@@ -42,17 +43,10 @@ export function BrandStatementBanner({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 md:px-8 text-center flex flex-col items-center justify-center space-y-4 sm:space-y-6"
+          className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 md:px-8 text-center flex flex-col items-center justify-center space-y-4 sm:space-y-6"
         >
-          {/* Subtle Tag */}
-          {tag && (
-            <span className="inline-block font-display text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-zinc-300 drop-shadow-sm">
-              {tag}
-            </span>
-          )}
-
           {/* Large Bold Brand Statement */}
-          <h2 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-tighter text-white leading-[1.02] drop-shadow-[0_6px_28px_rgba(0,0,0,0.85)]">
+          <h2 className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-tighter text-white leading-[1.02] drop-shadow-[0_6px_28px_rgba(0,0,0,0.85)]">
             {statement}
           </h2>
 

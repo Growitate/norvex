@@ -1,67 +1,51 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
+import splashLogo from "@/assets/norva_splash_logo.png";
+
+const SPLASH_KEY = "norva_splash_shown";
 
 export function OpeningLoader() {
   const [visible, setVisible] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
-    // Ensure viewport starts at the top of the page on initial load
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
     }
-
-    // As text slightly fades, navigate to '/' and fade out loader onto homepage
-    const timer = setTimeout(() => {
-      router.navigate({ to: "/", replace: true });
-      setVisible(false);
-    }, 700);
-
-    return () => clearTimeout(timer);
-  }, [router]);
+    // 1400ms slow flicker, then 800ms fade exit = ~2.2s total
+    const t = setTimeout(() => setVisible(false), 1400);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          key="norva-opening-loader"
+          key="norva-splash"
           initial={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            transition: { duration: 0.85, ease: [0.25, 1, 0.5, 1] },
-          }}
-          className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-black text-white select-none overflow-hidden"
+          exit={{ opacity: 0, transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] } }}
+          style={{ position: "fixed", inset: 0, zIndex: 100000, backgroundColor: "#000", display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", userSelect: "none" }}
         >
-          {/* Ambient subtle radial glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12)_0%,transparent_65%)] pointer-events-none" />
-
-          {/* Centered Logo: Written text slightly fades smoothly without any blink */}
-          <motion.div
-            initial={{ opacity: 1, scale: 1 }}
-            animate={{
-              opacity: 0.45,
-              scale: 0.99,
-            }}
+          {/* norvastore logo: full → 30% (slow dim) → 70% (slightly faded, holds) → exit */}
+          <motion.img
+            src={splashLogo}
+            alt="norvastore"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: [1, 0.25, 0.7, 0.7] }}
             transition={{
-              duration: 1.2,
-              ease: [0.25, 1, 0.5, 1],
+              duration: 1.8,
+              times: [0, 0.3, 0.6, 1],
+              ease: [0.4, 0, 0.2, 1],
             }}
-            className="relative z-10 flex flex-col items-center justify-center gap-3 px-6 text-center"
-          >
-            {/* Already Written Main Brand Title */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 font-display font-black text-4xl sm:text-6xl md:text-7xl uppercase text-white tracking-[0.22em] drop-shadow-[0_0_30px_rgba(255,255,255,0.35)]">
-              <span>NØRVA</span>
-              <span className="text-zinc-400 font-light tracking-[0.25em]">STORE</span>
-            </div>
-
-            {/* Subtitle Tagline */}
-            <span className="font-sans text-[10px] sm:text-xs font-bold uppercase tracking-[0.38em] text-zinc-400 mt-1">
-              Y2K & GOTHIC FASHION // EST. 2026
-            </span>
-          </motion.div>
+            style={{ width: "min(85vw, 480px)", height: "auto", objectFit: "contain", mixBlendMode: "screen" }}
+          />
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
+
+
+
+
+
+

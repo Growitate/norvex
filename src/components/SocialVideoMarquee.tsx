@@ -143,22 +143,18 @@ export function SocialVideoMarquee() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-white py-8 sm:py-10 text-zinc-900 border-t border-b border-black/[0.08] select-none">
+    <section className="relative overflow-hidden bg-white py-5 sm:py-6 text-zinc-900 select-none">
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 space-y-3 sm:space-y-4">
         {/* Top Header - Tight Nude-Project Style */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-black/[0.08] pb-2.5 sm:pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-1 sm:pb-1.5">
           <div className="space-y-0.5">
             <span className="inline-block font-display text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-400">
-              COMMUNITY // @NORVAXSTORE
+              COMMUNITY • @NORVAXSTORE
             </span>
             <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-tight text-zinc-900">
               Community & Styling Reels
             </h2>
           </div>
-
-          <p className="font-sans text-[11px] sm:text-xs text-zinc-500 font-normal max-w-xs sm:text-right">
-            Hover to pause reels. Click any reel to view tagged statement bags.
-          </p>
         </div>
 
         {/* Carousel Track Container */}
@@ -193,7 +189,7 @@ export function SocialVideoMarquee() {
             style={{ scrollBehavior: "smooth" }}
           >
             <div
-              className={`flex gap-2.5 sm:gap-3.5 shrink-0 ${
+              className={`flex gap-2.5 sm:gap-3.5 shrink-0 gpu-layer ${
                 isHovered ? "" : "animate-marquee"
               } transition-all`}
             >

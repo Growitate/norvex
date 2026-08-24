@@ -67,7 +67,7 @@ function About() {
 
           <div className="space-y-6">
             <span className="font-display text-[11px] uppercase tracking-widest text-zinc-500 font-bold block">
-              01 // BRAND STORY
+              01 • BRAND STORY
             </span>
 
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-zinc-900 leading-tight">
@@ -100,7 +100,7 @@ function About() {
       <section className="bg-white py-20 md:py-28 text-zinc-900 border-b border-black/10">
         <div className="mx-auto max-w-[1100px] px-4 md:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/15 bg-white text-[11px] font-display font-semibold tracking-widest uppercase text-zinc-600 mb-6 shadow-xs">
-            <Sparkles className="h-3.5 w-3.5 text-zinc-900" /> 02 // MISSION STATEMENT
+            <Sparkles className="h-3.5 w-3.5 text-zinc-900" /> 02 • MISSION STATEMENT
           </div>
 
           <blockquote className="font-display font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight text-zinc-900 leading-[1.25] max-w-4xl mx-auto">
@@ -128,7 +128,7 @@ function About() {
         <div className="mx-auto grid max-w-[1400px] gap-12 px-4 md:grid-cols-2 md:gap-16 md:px-8 items-center">
           <div className="order-2 md:order-1 space-y-6">
             <span className="font-display text-[11px] uppercase tracking-widest text-zinc-500 font-bold block">
-              03 // VISION & IDENTITY
+              03 • VISION & IDENTITY
             </span>
 
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-zinc-900 leading-tight">

@@ -12,6 +12,7 @@ import {
   Music2,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import logoDark from "@/assets/norva_logo_dark.png";
 
 export function Footer() {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -20,7 +21,7 @@ export function Footer() {
   const [agreed, setAgreed] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState("IN | INR₹ | English");
+  const [selectedRegion, setSelectedRegion] = useState("IN · INR ₹ · English");
 
   const toggleSection = (section: string) => {
     setOpenSection((prev) => (prev === section ? null : section));
@@ -40,17 +41,17 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-white text-zinc-900 border-t border-black/[0.08] select-none pt-12 sm:pt-16 pb-8">
+    <footer className="w-full bg-[#fcfbfa] text-zinc-900 select-none pt-12 sm:pt-16 pb-8">
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8">
-        {/* Main Grid Columns (Nude Project Style) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-12 sm:pb-16 border-b border-black/[0.08]">
-          {/* Column 1: JOIN THE MOVEMENT / NEWSLETTER (5 cols on desktop) */}
-          <div className="md:col-span-5 space-y-4 pr-0 lg:pr-8">
+        {/* Top Grid Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-8 sm:pb-12">
+          {/* Column 1: STAY IN THE LOOP (Newsletter) */}
+          <div className="md:col-span-4 space-y-4 pr-0 lg:pr-6">
             <h3 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-zinc-950">
-              JOIN THE MOVEMENT
+              STAY IN THE LOOP
             </h3>
             <p className="font-sans text-xs text-zinc-600 font-normal leading-relaxed max-w-sm">
-              Sign up to our email list and get 10% off your first order.
+              Sign up to our email list and get 10% off your first order:
             </p>
 
             {/* Email Input */}
@@ -61,7 +62,7 @@ export function Footer() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="user@gmail.com"
+                  placeholder="you@arethebest.com"
                   className="w-full bg-transparent font-sans text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none pr-24"
                 />
                 <button
@@ -84,7 +85,7 @@ export function Footer() {
               </div>
 
               {/* Preference Radio Options */}
-              <div className="flex items-center gap-4 text-xs font-sans text-zinc-700 pt-1">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs font-sans text-zinc-700 pt-1">
                 <span className="text-zinc-500 font-normal">Select your preferences:</span>
                 <label className="flex items-center gap-1.5 cursor-pointer">
                   <input
@@ -144,8 +145,8 @@ export function Footer() {
             </form>
           </div>
 
-          {/* Desktop & Mobile Links (7 cols on desktop) */}
-          <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          {/* Desktop & Mobile Links Grid (8 cols on desktop) */}
+          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
             {/* 1. BRAND COLUMN */}
             <div className="border-b sm:border-b-0 border-black/[0.08] pb-4 sm:pb-0">
               <button
@@ -165,7 +166,7 @@ export function Footer() {
               </button>
 
               <div
-                className={`mt-3 space-y-2 text-xs font-sans text-zinc-600 ${
+                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${
                   openSection === "brand" ? "block" : "hidden sm:block"
                 }`}
               >
@@ -176,17 +177,17 @@ export function Footer() {
                 </p>
                 <p>
                   <Link to="/shop" className="hover:text-black transition-colors">
-                    Lookbook Drops
+                    Nørva News
                   </Link>
                 </p>
                 <p>
                   <Link to="/about" className="hover:text-black transition-colors">
-                    Our Story
+                    Stores
                   </Link>
                 </p>
                 <p>
                   <Link to="/contact" className="hover:text-black transition-colors">
-                    Press & Careers
+                    Careers
                   </Link>
                 </p>
               </div>
@@ -211,45 +212,45 @@ export function Footer() {
               </button>
 
               <div
-                className={`mt-3 space-y-2 text-xs font-sans text-zinc-600 ${
+                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${
                   openSection === "support" ? "block" : "hidden sm:block"
                 }`}
               >
-                <p>
-                  <a
-                    href="https://www.instagram.com/norvaxstore?igsh=MWxubzhoZHNmN3B5aA=="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-black transition-colors"
-                  >
-                    Social
-                  </a>
-                </p>
-                <p>
-                  <Link to="/contact" className="hover:text-black transition-colors">
-                    Contact Us
-                  </Link>
-                </p>
                 <p>
                   <Link
                     to="/legal/$page"
                     params={{ page: "refund" }}
                     className="hover:text-black transition-colors"
                   >
-                    Return & Refund
+                    Returns & Refund
+                  </Link>
+                </p>
+                <p>
+                  <Link to="/contact" className="hover:text-black transition-colors">
+                    Order Tracking
+                  </Link>
+                </p>
+                <p>
+                  <Link to="/contact" className="hover:text-black transition-colors">
+                    FAQ
+                  </Link>
+                </p>
+                <p>
+                  <Link to="/contact" className="hover:text-black transition-colors">
+                    Contact Us
                   </Link>
                 </p>
               </div>
             </div>
 
-            {/* 3. POLICIES COLUMN */}
+            {/* 3. BORING STUFF COLUMN */}
             <div className="border-b sm:border-b-0 border-black/[0.08] pb-4 sm:pb-0">
               <button
                 onClick={() => toggleSection("policies")}
                 className="w-full flex items-center justify-between sm:pointer-events-none text-left"
               >
                 <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-zinc-950">
-                  POLICIES
+                  BORING STUFF
                 </h4>
                 <span className="sm:hidden text-zinc-600 text-sm">
                   {openSection === "policies" ? (
@@ -261,26 +262,17 @@ export function Footer() {
               </button>
 
               <div
-                className={`mt-3 space-y-2 text-xs font-sans text-zinc-600 ${
+                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${
                   openSection === "policies" ? "block" : "hidden sm:block"
                 }`}
               >
                 <p>
                   <Link
                     to="/legal/$page"
-                    params={{ page: "refund" }}
-                    className="hover:text-black transition-colors"
-                  >
-                    Refund Policy
-                  </Link>
-                </p>
-                <p>
-                  <Link
-                    to="/legal/$page"
                     params={{ page: "terms" }}
                     className="hover:text-black transition-colors"
                   >
-                    Shipping Policy
+                    Legal Notice
                   </Link>
                 </p>
                 <p>
@@ -301,13 +293,31 @@ export function Footer() {
                     Terms of Service
                   </Link>
                 </p>
+                <p>
+                  <Link
+                    to="/legal/$page"
+                    params={{ page: "refund" }}
+                    className="hover:text-black transition-colors"
+                  >
+                    Refund Policy
+                  </Link>
+                </p>
+                <p>
+                  <Link
+                    to="/legal/$page"
+                    params={{ page: "terms" }}
+                    className="hover:text-black transition-colors"
+                  >
+                    Shipping Policy
+                  </Link>
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Middle Bar: Country & Language Selector + Social Icons */}
-        <div className="py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-black/[0.08]">
+        <div className="py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Country & Language Selector */}
           <div className="relative">
             <button
@@ -330,32 +340,32 @@ export function Footer() {
                 >
                   <button
                     onClick={() => {
-                      setSelectedRegion("IN | INR₹ | English");
+                      setSelectedRegion("IN | INR ₹ | English");
                       setLanguageOpen(false);
                     }}
                     className="w-full text-left px-3 py-2 text-xs font-sans rounded hover:bg-zinc-100 flex items-center justify-between cursor-pointer"
                   >
-                    <span>India (INR ₹) · English</span>
+                    <span>India (IN | INR ₹) · English</span>
                     {selectedRegion.includes("IN") && <Check className="h-3.5 w-3.5" />}
                   </button>
                   <button
                     onClick={() => {
-                      setSelectedRegion("US | USD$ | English");
+                      setSelectedRegion("US | USD $ | English");
                       setLanguageOpen(false);
                     }}
                     className="w-full text-left px-3 py-2 text-xs font-sans rounded hover:bg-zinc-100 flex items-center justify-between cursor-pointer"
                   >
-                    <span>United States (USD $) · English</span>
+                    <span>United States (US | USD $) · English</span>
                     {selectedRegion.includes("US") && <Check className="h-3.5 w-3.5" />}
                   </button>
                   <button
                     onClick={() => {
-                      setSelectedRegion("EU | EUR€ | English");
+                      setSelectedRegion("EU | EUR € | English");
                       setLanguageOpen(false);
                     }}
                     className="w-full text-left px-3 py-2 text-xs font-sans rounded hover:bg-zinc-100 flex items-center justify-between cursor-pointer"
                   >
-                    <span>Europe (EUR €) · English</span>
+                    <span>Europe (EU | EUR €) · English</span>
                     {selectedRegion.includes("EU") && <Check className="h-3.5 w-3.5" />}
                   </button>
                 </motion.div>
@@ -363,7 +373,7 @@ export function Footer() {
             </AnimatePresence>
           </div>
 
-          {/* Social Icons (Instagram, TikTok, Spotify/YouTube) */}
+          {/* Social Icons (Instagram, TikTok, Spotify, YouTube) */}
           <div className="flex items-center gap-3">
             <a
               href="https://www.instagram.com/norvaxstore?igsh=MWxubzhoZHNmN3B5aA=="
@@ -395,15 +405,17 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Giant Centered Brand Wordmark/Logo (Nude Project Reference Style) */}
-        <div className="pt-8 sm:pt-12 pb-6 sm:pb-8 text-center overflow-hidden">
-          <h1 className="font-display font-black text-[clamp(3.5rem,14vw,11rem)] tracking-tight text-zinc-950 uppercase leading-none select-none">
-            NØRVA STORE
-          </h1>
+        {/* Centered Brand Logo */}
+        <div className="pt-8 sm:pt-12 pb-8 sm:pb-10 flex justify-center items-center overflow-hidden">
+          <img
+            src={logoDark}
+            alt="norvastore"
+            className="h-12 sm:h-20 md:h-28 w-auto max-w-[85vw] object-contain select-none opacity-90 hover:opacity-100 transition-opacity"
+          />
         </div>
 
-        {/* Thin Divider Line at the very bottom & Copyright / Built by / Back to top */}
-        <div className="border-t border-black/[0.08] pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-sans text-zinc-500 text-center md:text-left">
+        {/* Bottom Line & Copyright */}
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-sans text-zinc-500 text-center md:text-left">
           <div>
             © {new Date().getFullYear()} NØRVA STORE (JEVANI ENTERPRISES) — ALL RIGHTS RESERVED
           </div>

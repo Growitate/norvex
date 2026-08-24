@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { products } from "@/lib/products";
-import { HeroSlider } from "@/components/HeroSlider";
+import { HeroVideoSection } from "@/components/HeroVideoSection";
 import { CategorySection } from "@/components/CategorySection";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { CollectionBanner } from "@/components/CollectionBanner";
@@ -40,11 +40,8 @@ function Home() {
 
   return (
     <>
-      {/* Spacer to push content below fixed header */}
-      <div className="h-14 sm:h-16 bg-white" />
-
       {/* HERO BANNER / VIDEO SECTION */}
-      <HeroSlider />
+      <HeroVideoSection />
 
       {/* 1. PRODUCT CAROUSEL (NEW ARRIVALS) */}
       <ProductCarousel
@@ -52,62 +49,48 @@ function Home() {
         flushTop={true}
       />
 
-      {/* 2. BANNER 1 (IMAGE + TITLE + SHOP NOW) */}
+      {/* 2. BANNER 1 (IMAGE + TITLE + SINGLE SHOP NOW BUTTON) */}
       <CollectionBanner
         image={lifestyleBanner1}
-        seasonLabel="FW2026 // DROP 01"
         title="New Arrivals"
-        description="Architectural dark aesthetic silhouettes, gothic cyber hardware, and limited-edition leather craft."
         primaryButtonText="Shop Now"
         primaryButtonLink="/shop?category=Bags"
-        secondaryButtonText="Women's Exclusive"
-        secondaryButtonLink="/shop?category=Female+Bags+%26+Clothes"
         position="bottom-left"
       />
 
       {/* 4. PRODUCT CAROUSEL (SECOND COLLECTION - BESTSELLERS) */}
       <ProductCarousel
         title="Bestsellers"
-        badge="MOST WANTED // ICONIC PIECES"
-        subtitle="The most coveted statement bags and streetwear of the season"
         products={bestsellers}
         viewAllLink="/shop"
         viewAllText="Explore All"
+        className="pb-0"
       />
 
-      {/* 5. BANNER 2 (IMAGE + TITLE + SHOP NOW) */}
+      {/* 5. BANNER 2 (IMAGE + TITLE + SINGLE SHOP NOW BUTTON) */}
       <CollectionBanner
         image={lifestyleBanner2}
-        seasonLabel="LIMITED RUN // CRAFT IDENTITY"
         title="Harness & Hardware"
-        description="Sculpted metal buckles, industrial eyelet straps, and heavy silver curb chains engineered for longevity."
         primaryButtonText="Shop Now"
         primaryButtonLink="/shop?category=Bags"
-        secondaryButtonText="Shop All"
-        secondaryButtonLink="/shop"
         position="bottom-center"
       />
 
       {/* 6. PRODUCT CAROUSEL (THIRD COLLECTION - SHOULDER & HARNESS BAGS) */}
       <ProductCarousel
         title="Shoulder & Harness Bags"
-        badge="FEATURED CATEGORY"
-        subtitle="Heavy metal chains, O-ring harness details, and textured leather finishes"
         products={shoulderAndHarness.length > 0 ? shoulderAndHarness : products}
         viewAllLink="/shop?category=Shoulder+Bags"
         viewAllText="View Shoulder Bags"
+        className="pb-0"
       />
 
-      {/* 7. BANNER 3 (IMAGE + TITLE + SHOP NOW) */}
+      {/* 7. BANNER 3 (IMAGE + TITLE + SINGLE SHOP NOW BUTTON) */}
       <CollectionBanner
         image={lifestyleBanner3}
-        seasonLabel="EDITORIAL // LONDON STREETS"
         title="Cyber Streetwear 2026"
-        description="Engineered for individuals who refuse mass production. Limited batch releases."
         primaryButtonText="Shop Men's"
         primaryButtonLink="/shop?category=Male+Clothes"
-        secondaryButtonText="Explore Accessories"
-        secondaryButtonLink="/shop?category=Accessories"
         position="bottom-left"
       />
 
@@ -120,7 +103,6 @@ function Home() {
       {/* 10. ANNOUNCEMENT / BRAND STATEMENT BANNER (Tauxxic Style) */}
       <BrandStatementBanner
         image={brandStatementBg}
-        tag="NØRVA STORE // STATEMENT"
         statement="We Are Loud and Proud"
         buttonText="Explore"
         buttonLink="/shop"

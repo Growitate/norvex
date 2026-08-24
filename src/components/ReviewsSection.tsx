@@ -90,7 +90,7 @@ export function ReviewsSection() {
   };
 
   return (
-    <section className="border-t border-black/10 bg-white py-20 md:py-28 text-zinc-900 overflow-hidden">
+    <section className="bg-white py-10 sm:py-14 text-zinc-900 overflow-hidden">
       <div className="mx-auto max-w-[1200px] px-4 md:px-8 text-center">
         {/* Main Section Header */}
         <div className="space-y-4 mb-12">

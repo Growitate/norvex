@@ -481,6 +481,9 @@ export const products: Product[] = [
     image: bagShoulderChain,
     gallery: [
       bagShoulderChain,
+      modelShoulderBag,
+      bagGothicSilverCrossbody,
+      modelBag2,
     ],
     category: "Shoulder Bags",
     department: "female",
@@ -539,6 +542,9 @@ export const products: Product[] = [
     image: bagCrossbodyPatent,
     gallery: [
       bagCrossbodyPatent,
+      modelBag2,
+      modelShoulderBag,
+      bagGothicSilverCrossbody,
     ],
     category: "Crossbody",
     department: "female",
@@ -595,6 +601,9 @@ export const products: Product[] = [
     image: bagHarnessTote,
     gallery: [
       bagHarnessTote,
+      modelSilverTote,
+      bagShoulderChain,
+      modelShoulderBag,
     ],
     category: "Totes & Backpacks",
     department: "unisex",
@@ -651,6 +660,9 @@ export const products: Product[] = [
     image: bagMiniSatchel,
     gallery: [
       bagMiniSatchel,
+      modelBag2,
+      modelShoulderBag,
+      bagCrossbodyPatent,
     ],
     category: "Mini Bags",
     department: "female",
@@ -706,6 +718,9 @@ export const products: Product[] = [
     image: bagGothicSilverCrossbody,
     gallery: [
       bagGothicSilverCrossbody,
+      modelSilverTote,
+      modelShoulderBag,
+      bagShoulderChain,
     ],
     category: "Crossbody",
     department: "unisex",

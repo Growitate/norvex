@@ -106,7 +106,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap",
       },
     ],
   }),
@@ -142,15 +146,18 @@ function RootComponent() {
     import("lenis")
       .then(({ default: Lenis }) => {
         lenisInstance = new Lenis({
-          duration: 1.2,
+          duration: 0.9,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           orientation: "vertical",
           gestureOrientation: "vertical",
           smoothWheel: true,
           wheelMultiplier: 1.0,
-          touchMultiplier: 1.5,
+          touchMultiplier: 1.0,
+          syncTouch: false,
         });
+        (window as any).__lenis = lenisInstance;
 
+        let lastTime = 0;
         function raf(time: number) {
           if (lenisInstance) {
             lenisInstance.raf(time);
@@ -166,7 +173,10 @@ function RootComponent() {
 
     return () => {
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      if (lenisInstance) lenisInstance.destroy();
+      if (lenisInstance) {
+        lenisInstance.destroy();
+        delete (window as any).__lenis;
+      }
     };
   }, []);
 

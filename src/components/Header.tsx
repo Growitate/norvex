@@ -15,7 +15,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "@/lib/cart";
 import { CartDrawer } from "./CartDrawer";
 import { SearchModal } from "./SearchModal";
-import { WrittenLogo } from "./WrittenLogo";
+import logoWhite from "@/assets/norva_logo_white.png";
+import logoDark from "@/assets/norva_logo_dark.png";
 
 export function Header() {
   const navigate = useNavigate();
@@ -24,19 +25,61 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [drawerSearch, setDrawerSearch] = useState("");
 
+  const [activeTheme, setActiveTheme] = useState<"dark" | "light">("dark");
+
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const count = useCart((s) => s.items.reduce((n, i) => n + i.qty, 0));
   const setCartOpen = useCart((s) => s.setOpen);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 15);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const checkScroll = () => {
+      setScrolled(window.scrollY > 15);
+
+      if (pathname === "/") {
+        // Sample element at top center below header
+        const el = document.elementFromPoint(window.innerWidth / 2, 28);
+        if (el) {
+          const darkParent = el.closest('[data-header-theme="dark"]');
+          if (darkParent) {
+            setActiveTheme("dark");
+            return;
+          }
+          const lightParent = el.closest('[data-header-theme="light"]');
+          if (lightParent) {
+            setActiveTheme("light");
+            return;
+          }
+        }
+        setActiveTheme(window.scrollY < 300 ? "dark" : "light");
+      } else {
+        setActiveTheme("light");
+      }
+    };
+
+    checkScroll();
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, [pathname]);
 
   useEffect(() => {
     setMenuOpen(false);
+    
+    // Instant scroll reset for both window and Lenis smoothly on route change
+    if (typeof window !== "undefined") {
+      if ((window as any).__lenis) {
+        (window as any).__lenis.scrollTo(0, { immediate: true });
+      }
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+    
+    // Force scrolled to false immediately on navigation to home page
+    if (pathname === "/") {
+      setScrolled(false);
+    } else {
+      setScrolled((window.scrollY || document.documentElement.scrollTop || 0) > 15);
+    }
   }, [pathname]);
 
   // Prevent background scrolling when menu drawer is open
@@ -46,9 +89,6 @@ export function Header() {
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
   }, [menuOpen]);
 
   const handleDrawerSearchSubmit = (e: React.FormEvent) => {
@@ -63,15 +103,18 @@ export function Header() {
     }
   };
 
+  const isHomePage = pathname === "/";
+  // On home page, ensure header is transparent when near top (preventing state glitches)
+  const isTransparentHero = isHomePage && (!scrolled || (typeof window !== "undefined" && (window.scrollY || document.documentElement.scrollTop || 0) < 25));
+
   return (
     <>
       {/* Main Navbar */}
       <header
-        className={`fixed inset-x-0 top-0 z-40 transition-all duration-200 ${
-          scrolled
-            ? "bg-white/95 backdrop-blur-md border-b border-black/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
-            : "bg-white border-b border-black/[0.06]"
-        }`}
+        className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${isTransparentHero
+            ? "bg-transparent border-none text-white"
+            : "bg-white/45 backdrop-blur-xl border-b border-black/[0.06] text-zinc-950 shadow-[0_4px_24px_rgba(0,0,0,0.03)]"
+          }`}
       >
         <div className="mx-auto grid grid-cols-3 items-center h-14 sm:h-16 px-4 sm:px-6 md:px-8 max-w-[1600px]">
           {/* Left: 3-line hamburger menu icon */}
@@ -79,12 +122,13 @@ export function Header() {
             <button
               onClick={() => setMenuOpen(true)}
               aria-label="Open navigation menu"
-              className="group flex items-center justify-center p-2.5 -ml-2.5 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-900 cursor-pointer"
+              className={`group flex items-center justify-center p-2.5 -ml-2.5 rounded-full transition-all cursor-pointer ${isTransparentHero ? "hover:bg-white/10 text-white" : "hover:bg-black/5 text-zinc-900"
+                }`}
             >
               <div className="w-[19px] h-[13px] flex flex-col justify-between py-[0.5px]">
-                <span className="block w-full h-[1.75px] bg-zinc-900 rounded-full transition-transform duration-200 group-hover:scale-x-110 group-hover:origin-left" />
-                <span className="block w-full h-[1.75px] bg-zinc-900 rounded-full transition-transform duration-200" />
-                <span className="block w-full h-[1.75px] bg-zinc-900 rounded-full transition-transform duration-200 group-hover:scale-x-110 group-hover:origin-left" />
+                <span className={`block w-full h-[1.75px] rounded-full transition-transform duration-200 group-hover:scale-x-110 group-hover:origin-left ${isTransparentHero ? "bg-white" : "bg-zinc-900"}`} />
+                <span className={`block w-full h-[1.75px] rounded-full transition-transform duration-200 ${isTransparentHero ? "bg-white" : "bg-zinc-900"}`} />
+                <span className={`block w-full h-[1.75px] rounded-full transition-transform duration-200 group-hover:scale-x-110 group-hover:origin-left ${isTransparentHero ? "bg-white" : "bg-zinc-900"}`} />
               </div>
             </button>
           </div>
@@ -93,9 +137,13 @@ export function Header() {
           <div className="flex items-center justify-center text-center">
             <Link
               to="/"
-              className="inline-flex items-center justify-center group focus:outline-none transition-opacity hover:opacity-80"
+              className="inline-flex items-center justify-center group focus:outline-none transition-opacity hover:opacity-85"
             >
-              <WrittenLogo size="md" />
+              <img
+                src={isTransparentHero ? logoWhite : logoDark}
+                alt="norvastore"
+                className="h-5 sm:h-6 w-auto object-contain block"
+              />
             </Link>
           </div>
 
@@ -104,19 +152,22 @@ export function Header() {
             <button
               aria-label="Search catalog"
               onClick={() => setSearchOpen(true)}
-              className="flex items-center justify-center p-2.5 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-900 cursor-pointer"
+              className={`flex items-center justify-center p-2.5 rounded-full active:scale-95 transition-all cursor-pointer ${isTransparentHero ? "hover:bg-white/10 text-white" : "hover:bg-black/5 text-zinc-900"
+                }`}
             >
-              <Search className="h-[18px] w-[18px] stroke-[1.75] text-zinc-900" />
+              <Search className={`h-[18px] w-[18px] stroke-[1.75] ${isTransparentHero ? "text-white" : "text-zinc-900"}`} />
             </button>
 
             <button
               aria-label="Shopping bag"
               onClick={() => setCartOpen(true)}
-              className="relative flex items-center justify-center p-2.5 rounded-full hover:bg-black/5 active:scale-95 transition-all text-zinc-900 cursor-pointer"
+              className={`relative flex items-center justify-center p-2.5 rounded-full active:scale-95 transition-all cursor-pointer ${isTransparentHero ? "hover:bg-white/10 text-white" : "hover:bg-black/5 text-zinc-900"
+                }`}
             >
-              <ShoppingBag className="h-[18px] w-[18px] stroke-[1.75] text-zinc-900" />
+              <ShoppingBag className={`h-[18px] w-[18px] stroke-[1.75] ${isTransparentHero ? "text-white" : "text-zinc-900"}`} />
               {count > 0 && (
-                <span className="absolute top-1 right-1 grid h-4 min-w-4 place-items-center rounded-full bg-zinc-900 text-[10px] font-bold leading-none text-white ring-2 ring-white px-1">
+                <span className={`absolute top-1 right-1 grid h-4 min-w-4 place-items-center rounded-full text-[10px] font-bold leading-none px-1 ${isTransparentHero ? "bg-white text-zinc-950 ring-2 ring-black/40" : "bg-zinc-900 text-white ring-2 ring-white"
+                  }`}>
                   {count}
                 </span>
               )}
@@ -166,7 +217,11 @@ export function Header() {
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center hover:opacity-85 transition-opacity px-2"
                 >
-                  <WrittenLogo size="sm" />
+                  <img
+                    src={logoDark}
+                    alt="norvastore"
+                    className="h-4 sm:h-5 w-auto object-contain block"
+                  />
                 </Link>
 
                 {/* Right Action Icons Row: Search, Account, Wishlist, Bag */}

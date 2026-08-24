@@ -97,7 +97,7 @@ function Shop() {
       } else if (search.category.toLowerCase().includes("all")) {
         setCat("All");
       } else if (search.category.toLowerCase().includes("bag")) {
-        setCat("Bags");
+        setCat("Accessories");
       }
     } else {
       setCat("All");

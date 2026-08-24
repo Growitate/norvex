@@ -332,30 +332,20 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
       {/* Fixed Header Spacer */}
       <div className="h-14 sm:h-16 bg-white" />
 
-      {/* Top Free Delivery Notification Bar matching Zapvi/Img 2 */}
-      <div className="bg-[#111] text-white text-center py-2 px-4 text-xs font-sans font-medium flex items-center justify-center gap-2">
-        <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-        <span>Hurry! Add ₹150 More to Unlock Free Delivery — Offer Ends Today!</span>
-      </div>
-
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-black/[0.08]">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6 md:px-8 py-3">
-          <nav className="flex items-center gap-1.5 text-xs font-sans text-zinc-500 uppercase tracking-wide">
-            <Link to="/" className="hover:text-black">
-              HOME
-            </Link>
-            <span className="text-zinc-400">/</span>
-            <Link to="/shop" search={{ category: "Accessories" }} className="hover:text-black">
-              SOFT SILICONE MOBILE COVER
-            </Link>
-            <span className="text-zinc-400">/</span>
-            <span className="text-zinc-900 font-semibold truncate max-w-[200px] sm:max-w-none">
-              {product.name}
-            </span>
-          </nav>
+      {/* Top Free Delivery Infinite Marquee Banner */}
+      <div className="bg-[#111] text-white py-2 overflow-hidden select-none relative z-20">
+        <div className="flex w-max animate-marquee gap-8 items-center font-sans text-xs font-medium tracking-wide">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="flex items-center gap-2 shrink-0">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+              <span>Hurry! Add ₹150 More to Unlock Free Delivery — Offer Ends Today!</span>
+              <span className="text-zinc-600 ml-6">✦</span>
+            </div>
+          ))}
         </div>
       </div>
+
+
 
       {/* Main Container */}
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 md:px-8 py-6 sm:py-10">
