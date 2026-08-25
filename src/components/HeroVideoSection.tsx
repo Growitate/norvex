@@ -41,14 +41,14 @@ export function HeroVideoSection({
       </div>
 
       {/* Centered Overlaid CTA (Broken Planet style) */}
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center pointer-events-none px-3 xs:px-4">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center pointer-events-none px-4 sm:px-6 md:px-8 max-w-[1600px] mx-auto">
         <Link
           to={ctaTo}
-          className="pointer-events-auto group cursor-pointer flex flex-col items-center justify-center gap-3 sm:gap-4 transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none select-none max-w-full"
+          className="pointer-events-auto group cursor-pointer flex flex-col items-center justify-center gap-3 sm:gap-4 transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none select-none max-w-full text-center"
           aria-label={ctaLabel}
         >
           {/* Large Bold Pulsing Centered Title in Clash Display */}
-          <h1 className="font-clash font-bold text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-tight text-white drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)] animate-pulse group-hover:animate-none group-hover:text-zinc-100 transition-colors px-2">
+          <h1 className="font-clash font-bold text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-tight text-white drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)] animate-pulse group-hover:animate-none group-hover:text-zinc-100 transition-colors text-center">
             {ctaLabel}
           </h1>
         </Link>

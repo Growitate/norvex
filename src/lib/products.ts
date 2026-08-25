@@ -111,6 +111,10 @@ export const products: Product[] = [
     image: caseGothicClaw,
     gallery: [
       caseGothicClaw,
+      caseGothicClaw,
+      caseGothicClaw,
+      caseGothicClaw,
+      caseGothicClaw,
     ],
     category: "Accessories",
     department: "unisex",
@@ -154,6 +158,10 @@ export const products: Product[] = [
     price: 899,
     image: productCap,
     gallery: [
+      productCap,
+      productCap,
+      productCap,
+      productCap,
       productCap,
     ],
     category: "Accessories",

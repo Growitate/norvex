@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -40,6 +40,15 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
   // Mobile active image index tracking for horizontal scroll snap
   const [mobileActiveIdx, setMobileActiveIdx] = useState(0);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
+  const thumbScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!thumbScrollRef.current) return;
+    const activeThumb = thumbScrollRef.current.children[mobileActiveIdx] as HTMLElement;
+    if (activeThumb) {
+      activeThumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  }, [mobileActiveIdx]);
 
   const handleMobileScroll = () => {
     if (!mobileScrollRef.current) return;
@@ -94,16 +103,16 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
 
 
         {/* Main Product Container */}
-        <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 py-4 sm:py-6">
+        <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 pt-0 lg:pt-6 pb-4 sm:pb-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-start">
             {/* ========================================================================= */}
             {/* MOBILE ONLY: 100% FULL-BLEED CAROUSEL                                     */}
             {/* ========================================================================= */}
-            <div className="lg:hidden col-span-1 space-y-3 pb-2">
+            <div className="lg:hidden col-span-1 -mx-4 sm:-mx-6 space-y-1 pb-0 mt-0">
               <div
                 ref={mobileScrollRef}
                 onScroll={handleMobileScroll}
-                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-2 -mx-4 px-3 sm:px-4 touch-pan-x overscroll-x-contain"
+                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-0 touch-pan-x overscroll-x-contain"
                 style={{
                   scrollbarWidth: "none",
                   WebkitOverflowScrolling: "touch",
@@ -113,7 +122,7 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                 {galleryImages.map((imgSrc, idx) => (
                   <div
                     key={idx}
-                    className="w-[91vw] xs:w-[92vw] sm:w-[93vw] max-w-[500px] shrink-0 snap-center relative aspect-[3/4.1] bg-zinc-950 rounded-2xl overflow-hidden shadow-xs select-none"
+                    className="relative aspect-[3/4] w-screen shrink-0 snap-center bg-white overflow-hidden select-none"
                   >
                     <img
                       src={imgSrc}
@@ -122,7 +131,7 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                       className="w-full h-full object-cover object-center pointer-events-none"
                     />
                     {galleryImages.length > 1 && (
-                      <div className="absolute bottom-4 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none">
+                      <div className="absolute bottom-3 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full">
                         {idx + 1} / {galleryImages.length}
                       </div>
                     )}
@@ -136,10 +145,49 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                   {galleryImages.map((_, i) => (
                     <span
                       key={i}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${mobileActiveIdx === i ? "w-6 bg-zinc-900" : "w-1.5 bg-zinc-300"
-                        }`}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        mobileActiveIdx === i ? "w-6 bg-zinc-900" : "w-1.5 bg-zinc-300"
+                      }`}
                     />
                   ))}
+                </div>
+              )}
+
+              {/* Horizontal Image Thumbnails Selector (Centered & Gap Fixed) */}
+              {galleryImages.length > 1 && (
+                <div
+                  ref={thumbScrollRef}
+                  className="flex items-center justify-center gap-2 overflow-x-auto pt-1 pb-0.5 scrollbar-none px-4 touch-pan-x overscroll-x-contain"
+                  style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+                >
+                  {galleryImages.map((imgSrc, i) => {
+                    const isActive = mobileActiveIdx === i;
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          if (mobileScrollRef.current) {
+                            const itemWidth = mobileScrollRef.current.clientWidth;
+                            mobileScrollRef.current.scrollTo({ left: i * itemWidth, behavior: "smooth" });
+                          }
+                          setMobileActiveIdx(i);
+                        }}
+                        className={`relative w-14 h-18 sm:w-16 sm:h-20 shrink-0 overflow-hidden bg-white rounded-lg transition-all cursor-pointer ${
+                          isActive
+                            ? "border-2 border-black shadow-md ring-1 ring-black scale-102"
+                            : "border border-zinc-200/80 opacity-70 hover:opacity-100 hover:border-zinc-400"
+                        }`}
+                        aria-label={`View thumbnail angle ${i + 1}`}
+                      >
+                        <img
+                          src={imgSrc}
+                          alt={`${product.name} angle ${i + 1}`}
+                          className="w-full h-full object-cover object-center pointer-events-none"
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -219,7 +267,7 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
             {/* ========================================================= */}
             {/* DESKTOP COLUMN 3: STICKY PURCHASE PANEL & INFO CARDS      */}
             {/* ========================================================= */}
-            <div className={`${secondaryAngles.length > 0 ? "lg:col-span-5 xl:col-span-5" : "lg:col-span-5"} lg:sticky lg:top-20 lg:self-start max-h-[calc(100vh-5.5rem)] overflow-y-auto scrollbar-none pr-1 space-y-3`}>
+            <div className={`${secondaryAngles.length > 0 ? "lg:col-span-5 xl:col-span-5" : "lg:col-span-5"} lg:sticky lg:top-20 lg:self-start space-y-3.5 pr-0.5`}>
               {/* Professional Purchase Selection Box (Ultra-Compact & Sleek Spacing) */}
               <div className="bg-white border border-[#e4e4e7] rounded-[18px] p-3.5 sm:p-4 space-y-2.5 shadow-2xs">
                 {/* Title & Short Description */}
@@ -528,7 +576,6 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
           <ProductCarousel
             title="You Might Also Like"
             badge="CURATED RECOMMENDATIONS"
-            subtitle="Explore complementary dark aesthetic and cyber silhouettes"
             products={relatedBags.length > 0 ? relatedBags : products}
             viewAllLink="/shop"
             viewAllText="Explore All Bags"
@@ -540,9 +587,8 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
         {/* ========================================================= */}
         <div className="border-t border-black/10 bg-zinc-50/50">
           <ProductCarousel
-            title="This Is What Other Customers Have Additionally Chosen"
+            title="Customer Favorites"
             badge="POPULAR DROPS"
-            subtitle="Trending accessories and limited releases"
             products={otherCustomersChosen}
             viewAllLink="/shop"
             viewAllText="View Catalog"

@@ -2,6 +2,7 @@ import { createFileRoute, useSearch, useNavigate } from "@tanstack/react-router"
 import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { products, type Product } from "@/lib/products";
+import { SlidersHorizontal, Check } from "lucide-react";
 
 const CATEGORIES = [
   "All",
@@ -27,13 +28,13 @@ export const Route = createFileRoute("/shop")({
   },
   head: () => ({
     meta: [
-      { title: "Catalog — Nørva Store" },
+      { title: "Catalog — Norva Store" },
       {
         name: "description",
         content:
-          "Explore Nørva Store's curated collection of statement bags, women's drops, heavyweight streetwear, and dark aesthetic accessories.",
+          "Explore Norva Store's curated collection of statement bags, women's drops, heavyweight streetwear, and dark aesthetic accessories.",
       },
-      { property: "og:title", content: "Catalog — Nørva Store" },
+      { property: "og:title", content: "Catalog — Norva Store" },
       {
         property: "og:description",
         content: "Statement Bags, Streetwear & Gothic Accessories. Express your individuality.",
@@ -85,6 +86,8 @@ function Shop() {
   const search = useSearch({ from: "/shop" });
   const navigate = useNavigate();
   const [cat, setCat] = useState<Cat>("All");
+  const [sortBy, setSortBy] = useState<string>("featured");
+  const [sortOpen, setSortOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (search.category) {
@@ -118,52 +121,111 @@ function Shop() {
 
   const query = (search.q || "").toLowerCase().trim();
 
-  const filtered = products.filter((p) => {
-    const matchesCat = matchesCategory(p, cat);
-    const matchesQuery =
-      !query ||
-      p.name.toLowerCase().includes(query) ||
-      p.description.toLowerCase().includes(query) ||
-      p.category.toLowerCase().includes(query);
-    return matchesCat && matchesQuery;
-  });
+  const filtered = products
+    .filter((p) => {
+      const matchesCat = matchesCategory(p, cat);
+      const matchesQuery =
+        !query ||
+        p.name.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query);
+      return matchesCat && matchesQuery;
+    })
+    .sort((a, b) => {
+      if (sortBy === "price-low") return a.price - b.price;
+      if (sortBy === "price-high") return b.price - a.price;
+      if (sortBy === "newest") return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+      return 0;
+    });
 
   return (
-    <section className="bg-white pt-24 sm:pt-36 text-zinc-900 md:pt-40 min-h-screen pb-20">
+    <section className="bg-white pt-20 sm:pt-28 md:pt-32 text-zinc-900 min-h-screen pb-20 select-none">
       <div className="mx-auto max-w-[1600px] px-4 md:px-8">
-        <header className="border-b border-black/10 pb-6 sm:pb-8">
-          <p className="font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide text-zinc-500 font-semibold">
-            Catalog · {filtered.length} Statement Pieces
-          </p>
-          <h1 className="mt-2 sm:mt-3 font-display text-3xl uppercase tracking-tight sm:text-6xl md:text-7xl text-zinc-900 font-black">
-            {cat === "All" ? "The Collection" : cat}
-          </h1>
+        {/* Header Section matching Img 1 & Mobile Responsive */}
+        <header className="pb-3 border-b border-black/10">
+          <div className="flex items-center justify-between gap-2 xs:gap-4 pb-2">
+            {/* Title with Superscript Count (e.g. WOMEN EXCLUSIVE / THE COLLECTION) */}
+            <h1 className="font-display font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-wide uppercase text-zinc-950 flex items-start gap-0.5 min-w-0 leading-tight">
+              <span className="truncate xs:whitespace-normal">{cat === "All" ? "THE COLLECTION" : cat.toUpperCase()}</span>
+              <sup className="text-[10px] sm:text-xs font-sans font-medium text-zinc-500 top-[-0.2em] ml-0.5 shrink-0">
+                {filtered.length}
+              </sup>
+            </h1>
+
+            {/* Filter | Sort Button matching Img 1 */}
+            <div className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => setSortOpen(!sortOpen)}
+                className="flex items-center gap-1.5 font-sans text-[11px] sm:text-xs font-semibold text-zinc-800 hover:text-black py-1.5 px-2.5 sm:px-3.5 rounded-full hover:bg-zinc-100 transition-colors cursor-pointer border border-black/15 shadow-2xs"
+              >
+                <SlidersHorizontal className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-zinc-700" />
+                <span>Filter | Sort</span>
+                {sortBy !== "featured" && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-black ml-0.5" />
+                )}
+              </button>
+
+              {/* Sort Dropdown Menu */}
+              {sortOpen && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-black/10 rounded-xl shadow-xl p-1.5 z-30 font-sans text-xs animate-in fade-in zoom-in-95">
+                  <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider font-bold text-zinc-400">
+                    Sort Catalog
+                  </div>
+                  {[
+                    { id: "featured", label: "Featured" },
+                    { id: "newest", label: "Newest Drops" },
+                    { id: "price-low", label: "Price: Low to High" },
+                    { id: "price-high", label: "Price: High to Low" },
+                  ].map((option) => (
+                    <button
+                      key={option.id}
+                      onClick={() => {
+                        setSortBy(option.id);
+                        setSortOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between cursor-pointer transition-colors ${
+                        sortBy === option.id
+                          ? "bg-black text-white font-bold"
+                          : "text-zinc-700 hover:bg-zinc-100"
+                      }`}
+                    >
+                      <span>{option.label}</span>
+                      {sortBy === option.id && <Check className="w-3.5 h-3.5" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Borderless Horizontal Category Nav Strip (Red Circled Img 1 section) */}
+          <div
+            className="sticky top-[56px] sm:top-[64px] z-20 -mx-4 md:-mx-8 flex items-center gap-6 sm:gap-8 overflow-x-auto bg-white/95 backdrop-blur-md px-4 md:px-8 pt-3 pb-1 scrollbar-none whitespace-nowrap"
+            style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+          >
+            {CATEGORIES.map((c) => {
+              const active = c === cat;
+              return (
+                <button
+                  key={c}
+                  onClick={() => handleCategoryChange(c)}
+                  className={`shrink-0 font-sans text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-0.5 py-1 ${
+                    active
+                      ? "font-bold text-zinc-950 border-b-2 border-black -mb-[5px] pb-2.5"
+                      : "font-medium text-zinc-500 hover:text-zinc-900"
+                  }`}
+                >
+                  <span>{c}</span>
+                  {active && <span className="text-zinc-950 font-bold ml-0.5">•</span>}
+                </button>
+              );
+            })}
+          </div>
         </header>
 
-        {/* Filter Pills */}
-        <div
-          className="sticky top-[56px] sm:top-[64px] z-20 -mx-4 flex gap-2 overflow-x-auto border-b border-black/10 bg-white/95 backdrop-blur-md px-4 py-3 sm:py-4 md:-mx-8 md:px-8 scrollbar-none whitespace-nowrap"
-          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
-        >
-          {CATEGORIES.map((c) => {
-            const active = c === cat;
-            return (
-              <button
-                key={c}
-                onClick={() => handleCategoryChange(c)}
-                className={`shrink-0 rounded-full border px-4 sm:px-5 py-2 font-display text-[10px] sm:text-[11px] uppercase tracking-brand-wide transition-all cursor-pointer min-h-[38px] flex items-center justify-center ${active
-                    ? "border-black bg-black text-white font-bold shadow-xs"
-                    : "border-black/15 text-zinc-700 hover:border-black hover:text-black active:bg-black/5 font-semibold bg-white"
-                  }`}
-              >
-                {c}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-12 py-10 md:grid-cols-3 md:gap-x-6 md:py-14">
+        {/* Product Cards Grid (Fully fits page width with zero horizontal gap) */}
+        <div className="-mx-4 md:-mx-8 grid grid-cols-2 gap-x-0 gap-y-6 sm:gap-y-10 md:grid-cols-3 lg:grid-cols-4 py-6 sm:py-10">
           {filtered.map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}

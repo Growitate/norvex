@@ -7,7 +7,6 @@ import {
   Maximize2,
   ChevronLeft,
   ChevronRight,
-  MessageSquare,
   Ruler,
   Sparkles,
   Layers,
@@ -16,6 +15,7 @@ import type { Product } from "@/lib/products";
 import { products } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { ProductCarousel } from "./ProductCarousel";
+import { ProductCard } from "./ProductCard";
 
 interface UniversalProductDetailProps {
   product: Product;
@@ -38,6 +38,15 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
   // Mobile Sideways Carousel State
   const [activeMobileIdx, setActiveMobileIdx] = useState(0);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
+  const thumbScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!thumbScrollRef.current) return;
+    const activeThumb = thumbScrollRef.current.children[activeMobileIdx] as HTMLElement;
+    if (activeThumb) {
+      activeThumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  }, [activeMobileIdx]);
 
   const handleMobileScroll = () => {
     if (mobileScrollRef.current) {
@@ -152,20 +161,20 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
   };
 
   return (
-    <div className="bg-[#ededf0] text-zinc-900 selection:bg-zinc-900 selection:text-white min-h-screen font-sans pb-16">
+    <div className="bg-white text-zinc-900 selection:bg-zinc-900 selection:text-white min-h-screen font-sans pb-16">
       {/* Header Spacer */}
       <div className="h-14 sm:h-16 bg-white" />
 
 
 
       {/* Main Grid Layout Container */}
-      <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 pt-2 sm:pt-3.5 pb-8">
+      <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 pt-0 lg:pt-3.5 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-start">
 
           {/* ========================================================================= */}
           {/* MOBILE ONLY: 100% FULL-BLEED CAROUSEL                                     */}
           {/* ========================================================================= */}
-          <div className="lg:hidden col-span-1 -mx-4 sm:-mx-6 space-y-3 pb-3">
+          <div className="lg:hidden col-span-1 -mx-4 sm:-mx-6 space-y-1 pb-0 mt-0">
             <div
               ref={mobileScrollRef}
               onScroll={handleMobileScroll}
@@ -180,10 +189,10 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 <div
                   key={idx}
                   onClick={() => openLightbox(idx)}
-                  className="relative aspect-[3/4.2] w-screen shrink-0 snap-center bg-zinc-100 overflow-hidden cursor-zoom-in select-none"
+                  className="relative aspect-[3/4] w-screen shrink-0 snap-center bg-white overflow-hidden cursor-zoom-in select-none"
                 >
                   {/* Image counter pill bottom left */}
-                  <div className="absolute bottom-4 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full">
+                  <div className="absolute bottom-3 left-4 z-10 text-white font-sans text-xs font-semibold tracking-wider drop-shadow-[0_2px_5px_rgba(0,0,0,0.95)] select-none bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full">
                     {idx + 1} / {gallery.length}
                   </div>
 
@@ -210,6 +219,38 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     aria-label={`View angle ${i + 1}`}
                   />
                 ))}
+              </div>
+            )}
+
+            {/* Horizontal Image Thumbnails Selector (Mobile Friendly Touch Scrollable Track) */}
+            {gallery.length > 1 && (
+              <div
+                ref={thumbScrollRef}
+                className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pt-2.5 pb-1 scrollbar-none px-4 touch-pan-x overscroll-x-contain"
+                style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+              >
+                {gallery.map((imgSrc, i) => {
+                  const isActive = activeMobileIdx === i;
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => scrollToMobileIndex(i)}
+                      className={`relative w-14 h-18 sm:w-16 sm:h-20 shrink-0 overflow-hidden bg-white rounded-lg transition-all cursor-pointer ${
+                        isActive
+                          ? "border-2 border-black shadow-md ring-1 ring-black scale-102"
+                          : "border border-zinc-200/80 opacity-70 hover:opacity-100 hover:border-zinc-400"
+                      }`}
+                      aria-label={`View thumbnail angle ${i + 1}`}
+                    >
+                      <img
+                        src={imgSrc}
+                        alt={`${product.name} angle ${i + 1}`}
+                        className="w-full h-full object-cover object-center pointer-events-none"
+                      />
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -316,7 +357,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
           {/* ========================================================================= */}
           {/* COLUMN 3: RIGHT STICKY PURCHASE PANEL (PERMANENTLY PINNED ALONGSIDE GALLERY) */}
           {/* ========================================================================= */}
-          <div className="col-span-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 lg:self-start space-y-3.5 pr-0.5 pt-8 sm:pt-12 lg:pt-16">
+          <div className="col-span-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 lg:self-start space-y-3 pr-0.5 pt-0 sm:pt-2 lg:pt-16">
 
             {/* ----------------------------------------------------------------------- */}
             {/* CARD 1: PURCHASE SELECTION BOX (DESKTOP STICKY OVERLAP ONLY)           */}
@@ -578,67 +619,24 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
 
           {/* Recently Viewed Grid */}
           <div>
-            <h3 className="font-bold text-zinc-950 text-sm uppercase tracking-wide mb-4">
+            <h3 className="font-display font-bold text-zinc-950 text-base sm:text-lg uppercase tracking-wider mb-4">
               Recently viewed
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-              {recentlyViewed.map((item) => (
-                <Link
-                  key={item.id}
-                  to="/product/$id"
-                  params={{ id: item.id }}
-                  className="group block"
-                >
-                  <div className="relative aspect-[3/4] w-full rounded-xl overflow-hidden bg-zinc-900 mb-2 border border-zinc-200/60 shadow-xs">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-103"
-                    />
-                    <div className="absolute top-2.5 right-2.5 z-10">
-                      <span className="w-7 h-7 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-zinc-800 shadow-2xs">
-                        <Bookmark className="h-3.5 w-3.5" />
-                      </span>
-                    </div>
-                  </div>
-                  <h4 className="font-bold text-xs text-zinc-900 truncate group-hover:underline">
-                    {item.name}
-                  </h4>
-                  <p className="text-xs text-zinc-500 font-medium mt-0.5">
-                    RS. {item.price.toLocaleString("en-IN")}
-                  </p>
-                </Link>
+            <div className="-mx-4 sm:-mx-6 md:-mx-8 grid grid-cols-2 sm:grid-cols-4 gap-x-0 gap-y-6">
+              {recentlyViewed.map((item, idx) => (
+                <ProductCard key={item.id} product={item} index={idx} />
               ))}
             </div>
           </div>
 
           {/* Styling Ideas Grid */}
           <div>
-            <h3 className="font-bold text-zinc-950 text-sm uppercase tracking-wide mb-4">
+            <h3 className="font-display font-bold text-zinc-950 text-base sm:text-lg uppercase tracking-wider mb-4">
               Styling ideas
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-              {related.slice(0, 2).map((item) => (
-                <Link
-                  key={item.id}
-                  to="/product/$id"
-                  params={{ id: item.id }}
-                  className="group block"
-                >
-                  <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-zinc-900 mb-2 border border-zinc-200/60 shadow-xs">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-103"
-                    />
-                  </div>
-                  <h4 className="font-bold text-xs text-zinc-900 truncate group-hover:underline">
-                    {item.name}
-                  </h4>
-                  <p className="text-xs text-zinc-500 font-medium mt-0.5">
-                    RS. {item.price.toLocaleString("en-IN")}
-                  </p>
-                </Link>
+            <div className="-mx-4 sm:-mx-6 md:-mx-8 grid grid-cols-2 sm:grid-cols-4 gap-x-0 gap-y-6">
+              {related.slice(0, 4).map((item, idx) => (
+                <ProductCard key={item.id} product={item} index={idx} />
               ))}
             </div>
           </div>
@@ -808,22 +806,12 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
         )}
       </AnimatePresence>
 
-      {/* Floating Chat Bubble Button at Bottom Right (Matches Image 2) */}
-      <button
-        type="button"
-        aria-label="Customer Support Chat"
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#18181b] text-white flex items-center justify-center shadow-lg hover:scale-105 transition-all cursor-pointer border border-white/20"
-      >
-        <MessageSquare className="h-5 w-5 fill-white text-white" />
-      </button>
-
       {/* "Wear It With" / "You Might Also Like" Carousel (Bluorng bottom section) */}
       {related.length > 0 && (
         <div className="border-t border-black/10 mt-12 sm:mt-16">
           <ProductCarousel
             title="Wear It With"
             badge="STYLE RECOMMENDATIONS"
-            subtitle="Explore complementary streetwear drops and accessories"
             products={related}
             viewAllLink="/shop"
             viewAllText="Explore Full Collection"

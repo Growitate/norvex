@@ -147,10 +147,7 @@ export function SocialVideoMarquee() {
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 space-y-3 sm:space-y-4">
         {/* Top Header - Tight Nude-Project Style */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-1 sm:pb-1.5">
-          <div className="space-y-0.5">
-            <span className="inline-block font-display text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-400">
-              COMMUNITY • @NORVAXSTORE
-            </span>
+          <div>
             <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-tight text-zinc-900">
               Community & Styling Reels
             </h2>

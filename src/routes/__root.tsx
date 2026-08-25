@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { OpeningLoader } from "@/components/OpeningLoader";
+import { FloatingChatWidget } from "@/components/FloatingChatWidget";
 
 function NotFoundComponent() {
   return (
@@ -84,14 +85,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Nørva Store — Y2K & Gothic Fashion Accessories" },
+      { title: "Norva Store — Y2K & Gothic Fashion Accessories" },
       {
         name: "description",
         content:
-          "Nørva Store — Premium Y2K, gothic, and dark aesthetic accessories. Unique statement pieces for fearless self-expression.",
+          "Norva Store — Premium Y2K, gothic, and dark aesthetic accessories. Unique statement pieces for fearless self-expression.",
       },
-      { name: "author", content: "Nørva Store / Jevani Enterprises" },
-      { property: "og:title", content: "Nørva Store — Y2K & Gothic Fashion Accessories" },
+      { name: "author", content: "Norva Store / Jevani Enterprises" },
+      { property: "og:title", content: "Norva Store — Y2K & Gothic Fashion Accessories" },
       {
         property: "og:description",
         content:
@@ -184,6 +185,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <FloatingChatWidget />
     </QueryClientProvider>
   );
 }

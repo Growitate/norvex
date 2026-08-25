@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, Heart, Plus, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, Plus, Check, ArrowRight } from "lucide-react";
 import { Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 
@@ -38,7 +38,7 @@ export function ProductCarousel({
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollContainerRef.current) return;
-    const cardWidth = 280;
+    const cardWidth = 320;
     const scrollAmount = direction === "left" ? -cardWidth * 2 : cardWidth * 2;
     scrollContainerRef.current.scrollBy({
       left: scrollAmount,
@@ -50,20 +50,15 @@ export function ProductCarousel({
     <section
       data-header-theme="light"
       className={`w-full bg-white text-zinc-900 select-none ${
-        flushTop ? "pt-0 pb-0" : "py-3 sm:py-4"
+        flushTop ? "pt-0 pb-0" : "py-6 sm:py-8 md:py-10"
       } ${className}`}
     >
-      {/* Optional Title Bar when title provided */}
+      {/* Premium Title Bar Header */}
       {title && (
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 mb-2">
-          <div className="flex items-end justify-between pb-1 sm:pb-1.5">
-            <div className="space-y-1">
-              {badge && (
-                <span className="inline-block font-display text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.24em] text-zinc-400">
-                  {badge}
-                </span>
-              )}
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-tight text-zinc-900">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 mb-2 sm:mb-3">
+          <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-3 pb-0">
+            <div>
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-wider text-zinc-950 leading-tight">
                 {title}
               </h2>
               {subtitle && (
@@ -71,25 +66,26 @@ export function ProductCarousel({
               )}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between xs:justify-end gap-3 sm:gap-6 shrink-0">
               {viewAllLink && (
                 <Link
                   to={viewAllLink}
-                  className="hidden sm:inline-flex items-center text-xs font-display font-bold uppercase tracking-wider text-zinc-800 hover:text-black transition-colors mr-2 underline underline-offset-4"
+                  className="group inline-flex items-center gap-1 font-sans text-xs font-medium uppercase tracking-wider text-zinc-600 hover:text-black border-b border-black/30 hover:border-black pb-0.5 transition-all cursor-pointer shrink-0"
                 >
-                  {viewAllText}
+                  <span>{viewAllText}</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
               )}
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   onClick={() => scroll("left")}
                   disabled={!canScrollLeft}
                   aria-label="Previous products"
-                  className={`w-8 h-8 rounded-full border border-black/15 flex items-center justify-center transition-all cursor-pointer ${
+                  className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
                     canScrollLeft
-                      ? "hover:bg-black hover:text-white text-zinc-900 border-black active:scale-95"
-                      : "opacity-30 cursor-not-allowed text-zinc-400 border-zinc-200"
+                      ? "border-black/30 hover:border-black hover:bg-black hover:text-white text-zinc-900 active:scale-95 shadow-2xs"
+                      : "opacity-20 cursor-not-allowed text-zinc-400 border-zinc-200"
                   }`}
                 >
                   <ChevronLeft className="h-4 w-4 stroke-[2]" />
@@ -99,10 +95,10 @@ export function ProductCarousel({
                   onClick={() => scroll("right")}
                   disabled={!canScrollRight}
                   aria-label="Next products"
-                  className={`w-8 h-8 rounded-full border border-black/15 flex items-center justify-center transition-all cursor-pointer ${
+                  className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
                     canScrollRight
-                      ? "hover:bg-black hover:text-white text-zinc-900 border-black active:scale-95"
-                      : "opacity-30 cursor-not-allowed text-zinc-400 border-zinc-200"
+                      ? "border-black/30 hover:border-black hover:bg-black hover:text-white text-zinc-900 active:scale-95 shadow-2xs"
+                      : "opacity-20 cursor-not-allowed text-zinc-400 border-zinc-200"
                   }`}
                 >
                   <ChevronRight className="h-4 w-4 stroke-[2]" />
@@ -114,7 +110,7 @@ export function ProductCarousel({
       )}
 
       {/* Horizontally Scrollable Track (Nude Project full-bleed tight edge-to-edge layout) */}
-      <div className="relative bg-zinc-50/50">
+      <div className="relative bg-white">
         <div
           ref={scrollContainerRef}
           onScroll={checkScroll}
@@ -217,8 +213,8 @@ function NudeProductCard({ product }: { product: Product }) {
 
   return (
     <div className="group flex flex-col h-full select-none bg-white">
-      {/* Product Image Container: flush, aspect-[3/4] for larger product photos */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-100/60">
+      {/* Product Image Container: flush aspect-[3/4] for larger product photos */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-white">
         <Link
           to="/product/$id"
           params={{ id: product.id }}
@@ -235,7 +231,7 @@ function NudeProductCard({ product }: { product: Product }) {
         {/* Top-Left: "New In" Badge (Nude Project Style) */}
         {product.isNew && (
           <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <span className="inline-block bg-white/95 backdrop-blur-xs text-zinc-900 text-[10px] font-sans font-medium tracking-normal px-2 py-0.5 rounded-full border border-black/10 shadow-xs">
+            <span className="inline-block bg-white/95 backdrop-blur-xs text-zinc-900 text-[10px] font-sans font-medium tracking-normal px-2.5 py-0.5 rounded-full border border-black/10 shadow-2xs">
               New In
             </span>
           </div>
@@ -245,7 +241,7 @@ function NudeProductCard({ product }: { product: Product }) {
         <button
           onClick={handleWishlist}
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full bg-white/80 backdrop-blur-xs hover:bg-white flex items-center justify-center text-zinc-700 transition-all active:scale-90 shadow-xs cursor-pointer"
+          className="absolute top-3 right-3 z-10 w-7.5 h-7.5 rounded-full bg-white/80 backdrop-blur-xs hover:bg-white flex items-center justify-center text-zinc-700 transition-all active:scale-90 shadow-2xs cursor-pointer"
         >
           <Heart
             className={`h-3.5 w-3.5 transition-colors ${
@@ -289,7 +285,7 @@ function NudeProductCard({ product }: { product: Product }) {
           {/* Row 2: Price & Quick-Add "+" Button */}
           <div className="flex items-center justify-between mt-1">
             <span className="font-sans text-xs sm:text-sm font-semibold text-zinc-900">
-              Rs. {product.price.toLocaleString("en-IN")}
+              ₹{product.price.toLocaleString("en-IN")}
             </span>
 
             {/* Quick-Add "+" Button */}

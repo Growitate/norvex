@@ -449,7 +449,7 @@ export function Header() {
                   </div>
 
                   <div className="text-[10px] font-sans text-zinc-400 flex items-center justify-between pt-1">
-                    <span>NØRVA STORE © 2026</span>
+                    <span>NORVA STORE © 2026</span>
                     <span className="text-zinc-500 font-medium">All Rights Reserved</span>
                   </div>
                 </div>

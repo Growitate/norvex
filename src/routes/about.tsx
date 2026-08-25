@@ -8,13 +8,13 @@ import { ArrowRight, Sparkles, Instagram, ShieldCheck, Heart, Award } from "luci
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Nørva Store" },
+      { title: "About — Norva Store" },
       {
         name: "description",
         content:
-          "Nørva Store was created for individuals who see fashion as a form of self-expression. Inspired by Y2K trends, gothic culture, and modern European aesthetics.",
+          "Norva Store was created for individuals who see fashion as a form of self-expression. Inspired by Y2K trends, gothic culture, and modern European aesthetics.",
       },
-      { property: "og:title", content: "About — Nørva Store" },
+      { property: "og:title", content: "About — Norva Store" },
       { property: "og:description", content: "Express your individuality through bold Y2K, gothic, and dark aesthetic accessories." },
       { property: "og:image", content: heroImg },
     ],
@@ -75,7 +75,7 @@ function About() {
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">
-              Nørva Store was created for individuals who see fashion as a form of art and identity. Inspired by Y2K aesthetic trends, gothic street culture, and modern dark aesthetics, we curate bold bags and hardware accessories that help you stand out with confidence.
+              Norva Store was created for individuals who see fashion as a form of art and identity. Inspired by Y2K aesthetic trends, gothic street culture, and modern dark aesthetics, we curate bold bags and hardware accessories that help you stand out with confidence.
             </p>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">

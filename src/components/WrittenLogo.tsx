@@ -11,7 +11,7 @@ interface WrittenLogoProps {
   onAnimationComplete?: () => void;
 }
 
-const FULL_NORVA = "NØRVA";
+const FULL_NORVA = "NORVA";
 const FULL_STORE = "STORE";
 
 export function WrittenLogo({

@@ -15,13 +15,13 @@ import brandStatementBg from "@/assets/brand_statement_bg.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Nørva Store — Y2K & Gothic Statement Bags, Apparel & Accessories" },
+      { title: "Norva Store — Y2K & Gothic Statement Bags, Apparel & Accessories" },
       {
         name: "description",
         content:
-          "Nørva Store helps fashion lovers express their individuality through bold Y2K, gothic, and dark aesthetic statement bags, women's edits, heavyweight streetwear, and accessories.",
+          "Norva Store helps fashion lovers express their individuality through bold Y2K, gothic, and dark aesthetic statement bags, women's edits, heavyweight streetwear, and accessories.",
       },
-      { property: "og:title", content: "Nørva Store — Y2K & Gothic Fashion" },
+      { property: "og:title", content: "Norva Store — Y2K & Gothic Fashion" },
       {
         property: "og:description",
         content: "Curated limited-edition statement bags, clothing, and accessories with a strong dark aesthetic identity.",
@@ -34,9 +34,6 @@ export const Route = createFileRoute("/")({
 function Home() {
   const newArrivals = products.filter((p) => p.isNew);
   const bestsellers = products.slice(0, 5);
-  const shoulderAndHarness = products.filter(
-    (p) => p.category === "Shoulder Bags" || p.category === "Totes & Backpacks",
-  );
 
   return (
     <>
@@ -52,13 +49,24 @@ function Home() {
       {/* 2. BANNER 1 (IMAGE + TITLE + SINGLE SHOP NOW BUTTON) */}
       <CollectionBanner
         image={lifestyleBanner1}
+        seasonLabel="FW2026"
         title="New Arrivals"
         primaryButtonText="Shop Now"
         primaryButtonLink="/shop?category=Bags"
-        position="bottom-left"
+        position="bottom-center"
       />
 
-      {/* 4. PRODUCT CAROUSEL (SECOND COLLECTION - BESTSELLERS) */}
+      {/* 5. BANNER 2 (HARNESS & HARDWARE) */}
+      <CollectionBanner
+        image={lifestyleBanner2}
+        seasonLabel="FW2026"
+        title="Harness & Hardware"
+        primaryButtonText="Shop Now"
+        primaryButtonLink="/shop?category=Bags"
+        position="bottom-center"
+      />
+
+      {/* 4. PRODUCT CAROUSEL (BESTSELLERS - POSITIONED BELOW HARNESS & HARDWARE BANNER) */}
       <ProductCarousel
         title="Bestsellers"
         products={bestsellers}
@@ -67,31 +75,14 @@ function Home() {
         className="pb-0"
       />
 
-      {/* 5. BANNER 2 (IMAGE + TITLE + SINGLE SHOP NOW BUTTON) */}
-      <CollectionBanner
-        image={lifestyleBanner2}
-        title="Harness & Hardware"
-        primaryButtonText="Shop Now"
-        primaryButtonLink="/shop?category=Bags"
-        position="bottom-center"
-      />
-
-      {/* 6. PRODUCT CAROUSEL (THIRD COLLECTION - SHOULDER & HARNESS BAGS) */}
-      <ProductCarousel
-        title="Shoulder & Harness Bags"
-        products={shoulderAndHarness.length > 0 ? shoulderAndHarness : products}
-        viewAllLink="/shop?category=Shoulder+Bags"
-        viewAllText="View Shoulder Bags"
-        className="pb-0"
-      />
-
-      {/* 7. BANNER 3 (IMAGE + TITLE + SINGLE SHOP NOW BUTTON) */}
+      {/* 7. BANNER 3 (CYBER STREETWEAR 2026) */}
       <CollectionBanner
         image={lifestyleBanner3}
+        seasonLabel="FW2026"
         title="Cyber Streetwear 2026"
         primaryButtonText="Shop Men's"
         primaryButtonLink="/shop?category=Male+Clothes"
-        position="bottom-left"
+        position="bottom-center"
       />
 
       {/* 8. COMMUNITY & STYLING REELS SECTION */}
@@ -100,9 +91,10 @@ function Home() {
       {/* 9. AUTO-SCROLLING CUSTOMER REVIEWS SECTION */}
       <ReviewsSection />
 
-      {/* 10. ANNOUNCEMENT / BRAND STATEMENT BANNER (Tauxxic Style) */}
+      {/* 10. ANNOUNCEMENT / BRAND STATEMENT BANNER */}
       <BrandStatementBanner
         image={brandStatementBg}
+        seasonLabel="FW2026"
         statement="We Are Loud and Proud"
         buttonText="Explore"
         buttonLink="/shop"

@@ -43,7 +43,7 @@ const REVIEWS: Review[] = [
     id: '5',
     author: 'Ananya Patel',
     title: 'Top tier streetwear quality',
-    text: "The hoodie weight is crazy good, 450GSM minimum feel. Doesn't lose shape after washing. NØRVA is setting new benchmarks.",
+    text: "The hoodie weight is crazy good, 450GSM minimum feel. Doesn't lose shape after washing. NORVA is setting new benchmarks.",
     rating: 5,
   },
   {
@@ -95,7 +95,7 @@ export function ReviewsSection() {
         {/* Main Section Header */}
         <div className="space-y-4 mb-12">
           <h2 className="font-display font-medium text-3xl sm:text-4xl md:text-5xl uppercase tracking-wider text-zinc-900">
-            Let NØRVA speak for itself
+            Let NORVA speak for itself
           </h2>
 
           {/* Overall Rating Summary */}

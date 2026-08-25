@@ -9,15 +9,15 @@ export const Route = createFileRoute("/product/$id")({
     const p = getProduct(params.id);
     return {
       meta: [
-        { title: `${p?.name ?? "Product"} — Nørva Store` },
+        { title: `${p?.name ?? "Product"} — Norva Store` },
         {
           name: "description",
           content:
             p?.shortDescription ||
             p?.description ||
-            "Nørva Store product. Premium Y2K, gothic statement bags, apparel and accessories.",
+            "Norva Store product. Premium Y2K, gothic statement bags, apparel and accessories.",
         },
-        { property: "og:title", content: `${p?.name ?? "Product"} — Nørva Store` },
+        { property: "og:title", content: `${p?.name ?? "Product"} — Norva Store` },
         { property: "og:description", content: p?.shortDescription || p?.description || "" },
         ...(p ? [{ property: "og:image", content: p.image }] : []),
       ],

@@ -344,9 +344,8 @@ export function HeroSlider() {
               <button
                 key={`dot-${i}`}
                 type="button"
-                className={`hs-dot h-[7px] rounded-[4px] border-none p-0 cursor-pointer pointer-events-auto transition-all duration-350 ${
-                  isActive ? "w-[28px] bg-black" : "w-[7px] bg-black/30"
-                }`}
+                className={`hs-dot h-[7px] rounded-[4px] border-none p-0 cursor-pointer pointer-events-auto transition-all duration-350 ${isActive ? "w-[28px] bg-black" : "w-[7px] bg-black/30"
+                  }`}
                 onClick={() => {
                   if (isDesktop) return;
                   const state = stateRef.current;
@@ -362,13 +361,13 @@ export function HeroSlider() {
         </div>
 
         {/* Broken Planet Centered Pulsing "SHOP HERE" CTA Button */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none px-4">
+        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none px-4 sm:px-6 md:px-8 max-w-[1600px] mx-auto text-center">
           <Link
             to="/shop"
-            className="pointer-events-auto group cursor-pointer flex flex-col items-center justify-center text-center transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none select-none"
+            className="pointer-events-auto group cursor-pointer flex flex-col items-center justify-center text-center transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none select-none text-center"
             aria-label="Shop Here"
           >
-            <h1 className="font-display font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter text-white drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] animate-pulse group-hover:animate-none group-hover:text-zinc-100 transition-colors">
+            <h1 className="font-bebas text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-wider uppercase text-white drop-shadow-lg group-hover:text-zinc-100 transition-colors text-center font-normal">
               SHOP HERE
             </h1>
           </Link>

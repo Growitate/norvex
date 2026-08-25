@@ -6,12 +6,12 @@ import modelBag3 from "@/assets/model_banner_bag_3_1786114733990.png";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Nørva Store" },
+      { title: "Contact — Norva Store" },
       {
         name: "description",
-        content: "Get in touch with Nørva Store. WhatsApp +91 9971303047, Email norvastorex@gmail.com or DM @norvaxstore.",
+        content: "Get in touch with Norva Store. WhatsApp +91 9971303047, Email norvastorex@gmail.com or DM @norvaxstore.",
       },
-      { property: "og:title", content: "Contact — Nørva Store" },
+      { property: "og:title", content: "Contact — Norva Store" },
       { property: "og:description", content: "Talk to us. WhatsApp, Email, Instagram, or drop a message." },
     ],
   }),
@@ -36,7 +36,7 @@ function Contact() {
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-zinc-900 leading-[1.1]">
-              Connect With NØRVA.
+              Connect With NORVA.
             </h1>
 
             <p className="font-sans text-sm sm:text-base text-zinc-600 leading-relaxed">

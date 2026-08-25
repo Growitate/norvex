@@ -69,7 +69,7 @@ export function CategorySection() {
               <Sparkles className="h-3.5 w-3.5 text-zinc-800" />
               CURATED DEPARTMENTS // FW2026
             </span>
-            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-zinc-950">
+            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight uppercase text-zinc-950">
               Shop By Category
             </h2>
             <p className="text-xs sm:text-sm text-zinc-500 font-normal max-w-xl">
@@ -106,7 +106,7 @@ export function CategorySection() {
               </div>
 
               {/* Image Container with high fashion aspect ratio */}
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-zinc-100/70 p-4">
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-white p-4">
                 <img
                   src={cat.image}
                   alt={cat.title}

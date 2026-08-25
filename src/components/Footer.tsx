@@ -41,7 +41,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#fcfbfa] text-zinc-900 select-none pt-12 sm:pt-16 pb-8">
+    <footer className="w-full bg-white text-zinc-900 select-none pt-12 sm:pt-16 pb-8">
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8">
         {/* Top Grid Columns */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-8 sm:pb-12">
@@ -131,7 +131,7 @@ export function Footer() {
                   className="mt-0.5 accent-zinc-900 rounded-sm"
                 />
                 <span>
-                  I agree to receive content from Nørva Store via email and have read and accept the{" "}
+                  I agree to receive content from Norva Store via email and have read and accept the{" "}
                   <Link
                     to="/legal/$page"
                     params={{ page: "privacy" }}
@@ -172,12 +172,12 @@ export function Footer() {
               >
                 <p>
                   <Link to="/about" className="hover:text-black transition-colors">
-                    Nørva Members
+                    Norva Members
                   </Link>
                 </p>
                 <p>
                   <Link to="/shop" className="hover:text-black transition-colors">
-                    Nørva News
+                    Norva News
                   </Link>
                 </p>
                 <p>
@@ -417,7 +417,7 @@ export function Footer() {
         {/* Bottom Line & Copyright */}
         <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-sans text-zinc-500 text-center md:text-left">
           <div>
-            © {new Date().getFullYear()} NØRVA STORE (JEVANI ENTERPRISES) — ALL RIGHTS RESERVED
+            © {new Date().getFullYear()} NORVA STORE (JEVANI ENTERPRISES) — ALL RIGHTS RESERVED
           </div>
 
           {/* Built by Growitate Credit Link */}

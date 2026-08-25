@@ -1,4 +1,5 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
 
 type LegalContent = {
   title: string;
@@ -10,7 +11,7 @@ const PAGES: Record<string, LegalContent> = {
   refund: {
     title: "Refund Policy",
     intro:
-      "All sales at Nørva Store (Jevani Enterprises) are carefully curated in limited batches. Please review our policy carefully before placing your order.",
+      "All sales at Norva Store (Jevani Enterprises) are carefully curated in limited batches. Please review our policy carefully before placing your order.",
     sections: [
       {
         heading: "Returns",
@@ -29,11 +30,11 @@ const PAGES: Record<string, LegalContent> = {
   terms: {
     title: "Terms & Conditions",
     intro:
-      "By visiting Nørva Store and placing an order, you agree to be bound by the following terms and conditions of Jevani Enterprises.",
+      "By visiting Norva Store and placing an order, you agree to be bound by the following terms and conditions of Jevani Enterprises.",
     sections: [
       {
         heading: "Use of Site",
-        body: "All content, logos, imagery, and product designs on this site are the property of Nørva Store / Jevani Enterprises and may not be reproduced without written permission.",
+        body: "All content, logos, imagery, and product designs on this site are the property of Norva Store / Jevani Enterprises and may not be reproduced without written permission.",
       },
       {
         heading: "Orders",
@@ -41,14 +42,14 @@ const PAGES: Record<string, LegalContent> = {
       },
       {
         heading: "Limitation of Liability",
-        body: "Nørva Store is not liable for any indirect, incidental, or consequential damages arising from the use of our products or website.",
+        body: "Norva Store is not liable for any indirect, incidental, or consequential damages arising from the use of our products or website.",
       },
     ],
   },
   privacy: {
     title: "Privacy Policy",
     intro:
-      "Your privacy is essential to us. This policy outlines how Nørva Store collects and safeguards your personal data.",
+      "Your privacy is essential to us. This policy outlines how Norva Store collects and safeguards your personal data.",
     sections: [
       {
         heading: "Information We Collect",
@@ -67,7 +68,7 @@ const PAGES: Record<string, LegalContent> = {
   disclaimer: {
     title: "Disclaimer",
     intro:
-      "The information provided on Nørva Store is for general informational and retail purposes only.",
+      "The information provided on Norva Store is for general informational and retail purposes only.",
     sections: [
       {
         heading: "Product Imagery",
@@ -77,55 +78,62 @@ const PAGES: Record<string, LegalContent> = {
         heading: "External Links",
         body: "Our site may contain links to social media or third-party platforms. We are not responsible for the content or privacy practices of those external sites.",
       },
-      {
-        heading: "Policy Updates",
-        body: "We reserve the right to update or modify any of our policies at any time without prior notice. Continued use of the site constitutes acceptance of updated terms.",
-      },
     ],
   },
 };
 
 export const Route = createFileRoute("/legal/$page")({
   head: ({ params }) => {
-    const c = PAGES[params.page];
+    const pageKey = params.page ?? "terms";
+    const c = PAGES[pageKey];
     return {
       meta: [
-        { title: `${c?.title ?? "Legal"} — Nørva Store` },
-        { name: "description", content: c?.intro ?? "Legal information for Nørva Store (Jevani Enterprises)." },
+        { title: `${c?.title ?? "Legal"} — Norva Store` },
+        { name: "description", content: c?.intro ?? "Legal information for Norva Store (Jevani Enterprises)." },
       ],
     };
-  },
-  loader: ({ params }) => {
-    const c = PAGES[params.page];
-    if (!c) throw notFound();
-    return c;
   },
   component: LegalPage,
 });
 
 function LegalPage() {
-  const c = Route.useLoaderData() as LegalContent;
+  const { page } = Route.useParams();
+  const content = PAGES[page] ?? PAGES.terms;
 
   return (
-    <section className="bg-white pt-40 text-zinc-900 md:pt-48 min-h-screen">
-      <article className="mx-auto max-w-3xl px-4 pb-24 md:px-8 md:pb-32">
-        <p className="font-display text-[11px] uppercase tracking-brand-wide text-zinc-500 font-semibold">
-          Legal Policy
-        </p>
-        <h1 className="mt-3 font-display text-4xl uppercase tracking-tight sm:text-6xl text-zinc-900 font-bold">
-          {c.title}
+    <section className="bg-white pt-24 sm:pt-32 pb-20 text-zinc-900 min-h-screen select-none">
+      <article className="mx-auto max-w-4xl px-4 sm:px-6 md:px-8">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 font-sans text-xs uppercase tracking-brand text-zinc-500 hover:text-black transition-colors mb-6"
+        >
+          <ArrowLeft className="h-4 w-4" /> Return to Home
+        </Link>
+
+        <div className="flex items-center gap-2 text-xs uppercase tracking-brand font-semibold text-zinc-700 mb-2">
+          <ShieldCheck className="h-4 w-4" /> Official Brand Policy
+        </div>
+
+        <h1 className="font-display text-3xl sm:text-5xl font-bold uppercase tracking-tight text-zinc-950 mb-4">
+          {content.title}
         </h1>
-        <p className="mt-6 text-lg leading-relaxed text-zinc-700 font-medium">{c.intro}</p>
-        <div className="mt-12 space-y-10 border-t border-black/15 pt-10">
-          {c.sections.map((s: { heading: string; body: string }) => (
-            <section key={s.heading}>
-              <h2 className="font-display text-sm uppercase tracking-brand-wide text-zinc-900 font-bold">{s.heading}</h2>
-              <p className="mt-3 leading-relaxed text-zinc-700">{s.body}</p>
-            </section>
+
+        <p className="font-sans text-sm sm:text-base text-zinc-600 leading-relaxed pb-8 border-b border-black/[0.08] mb-8">
+          {content.intro}
+        </p>
+
+        <div className="space-y-8 font-sans text-sm text-zinc-600 leading-relaxed">
+          {content.sections.map((sec, idx) => (
+            <div key={idx} className="space-y-2">
+              <h2 className="font-sans font-bold text-zinc-950 text-base uppercase tracking-wider">
+                {sec.heading}
+              </h2>
+              <p>{sec.body}</p>
+            </div>
           ))}
         </div>
         <p className="mt-16 text-xs uppercase tracking-brand text-zinc-500 font-semibold">
-          Nørva Store (Jevani Enterprises) · Contact: norvastorex@gmail.com
+          Norva Store (Jevani Enterprises) · Contact: norvastorex@gmail.com
         </p>
       </article>
     </section>

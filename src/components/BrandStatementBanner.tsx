@@ -1,11 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import brandBg from "@/assets/brand_statement_bg.jpg";
 
 interface BrandStatementBannerProps {
   image?: string;
-  tag?: string;
+  seasonLabel?: string;
   statement?: string;
   buttonText?: string;
   buttonLink?: string;
@@ -14,7 +13,7 @@ interface BrandStatementBannerProps {
 
 export function BrandStatementBanner({
   image = brandBg,
-  tag = "NØRVA STORE • STATEMENT",
+  seasonLabel = "FW2026",
   statement = "We Are Loud and Proud",
   buttonText = "Explore",
   buttonLink = "/shop",
@@ -25,39 +24,45 @@ export function BrandStatementBanner({
       data-header-theme="dark"
       className={`relative w-full overflow-hidden bg-black select-none border-t border-black/[0.08] ${className}`}
     >
-      {/* Full-Bleed Background Lifestyle / Graphic Image */}
-      <div className="relative w-full h-[640px] xs:h-[750px] sm:h-[85vh] md:h-[90vh] lg:h-[95vh] min-h-[680px] max-h-[1100px] flex items-center justify-center">
+      {/* Full-Bleed Background Image */}
+      <div className="relative w-full h-[600px] xs:h-[720px] sm:h-[85vh] md:h-[90vh] lg:h-[95vh] min-h-[600px] max-h-[1100px] flex items-center justify-center">
         <img
           src={image}
           alt={statement}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover object-top sm:object-center pointer-events-none transition-transform duration-1000 ease-out hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-1000 ease-out hover:scale-105"
         />
 
         {/* Ambient Darkened Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/35 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/25 pointer-events-none" />
 
-        {/* Centered Large Announcement Text & Explore Button (Tauxxic Style) */}
+        {/* Centered Bottom Content Overlay (Nude Project Style Image 2) */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 md:px-8 text-center flex flex-col items-center justify-center space-y-4 sm:space-y-6"
+          className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 md:px-8 text-center flex flex-col items-center justify-end space-y-2.5 sm:space-y-3.5 pb-10 sm:pb-16 md:pb-20 h-full"
         >
-          {/* Large Bold Brand Statement */}
-          <h2 className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-tighter text-white leading-[1.02] drop-shadow-[0_6px_28px_rgba(0,0,0,0.85)]">
+          {/* Season Badge (FW2026) */}
+          {seasonLabel && (
+            <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-widest text-white/90 uppercase drop-shadow-md">
+              {seasonLabel}
+            </span>
+          )}
+
+          {/* High-Fashion Clash Display Statement Title */}
+          <h2 className="font-display font-semibold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase text-white leading-[1.08] drop-shadow-lg">
             {statement}
           </h2>
 
-          {/* Small "Explore" Pill Button */}
+          {/* White Capsule Pill Button */}
           <div className="pt-2">
             <Link
               to={buttonLink}
-              className="group inline-flex items-center justify-center gap-2 bg-white hover:bg-zinc-100 text-zinc-950 px-7 sm:px-8 py-2.5 sm:py-3 rounded-full font-sans text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
+              className="group inline-flex items-center justify-center bg-white hover:bg-zinc-100 text-zinc-950 px-7 sm:px-8 py-2.5 sm:py-3 rounded-full font-sans text-xs sm:text-sm font-bold tracking-tight shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
               <span>{buttonText}</span>
-              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </motion.div>
