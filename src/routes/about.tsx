@@ -15,7 +15,11 @@ export const Route = createFileRoute("/about")({
           "Norva Store was created for individuals who see fashion as a form of self-expression. Inspired by Y2K trends, gothic culture, and modern European aesthetics.",
       },
       { property: "og:title", content: "About — Norva Store" },
-      { property: "og:description", content: "Express your individuality through bold Y2K, gothic, and dark aesthetic accessories." },
+      {
+        property: "og:description",
+        content:
+          "Express your individuality through bold Y2K, gothic, and dark aesthetic accessories.",
+      },
       { property: "og:image", content: heroImg },
     ],
   }),
@@ -46,7 +50,8 @@ function About() {
             </h1>
 
             <p className="mx-auto max-w-2xl text-base sm:text-lg text-zinc-600 font-sans leading-relaxed">
-              Inspired by Y2K trends, gothic culture, and modern European aesthetics. We curate bold, limited-edition statement accessories designed for fearless self-expression.
+              Inspired by Y2K trends, gothic culture, and modern European aesthetics. We curate
+              bold, limited-edition statement accessories designed for fearless self-expression.
             </p>
           </motion.div>
         </div>
@@ -62,7 +67,12 @@ function About() {
             transition={{ duration: 0.8 }}
             className="aspect-[4/5] overflow-hidden bg-zinc-50 border border-black/10 rounded-2xl shadow-sm"
           >
-            <img src={about1} alt="Nørva Store aesthetics" className="h-full w-full object-cover" loading="lazy" />
+            <img
+              src={about1}
+              alt="Nørva Store aesthetics"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
           </motion.div>
 
           <div className="space-y-6">
@@ -75,21 +85,31 @@ function About() {
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">
-              Norva Store was created for individuals who see fashion as a form of art and identity. Inspired by Y2K aesthetic trends, gothic street culture, and modern dark aesthetics, we curate bold bags and hardware accessories that help you stand out with confidence.
+              Norva Store was created for individuals who see fashion as a form of art and identity.
+              Inspired by Y2K aesthetic trends, gothic street culture, and modern dark aesthetics,
+              we curate bold bags and hardware accessories that help you stand out with confidence.
             </p>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">
-              Every piece is selected to blend premium quality, unique architectural hardware design, and timeless style, allowing you to express your individuality without compromise.
+              Every piece is selected to blend premium quality, unique architectural hardware
+              design, and timeless style, allowing you to express your individuality without
+              compromise.
             </p>
 
             <div className="pt-4 grid grid-cols-2 gap-6 border-t border-black/10">
               <div>
                 <span className="font-display text-2xl font-bold text-zinc-900 block">100%</span>
-                <span className="font-sans text-xs text-zinc-500 font-medium">Curated Limited Drops</span>
+                <span className="font-sans text-xs text-zinc-500 font-medium">
+                  Curated Limited Drops
+                </span>
               </div>
               <div>
-                <span className="font-display text-2xl font-bold text-zinc-900 block">Y2K / GOTH</span>
-                <span className="font-sans text-xs text-zinc-500 font-medium">Dark Aesthetic Craft</span>
+                <span className="font-display text-2xl font-bold text-zinc-900 block">
+                  Y2K / GOTH
+                </span>
+                <span className="font-sans text-xs text-zinc-500 font-medium">
+                  Dark Aesthetic Craft
+                </span>
               </div>
             </div>
           </div>
@@ -104,7 +124,9 @@ function About() {
           </div>
 
           <blockquote className="font-display font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight text-zinc-900 leading-[1.25] max-w-4xl mx-auto">
-            "Our mission is to make premium Y2K and gothic fashion accessible through carefully curated accessories that empower people to express their unique identity with confidence."
+            "Our mission is to make premium Y2K and gothic fashion accessible through carefully
+            curated accessories that empower people to express their unique identity with
+            confidence."
           </blockquote>
 
           <div className="mt-10 pt-8 border-t border-black/10 flex flex-wrap items-center justify-center gap-8 text-xs font-display uppercase tracking-widest text-zinc-600 font-semibold">
@@ -136,7 +158,9 @@ function About() {
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">
-              Our vision is to become a globally recognized destination for Y2K, gothic, and dark aesthetic fashion—inspiring a global community that embraces individuality, creativity, and fearless style through statement accessories.
+              Our vision is to become a globally recognized destination for Y2K, gothic, and dark
+              aesthetic fashion—inspiring a global community that embraces individuality,
+              creativity, and fearless style through statement accessories.
             </p>
 
             <div className="pt-4">
@@ -157,7 +181,12 @@ function About() {
             transition={{ duration: 0.8 }}
             className="order-1 md:order-2 aspect-[4/5] overflow-hidden bg-zinc-50 border border-black/10 rounded-2xl shadow-sm"
           >
-            <img src={about2} alt="Nørva Store accessory process" className="h-full w-full object-cover" loading="lazy" />
+            <img
+              src={about2}
+              alt="Nørva Store accessory process"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
           </motion.div>
         </div>
       </section>
@@ -172,7 +201,8 @@ function About() {
             @norvaxstore
           </h2>
           <p className="text-xs sm:text-sm text-zinc-600 font-sans">
-            Follow our official Instagram for exclusive behind-the-scenes, campaign lookbooks, and early drop announcements.
+            Follow our official Instagram for exclusive behind-the-scenes, campaign lookbooks, and
+            early drop announcements.
           </p>
           <div className="pt-4">
             <a

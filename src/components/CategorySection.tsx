@@ -73,7 +73,8 @@ export function CategorySection() {
               Shop By Category
             </h2>
             <p className="text-xs sm:text-sm text-zinc-500 font-normal max-w-xl">
-              Explore handcrafted leather statement bags, women's lookbook edits, heavyweight men's streetwear, and gothic accessories.
+              Explore handcrafted leather statement bags, women's lookbook edits, heavyweight men's
+              streetwear, and gothic accessories.
             </p>
           </div>
 

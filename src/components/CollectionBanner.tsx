@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 interface CollectionBannerProps {
   image: string;
+  desktopImage?: string;
   seasonLabel?: string;
   title: string;
   description?: string;
@@ -12,10 +13,14 @@ interface CollectionBannerProps {
   secondaryButtonLink?: string;
   position?: "bottom-left" | "bottom-center" | "center";
   className?: string;
+  bgColor?: string;
+  mobileImagePosition?: string;
+  desktopImagePosition?: string;
 }
 
 export function CollectionBanner({
   image,
+  desktopImage,
   seasonLabel = "FW2026",
   title,
   description,
@@ -23,6 +28,9 @@ export function CollectionBanner({
   primaryButtonLink,
   position = "center",
   className = "",
+  bgColor = "#a8c7e0",
+  mobileImagePosition = "object-[center_15%]",
+  desktopImagePosition = "object-center",
 }: CollectionBannerProps) {
   const positionClasses = {
     "bottom-left": "items-end justify-start text-left pb-10 sm:pb-16 md:pb-20 px-6 sm:px-12",
@@ -33,22 +41,40 @@ export function CollectionBanner({
   const isCentered = position === "bottom-center" || position === "center";
 
   return (
-    <section data-header-theme="dark" className={`relative w-full overflow-hidden bg-black select-none ${className}`}>
-      {/* Full-Width Background Lifestyle Image */}
-      <div className="relative w-full h-[600px] xs:h-[720px] sm:h-[85vh] md:h-[90vh] lg:h-[95vh] min-h-[600px] max-h-[1100px]">
+    <section
+      data-header-theme="dark"
+      className={`relative w-full overflow-hidden select-none ${className}`}
+      style={{ backgroundColor: bgColor }}
+    >
+      {/* Full-Bleed Banner Section Container */}
+      <div 
+        className="relative w-full h-[600px] xs:h-[720px] sm:h-[85vh] md:h-[90vh] lg:h-[95vh] min-h-[600px] max-h-[1100px] flex items-center justify-center overflow-hidden"
+        style={{ backgroundColor: bgColor }}
+      >
+        {/* Mobile View Image */}
         <img
           src={image}
           alt={title}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-1000 ease-out hover:scale-105"
+          className={`w-full h-full object-cover ${mobileImagePosition} ${desktopImage ? "md:hidden block" : `block md:${desktopImagePosition}`} pointer-events-none transition-transform duration-1000 ease-out hover:scale-105`}
         />
 
-        {/* Ambient Gradient Overlay for high-contrast readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/15 pointer-events-none" />
+        {/* Dedicated Widescreen Desktop Image */}
+        {desktopImage && (
+          <img
+            src={desktopImage}
+            alt={title}
+            loading="lazy"
+            className={`hidden md:block absolute inset-0 w-full h-full object-cover ${desktopImagePosition} pointer-events-none transition-transform duration-1000 ease-out hover:scale-105`}
+          />
+        )}
+
+        {/* Ambient Bottom Gradient Overlay for text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none z-20" />
 
         {/* Content Overlay pulled to bottom matching Nude Project Image 2 */}
         <div
-          className={`absolute inset-0 flex z-10 mx-auto max-w-[1600px] ${positionClasses[position]}`}
+          className={`absolute inset-0 flex z-30 mx-auto max-w-[1600px] ${positionClasses[position]}`}
         >
           <motion.div
             initial={{ opacity: 0, y: 25 }}
@@ -70,13 +96,17 @@ export function CollectionBanner({
               {title}
             </h2>
 
-            {/* White Capsule Pill Button */}
-            <div className={`pt-2 flex items-center ${isCentered ? "justify-center" : "justify-start"}`}>
+            {/* Transparent Glassmorphic Capsule Pill Button */}
+            <div
+              className={`pt-2 flex items-center ${isCentered ? "justify-center" : "justify-start"}`}
+            >
               <Link
                 to={primaryButtonLink}
-                className="group inline-flex items-center justify-center bg-white hover:bg-zinc-100 text-zinc-950 px-7 sm:px-8 py-2.5 sm:py-3 rounded-full font-sans text-xs sm:text-sm font-bold tracking-tight shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+                className="group relative inline-flex items-center justify-center rounded-full bg-transparent hover:bg-white/15 border border-white/80 hover:border-white text-white px-8 sm:px-9 py-2.5 sm:py-3 font-sans text-xs sm:text-sm font-semibold tracking-wide backdrop-blur-sm transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-lg"
               >
-                <span>{primaryButtonText}</span>
+                <span className="relative z-10 flex items-center gap-2">
+                  {primaryButtonText}
+                </span>
               </Link>
             </div>
           </motion.div>

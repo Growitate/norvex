@@ -1,16 +1,11 @@
 import { createFileRoute, useSearch, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
-import { products, type Product } from "@/lib/products";
+import { type Product } from "@/lib/products";
+import { useProducts } from "@/lib/db";
 import { SlidersHorizontal, Check } from "lucide-react";
 
-const CATEGORIES = [
-  "All",
-  "Clothing",
-  "Accessories",
-  "Women exclusive",
-  "Mens exclusive",
-] as const;
+const CATEGORIES = ["All", "Clothing", "Accessories", "Women exclusive", "Mens exclusive"] as const;
 
 type Cat = (typeof CATEGORIES)[number];
 
@@ -83,6 +78,7 @@ function matchesCategory(product: Product, selectedCategory: Cat | string): bool
 }
 
 function Shop() {
+  const products = useProducts();
   const search = useSearch({ from: "/shop" });
   const navigate = useNavigate();
   const [cat, setCat] = useState<Cat>("All");
@@ -93,7 +89,9 @@ function Shop() {
     if (search.category) {
       const decoded = decodeURIComponent(search.category);
       const matched = CATEGORIES.find(
-        (c) => c.toLowerCase() === decoded.toLowerCase() || c.toLowerCase() === search.category?.toLowerCase(),
+        (c) =>
+          c.toLowerCase() === decoded.toLowerCase() ||
+          c.toLowerCase() === search.category?.toLowerCase(),
       );
       if (matched) {
         setCat(matched);
@@ -146,7 +144,9 @@ function Shop() {
           <div className="flex items-center justify-between gap-2 xs:gap-4 pb-2">
             {/* Title with Superscript Count (e.g. WOMEN EXCLUSIVE / THE COLLECTION) */}
             <h1 className="font-display font-bold text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-wide uppercase text-zinc-950 flex items-start gap-0.5 min-w-0 leading-tight">
-              <span className="truncate xs:whitespace-normal">{cat === "All" ? "THE COLLECTION" : cat.toUpperCase()}</span>
+              <span className="truncate xs:whitespace-normal">
+                {cat === "All" ? "THE COLLECTION" : cat.toUpperCase()}
+              </span>
               <sup className="text-[10px] sm:text-xs font-sans font-medium text-zinc-500 top-[-0.2em] ml-0.5 shrink-0">
                 {filtered.length}
               </sup>

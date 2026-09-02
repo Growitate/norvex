@@ -136,7 +136,9 @@ export function WhatFitsModal({ isOpen, onClose, product }: WhatFitsModalProps) 
                 </h4>
                 {product.dimensions && (
                   <p className="text-[11px] sm:text-xs text-zinc-500 font-sans">
-                    <span className="font-semibold text-zinc-700">Dimensions:</span> {product.dimensions.height} (H) × {product.dimensions.width} (W) × {product.dimensions.depth} (D)
+                    <span className="font-semibold text-zinc-700">Dimensions:</span>{" "}
+                    {product.dimensions.height} (H) × {product.dimensions.width} (W) ×{" "}
+                    {product.dimensions.depth} (D)
                   </p>
                 )}
                 {product.dimensions?.volume && (

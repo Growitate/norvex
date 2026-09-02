@@ -1,16 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { products } from "@/lib/products";
+import { useProducts } from "@/lib/db";
 import { HeroVideoSection } from "@/components/HeroVideoSection";
 import { CategorySection } from "@/components/CategorySection";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { CollectionBanner } from "@/components/CollectionBanner";
 import { SocialVideoMarquee } from "@/components/SocialVideoMarquee";
 import { ReviewsSection } from "@/components/ReviewsSection";
-import { BrandStatementBanner } from "@/components/BrandStatementBanner";
-import lifestyleBanner1 from "@/assets/lifestyle_banner_1.jpg";
-import lifestyleBanner2 from "@/assets/lifestyle_banner_2.jpg";
-import lifestyleBanner3 from "@/assets/lifestyle_banner_3.jpg";
-import brandStatementBg from "@/assets/brand_statement_bg.jpg";
+import newArrivalsBanner from "@/assets/new_arrivals_banner.png";
+import newArrivalsBannerDesktop from "@/assets/new_arrivals_banner_desktop.png";
+import harnessHardwareBanner from "@/assets/harness_hardware_banner.jpg";
+import harnessHardwareBannerDesktop from "@/assets/harness_hardware_banner_desktop.jpg";
+import cyberStreetwearBanner from "@/assets/cyber_streetwear_banner.jpg";
+import cyberStreetwearBannerDesktop from "@/assets/cyber_streetwear_banner_desktop.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,7 +25,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Norva Store — Y2K & Gothic Fashion" },
       {
         property: "og:description",
-        content: "Curated limited-edition statement bags, clothing, and accessories with a strong dark aesthetic identity.",
+        content:
+          "Curated limited-edition statement bags, clothing, and accessories with a strong dark aesthetic identity.",
       },
     ],
   }),
@@ -32,6 +34,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const products = useProducts();
   const newArrivals = products.filter((p) => p.isNew);
   const bestsellers = products.slice(0, 5);
 
@@ -41,29 +44,30 @@ function Home() {
       <HeroVideoSection />
 
       {/* 1. PRODUCT CAROUSEL (NEW ARRIVALS) */}
-      <ProductCarousel
-        products={newArrivals.length > 0 ? newArrivals : products}
-        flushTop={true}
-      />
+      <ProductCarousel products={newArrivals.length > 0 ? newArrivals : products} flushTop={true} />
 
       {/* 2. BANNER 1 (IMAGE + TITLE + SINGLE SHOP NOW BUTTON) */}
       <CollectionBanner
-        image={lifestyleBanner1}
+        image={newArrivalsBanner}
+        desktopImage={newArrivalsBannerDesktop}
         seasonLabel="FW2026"
         title="New Arrivals"
         primaryButtonText="Shop Now"
         primaryButtonLink="/shop?category=Bags"
         position="bottom-center"
+        bgColor="#a4c6e2"
       />
 
       {/* 5. BANNER 2 (HARNESS & HARDWARE) */}
       <CollectionBanner
-        image={lifestyleBanner2}
+        image={harnessHardwareBanner}
+        desktopImage={harnessHardwareBannerDesktop}
         seasonLabel="FW2026"
         title="Harness & Hardware"
         primaryButtonText="Shop Now"
         primaryButtonLink="/shop?category=Bags"
         position="bottom-center"
+        bgColor="#d8caa9"
       />
 
       {/* 4. PRODUCT CAROUSEL (BESTSELLERS - POSITIONED BELOW HARNESS & HARDWARE BANNER) */}
@@ -75,30 +79,25 @@ function Home() {
         className="pb-0"
       />
 
-      {/* 7. BANNER 3 (CYBER STREETWEAR 2026) */}
-      <CollectionBanner
-        image={lifestyleBanner3}
-        seasonLabel="FW2026"
-        title="Cyber Streetwear 2026"
-        primaryButtonText="Shop Men's"
-        primaryButtonLink="/shop?category=Male+Clothes"
-        position="bottom-center"
-      />
-
       {/* 8. COMMUNITY & STYLING REELS SECTION */}
       <SocialVideoMarquee />
 
+      {/* 7. BANNER 3 (ACCESSORIES 2026) */}
+      <CollectionBanner
+        image={cyberStreetwearBanner}
+        desktopImage={cyberStreetwearBannerDesktop}
+        seasonLabel="FW2026"
+        title="Accessories 2026"
+        primaryButtonText="Shop Accessories"
+        primaryButtonLink="/shop?category=Accessories"
+        position="bottom-center"
+        bgColor="#1c2022"
+        mobileImagePosition="object-[center_65%]"
+        desktopImagePosition="object-center"
+      />
+
       {/* 9. AUTO-SCROLLING CUSTOMER REVIEWS SECTION */}
       <ReviewsSection />
-
-      {/* 10. ANNOUNCEMENT / BRAND STATEMENT BANNER */}
-      <BrandStatementBanner
-        image={brandStatementBg}
-        seasonLabel="FW2026"
-        statement="We Are Loud and Proud"
-        buttonText="Explore"
-        buttonLink="/shop"
-      />
     </>
   );
 }

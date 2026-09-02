@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Search, X, ArrowRight, ShoppingBag } from "lucide-react";
-import { products, type Product } from "@/lib/products";
+import { type Product } from "@/lib/products";
+import { useProducts } from "@/lib/db";
 import { useCart } from "@/lib/cart";
 
 interface SearchModalProps {
@@ -9,9 +10,17 @@ interface SearchModalProps {
   onClose: () => void;
 }
 
-const POPULAR_TAGS = ["Shoulder Bags", "Crossbody", "Gothic Metal", "Mini Bags", "Cyberpunk", "Chrome"];
+const POPULAR_TAGS = [
+  "Shoulder Bags",
+  "Crossbody",
+  "Gothic Metal",
+  "Mini Bags",
+  "Cyberpunk",
+  "Chrome",
+];
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
+  const products = useProducts();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const add = useCart((s) => s.add);
@@ -33,11 +42,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   const results: Product[] = query.trim()
     ? products.filter(
-      (p) =>
-        p.name.toLowerCase().includes(query.toLowerCase()) ||
-        p.category.toLowerCase().includes(query.toLowerCase()) ||
-        p.description.toLowerCase().includes(query.toLowerCase())
-    )
+        (p) =>
+          p.name.toLowerCase().includes(query.toLowerCase()) ||
+          p.category.toLowerCase().includes(query.toLowerCase()) ||
+          p.description.toLowerCase().includes(query.toLowerCase()),
+      )
     : [];
 
   return (
@@ -117,8 +126,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   >
                     <img src={p.image} alt={p.name} className="w-12 h-14 object-cover rounded-xs" />
                     <div className="min-w-0">
-                      <p className="font-display text-[10px] uppercase tracking-brand text-zinc-900 truncate font-semibold">{p.name}</p>
-                      <p className="text-[10px] text-zinc-600 font-semibold">₹{p.price.toLocaleString("en-IN")}</p>
+                      <p className="font-display text-[10px] uppercase tracking-brand text-zinc-900 truncate font-semibold">
+                        {p.name}
+                      </p>
+                      <p className="text-[10px] text-zinc-600 font-semibold">
+                        ₹{p.price.toLocaleString("en-IN")}
+                      </p>
                     </div>
                   </Link>
                 ))}
@@ -141,13 +154,21 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       onClick={onClose}
                       className="flex items-center gap-4 min-w-0 flex-1"
                     >
-                      <img src={p.image} alt={p.name} className="w-14 h-16 object-cover rounded-xs shrink-0" />
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        className="w-14 h-16 object-cover rounded-xs shrink-0"
+                      />
                       <div className="min-w-0">
                         <p className="font-display text-xs uppercase tracking-brand text-zinc-900 group-hover:text-zinc-600 truncate font-semibold">
                           {p.name}
                         </p>
-                        <p className="mt-1 text-[10px] uppercase tracking-brand text-zinc-500">{p.category}</p>
-                        <p className="mt-1 font-display text-xs text-zinc-900 font-bold">₹{p.price.toLocaleString("en-IN")}</p>
+                        <p className="mt-1 text-[10px] uppercase tracking-brand text-zinc-500">
+                          {p.category}
+                        </p>
+                        <p className="mt-1 font-display text-xs text-zinc-900 font-bold">
+                          ₹{p.price.toLocaleString("en-IN")}
+                        </p>
                       </div>
                     </Link>
                     <button

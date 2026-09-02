@@ -62,7 +62,8 @@ export function FloatingChatWidget() {
 
           {/* Description */}
           <p className="text-xs text-zinc-600 font-sans leading-relaxed mb-4">
-            Have questions about drops, sizing, or orders? Chat directly with us on Instagram for quick responses.
+            Have questions about drops, sizing, or orders? Chat directly with us on Instagram for
+            quick responses.
           </p>
 
           {/* Action Buttons */}

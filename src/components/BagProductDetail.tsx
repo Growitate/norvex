@@ -30,9 +30,7 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
 
   // Gallery array (strictly this product's images)
   const rawGallery =
-    product.gallery && product.gallery.length > 0
-      ? product.gallery
-      : [product.image];
+    product.gallery && product.gallery.length > 0 ? product.gallery : [product.image];
   const galleryImages = rawGallery;
   const primaryImage = galleryImages[0] || product.image;
   const secondaryAngles = galleryImages.slice(1);
@@ -99,8 +97,6 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
       <div className="bg-white text-zinc-900 selection:bg-zinc-900 selection:text-white">
         {/* Spacer for fixed header */}
         <div className="h-14 sm:h-16 bg-white" />
-
-
 
         {/* Main Product Container */}
         <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 pt-0 lg:pt-6 pb-4 sm:pb-6">
@@ -169,7 +165,10 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                         onClick={() => {
                           if (mobileScrollRef.current) {
                             const itemWidth = mobileScrollRef.current.clientWidth;
-                            mobileScrollRef.current.scrollTo({ left: i * itemWidth, behavior: "smooth" });
+                            mobileScrollRef.current.scrollTo({
+                              left: i * itemWidth,
+                              behavior: "smooth",
+                            });
                           }
                           setMobileActiveIdx(i);
                         }}
@@ -195,7 +194,9 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
             {/* ========================================================================= */}
             {/* DESKTOP COLUMN 1: STATIC / STICKY HERO IMAGE (IMAGE 1)                     */}
             {/* ========================================================================= */}
-            <div className={`hidden lg:block ${secondaryAngles.length > 0 ? "lg:col-span-4 xl:col-span-4" : "lg:col-span-7"} lg:sticky lg:top-20 lg:self-start`}>
+            <div
+              className={`hidden lg:block ${secondaryAngles.length > 0 ? "lg:col-span-4 xl:col-span-4" : "lg:col-span-7"} lg:sticky lg:top-20 lg:self-start`}
+            >
               <div className="relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4.1] w-full bg-white rounded-[20px] overflow-hidden border border-[#e4e4e7] shadow-2xs group select-none cursor-zoom-in">
                 {/* New Drop Tag */}
                 {product.isNew && (
@@ -215,14 +216,16 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                     setIsWishlisted(!isWishlisted);
                   }}
                   aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                  className={`absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${isWishlisted
+                  className={`absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${
+                    isWishlisted
                       ? "bg-black text-white"
                       : "bg-white/90 hover:bg-white text-zinc-800 hover:scale-105 active:scale-95 border border-black/10"
-                    }`}
+                  }`}
                 >
                   <Bookmark
-                    className={`h-4 w-4 transition-transform ${isWishlisted ? "fill-white text-white scale-110" : "text-zinc-800"
-                      }`}
+                    className={`h-4 w-4 transition-transform ${
+                      isWishlisted ? "fill-white text-white scale-110" : "text-zinc-800"
+                    }`}
                   />
                 </button>
 
@@ -267,7 +270,9 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
             {/* ========================================================= */}
             {/* DESKTOP COLUMN 3: STICKY PURCHASE PANEL & INFO CARDS      */}
             {/* ========================================================= */}
-            <div className={`${secondaryAngles.length > 0 ? "lg:col-span-5 xl:col-span-5" : "lg:col-span-5"} lg:sticky lg:top-20 lg:self-start space-y-3.5 pr-0.5`}>
+            <div
+              className={`${secondaryAngles.length > 0 ? "lg:col-span-5 xl:col-span-5" : "lg:col-span-5"} lg:sticky lg:top-20 lg:self-start space-y-3.5 pr-0.5`}
+            >
               {/* Professional Purchase Selection Box (Ultra-Compact & Sleek Spacing) */}
               <div className="bg-white border border-[#e4e4e7] rounded-[18px] p-3.5 sm:p-4 space-y-2.5 shadow-2xs">
                 {/* Title & Short Description */}
@@ -313,10 +318,11 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                           onClick={() => setSelectedColorIdx(idx)}
                           title={color.name}
                           aria-label={`Select color ${color.name}`}
-                          className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer ${isSelected
-                            ? "ring-2 ring-black ring-offset-2 scale-105 shadow-xs"
-                            : "hover:scale-105 opacity-80 hover:opacity-100"
-                            }`}
+                          className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                            isSelected
+                              ? "ring-2 ring-black ring-offset-2 scale-105 shadow-xs"
+                              : "hover:scale-105 opacity-80 hover:opacity-100"
+                          }`}
                         >
                           <span
                             className="w-6 h-6 rounded-full border border-black/20 block"
@@ -336,7 +342,9 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                 >
                   <div className="flex items-center gap-1.5">
                     <Ruler className="h-3 w-3 text-zinc-600" />
-                    <span className="font-semibold text-[10.5px]">Check bag capacity & dimensions</span>
+                    <span className="font-semibold text-[10.5px]">
+                      Check bag capacity & dimensions
+                    </span>
                   </div>
                   <span className="font-display text-[9.5px] font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-0.5">
                     View Guide <ChevronRight className="h-2.5 w-2.5" />
@@ -366,14 +374,16 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                   <button
                     onClick={() => setIsWishlisted(!isWishlisted)}
                     aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                    className={`w-10 h-10 shrink-0 rounded-full border flex items-center justify-center transition-all cursor-pointer ${isWishlisted
-                      ? "border-red-500 bg-red-50 text-red-500"
-                      : "border-black/20 hover:border-black text-zinc-800 hover:bg-black/5"
-                      }`}
+                    className={`w-10 h-10 shrink-0 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                      isWishlisted
+                        ? "border-red-500 bg-red-50 text-red-500"
+                        : "border-black/20 hover:border-black text-zinc-800 hover:bg-black/5"
+                    }`}
                   >
                     <Heart
-                      className={`h-4 w-4 transition-transform ${isWishlisted ? "fill-red-500 text-red-500 scale-110" : "text-zinc-800"
-                        }`}
+                      className={`h-4 w-4 transition-transform ${
+                        isWishlisted ? "fill-red-500 text-red-500 scale-110" : "text-zinc-800"
+                      }`}
                     />
                   </button>
                 </div>
@@ -428,28 +438,33 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                                 <span>{detail}</span>
                               </li>
                             )) || (
-                                <>
-                                  <li className="flex items-start gap-2">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
-                                    <span>Distressed fine-grain leather with metallic chrome hardware</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
-                                    <span>Main compartment with dual polished silver zip fastening</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
-                                    <span>Interior zip safety pocket and slip card compartment</span>
-                                  </li>
-                                </>
-                              )}
+                              <>
+                                <li className="flex items-start gap-2">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
+                                  <span>
+                                    Distressed fine-grain leather with metallic chrome hardware
+                                  </span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
+                                  <span>
+                                    Main compartment with dual polished silver zip fastening
+                                  </span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
+                                  <span>Interior zip safety pocket and slip card compartment</span>
+                                </li>
+                              </>
+                            )}
                           </ul>
 
                           {/* Dimensions Callout inside Details */}
                           {product.dimensions && (
                             <div className="mt-3.5 p-3 bg-zinc-50 border border-black/5 rounded-xl space-y-1 text-[11px] font-sans text-zinc-700">
                               <p className="font-semibold text-zinc-900">
-                                Dimensions: {product.dimensions.height} (H) × {product.dimensions.width} (W) × {product.dimensions.depth} (D)
+                                Dimensions: {product.dimensions.height} (H) ×{" "}
+                                {product.dimensions.width} (W) × {product.dimensions.depth} (D)
                               </p>
                               {product.dimensions.strapDrop && (
                                 <p>Strap Drop: {product.dimensions.strapDrop}</p>
@@ -491,21 +506,26 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                                 <span>{item}</span>
                               </li>
                             )) || (
-                                <>
-                                  <li className="flex items-start gap-2">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
-                                    <span>Outer material: 100% fine cowhide leather</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
-                                    <span>Hardware: Polished silver-tone zinc alloy (rust-resistant)</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
-                                    <span>Care: Clean with a soft, slightly damp cloth. Avoid direct moisture.</span>
-                                  </li>
-                                </>
-                              )}
+                              <>
+                                <li className="flex items-start gap-2">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
+                                  <span>Outer material: 100% fine cowhide leather</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
+                                  <span>
+                                    Hardware: Polished silver-tone zinc alloy (rust-resistant)
+                                  </span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 mt-1.5 shrink-0" />
+                                  <span>
+                                    Care: Clean with a soft, slightly damp cloth. Avoid direct
+                                    moisture.
+                                  </span>
+                                </li>
+                              </>
+                            )}
                           </ul>
                         </motion.div>
                       )}
@@ -536,13 +556,19 @@ export function BagProductDetail({ product }: BagProductDetailProps) {
                           className="overflow-hidden pt-2 pb-2 font-sans text-xs text-zinc-600 space-y-2"
                         >
                           <p>
-                            <strong className="text-zinc-900 font-semibold">Standard Delivery:</strong> 2–4 business days across India. Dispatched in custom dust bag & protective rigid box.
+                            <strong className="text-zinc-900 font-semibold">
+                              Standard Delivery:
+                            </strong>{" "}
+                            2–4 business days across India. Dispatched in custom dust bag &
+                            protective rigid box.
                           </p>
                           <p>
-                            <strong className="text-zinc-900 font-semibold">Returns:</strong> 7-day hassle-free returns on unused items with original tags attached.
+                            <strong className="text-zinc-900 font-semibold">Returns:</strong> 7-day
+                            hassle-free returns on unused items with original tags attached.
                           </p>
                           <p>
-                            <strong className="text-zinc-900 font-semibold">Payments:</strong> UPI, Cards, NetBanking, and Cash on Delivery accepted.
+                            <strong className="text-zinc-900 font-semibold">Payments:</strong> UPI,
+                            Cards, NetBanking, and Cash on Delivery accepted.
                           </p>
                         </motion.div>
                       )}

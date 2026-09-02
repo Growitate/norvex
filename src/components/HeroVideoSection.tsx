@@ -22,7 +22,10 @@ export function HeroVideoSection({
   ctaLabel = "SHOP HERE",
 }: HeroVideoSectionProps) {
   return (
-    <section data-header-theme="dark" className="relative w-full h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] min-h-[560px] max-h-[1080px] overflow-hidden bg-black select-none">
+    <section
+      data-header-theme="dark"
+      className="relative w-full h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] min-h-[560px] max-h-[1080px] overflow-hidden bg-black select-none"
+    >
       {/* Background Video Only - No Poster Image */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
         <video

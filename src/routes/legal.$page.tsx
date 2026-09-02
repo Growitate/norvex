@@ -89,7 +89,10 @@ export const Route = createFileRoute("/legal/$page")({
     return {
       meta: [
         { title: `${c?.title ?? "Legal"} — Norva Store` },
-        { name: "description", content: c?.intro ?? "Legal information for Norva Store (Jevani Enterprises)." },
+        {
+          name: "description",
+          content: c?.intro ?? "Legal information for Norva Store (Jevani Enterprises).",
+        },
       ],
     };
   },

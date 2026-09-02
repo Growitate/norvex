@@ -190,10 +190,7 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
   const gallery: string[] =
     rawGallery.length >= 5
       ? rawGallery
-      : [
-          ...rawGallery,
-          ...Array(Math.max(0, 5 - rawGallery.length)).fill(rawGallery[0]),
-        ];
+      : [...rawGallery, ...Array(Math.max(0, 5 - rawGallery.length)).fill(rawGallery[0])];
   const primaryImage = gallery[0] || product.image;
   const secondaryAngles = gallery.slice(1);
   const [activeMobileIdx, setActiveMobileIdx] = useState(0);
@@ -237,12 +234,11 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
   const totalPrice = basePrice + gripPrice + keyChainPrice + screenGuardPrice;
 
   // Active brand data
-  const currentBrandObj =
-    PHONE_BRANDS.find((b) => b.name === selectedBrand) || PHONE_BRANDS[0];
+  const currentBrandObj = PHONE_BRANDS.find((b) => b.name === selectedBrand) || PHONE_BRANDS[0];
 
   // Filtered models for search
   const filteredModels = currentBrandObj.models.filter((m) =>
-    m.toLowerCase().includes(searchQuery.toLowerCase())
+    m.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const handleBrandSelect = (brandName: string) => {
@@ -321,7 +317,6 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
       {/* Main Grid Layout Container (Matches UniversalProductDetail.tsx) */}
       <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 pt-0 lg:pt-3.5 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-start">
-
           {/* ========================================================================= */}
           {/* MOBILE ONLY: 100% FULL-BLEED CAROUSEL                                     */}
           {/* ========================================================================= */}
@@ -490,7 +485,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                     />
 
                     <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur-xs text-white text-[10px] font-sans px-2.5 py-1 rounded-full flex items-center gap-1">
-                      <span>Angle {idx + 2} of {gallery.length}</span>
+                      <span>
+                        Angle {idx + 2} of {gallery.length}
+                      </span>
                       <span className="text-zinc-400">· Click to zoom</span>
                     </div>
                   </div>
@@ -502,12 +499,10 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
           {/* COLUMN 3: RIGHT STICKY PURCHASE PANEL & INFO CARDS (MATCHES CLOTHES PAGE) */}
           {/* ========================================================================= */}
           <div className="col-span-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 lg:self-start space-y-3 pr-0.5 pt-0 sm:pt-2 lg:pt-16">
-
             {/* ----------------------------------------------------------------------- */}
             {/* CARD 1: PURCHASE SELECTION BOX                                         */}
             {/* ----------------------------------------------------------------------- */}
             <div className="bg-white border border-[#e4e4e7] rounded-[18px] p-4 sm:p-5 space-y-3 relative z-10 shadow-2xs">
-
               {/* Row 1: Product Title & Bookmark */}
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -521,7 +516,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                     >
                       <Bookmark
                         className={`h-4 w-4 transition-all ${
-                          isWishlisted ? "fill-zinc-800 text-zinc-800" : "fill-zinc-400 text-zinc-400"
+                          isWishlisted
+                            ? "fill-zinc-800 text-zinc-800"
+                            : "fill-zinc-400 text-zinc-400"
                         }`}
                       />
                     </button>
@@ -568,8 +565,12 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                     className="flex items-center justify-between p-2.5 bg-zinc-50 hover:bg-zinc-100 border border-[#e4e4e7] rounded-xl transition-all text-left cursor-pointer group"
                   >
                     <div>
-                      <span className="text-[9px] text-zinc-400 uppercase font-bold tracking-wider block">Brand</span>
-                      <span className="text-xs font-bold text-zinc-950 truncate block">{selectedBrand}</span>
+                      <span className="text-[9px] text-zinc-400 uppercase font-bold tracking-wider block">
+                        Brand
+                      </span>
+                      <span className="text-xs font-bold text-zinc-950 truncate block">
+                        {selectedBrand}
+                      </span>
                     </div>
                     <ChevronDown className="h-3.5 w-3.5 text-zinc-500 group-hover:text-black shrink-0" />
                   </button>
@@ -581,8 +582,12 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                     className="flex items-center justify-between p-2.5 bg-zinc-50 hover:bg-zinc-100 border border-[#e4e4e7] rounded-xl transition-all text-left cursor-pointer group"
                   >
                     <div>
-                      <span className="text-[9px] text-zinc-400 uppercase font-bold tracking-wider block">Model</span>
-                      <span className="text-xs font-bold text-zinc-950 truncate block">{selectedModel}</span>
+                      <span className="text-[9px] text-zinc-400 uppercase font-bold tracking-wider block">
+                        Model
+                      </span>
+                      <span className="text-xs font-bold text-zinc-950 truncate block">
+                        {selectedModel}
+                      </span>
                     </div>
                     <ChevronDown className="h-3.5 w-3.5 text-zinc-500 group-hover:text-black shrink-0" />
                   </button>
@@ -605,7 +610,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                         onChange={(e) => setAddGrip(e.target.checked)}
                         className="w-3.5 h-3.5 rounded-xs accent-zinc-900 cursor-pointer"
                       />
-                      <span className="text-[11.5px] font-medium text-zinc-900">Add Matching Grip</span>
+                      <span className="text-[11.5px] font-medium text-zinc-900">
+                        Add Matching Grip
+                      </span>
                     </div>
                     <span className="text-[11.5px] font-bold text-zinc-900">+₹49</span>
                   </label>
@@ -633,7 +640,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                         onChange={(e) => setAddScreenGuard(e.target.checked)}
                         className="w-3.5 h-3.5 rounded-xs accent-zinc-900 cursor-pointer"
                       />
-                      <span className="text-[11.5px] font-medium text-zinc-900">Add 9D Screen Guard</span>
+                      <span className="text-[11.5px] font-medium text-zinc-900">
+                        Add 9D Screen Guard
+                      </span>
                     </div>
                     <span className="text-[11.5px] font-bold text-zinc-900">+₹29</span>
                   </label>
@@ -658,7 +667,6 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                   BUY NOW
                 </button>
               </div>
-
             </div>
 
             {/* ----------------------------------------------------------------------- */}
@@ -718,7 +726,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                       className="space-y-3.5"
                     >
                       <div>
-                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">Details & Features</p>
+                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">
+                          Details & Features
+                        </p>
                         <div className="space-y-1 text-zinc-600 text-xs sm:text-[12px] leading-snug font-normal pl-4">
                           <p>• Photo-Realistic High-Density 3D UV Embossed Print Quality</p>
                           <p>• Shockproof Thermoplastic Polyurethane (TPU) Rubber</p>
@@ -728,9 +738,13 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                       </div>
 
                       <div>
-                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">Description</p>
+                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">
+                          Description
+                        </p>
                         <p className="text-zinc-600 text-xs sm:text-[12px] leading-relaxed font-normal">
-                          Crafted with precision UV embossing for an authentic 3D tactile finish. Protects your device against drops and scratches while keeping a lightweight profile.
+                          Crafted with precision UV embossing for an authentic 3D tactile finish.
+                          Protects your device against drops and scratches while keeping a
+                          lightweight profile.
                         </p>
                       </div>
                     </motion.div>
@@ -747,9 +761,15 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                       className="space-y-3 text-zinc-600 text-xs sm:text-[12px] leading-relaxed"
                     >
                       <p className="font-bold text-zinc-950">Maintenance & Cleaning</p>
-                      <p>Wipe clean with a damp microfiber cloth. Avoid using harsh chemical solvents, acetone, or isopropyl alcohol on the embossed surface.</p>
+                      <p>
+                        Wipe clean with a damp microfiber cloth. Avoid using harsh chemical
+                        solvents, acetone, or isopropyl alcohol on the embossed surface.
+                      </p>
                       <p className="font-bold text-zinc-950 pt-1">Guarantee</p>
-                      <p>Includes a hassle-free replacement guarantee for fitting or manufacturing imperfections.</p>
+                      <p>
+                        Includes a hassle-free replacement guarantee for fitting or manufacturing
+                        imperfections.
+                      </p>
                     </motion.div>
                   )}
 
@@ -764,25 +784,24 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                       className="space-y-3 text-zinc-600 text-xs sm:text-[12px] leading-relaxed"
                     >
                       <p className="font-bold text-zinc-950">Delivery Timeline</p>
-                      <p>Dispatched within 24 hours. Express courier delivery takes 3 to 5 business days across India.</p>
+                      <p>
+                        Dispatched within 24 hours. Express courier delivery takes 3 to 5 business
+                        days across India.
+                      </p>
                       <p className="font-bold text-zinc-950 pt-1">Shipping Offer</p>
                       <p>Free Standard Shipping on all orders above ₹399.</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
-
             </div>
-
           </div>
-
         </div>
 
         {/* ========================================================================= */}
         {/* RECENTLY VIEWED & STYLING IDEAS SECTIONS (Matches Clothes Page)           */}
         {/* ========================================================================= */}
         <div className="mt-16 space-y-12 border-t border-zinc-200/80 pt-10">
-
           {/* Recently Viewed Grid */}
           <div>
             <h3 className="font-display font-bold text-zinc-950 text-base sm:text-lg uppercase tracking-wider mb-4">
@@ -806,9 +825,7 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
               ))}
             </div>
           </div>
-
         </div>
-
       </div>
 
       {/* ========================================================= */}
@@ -841,7 +858,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                   <h3 className="font-serif text-base sm:text-lg font-bold uppercase tracking-tight text-zinc-950">
                     Choose Your Brand
                   </h3>
-                  <p className="text-[11px] font-sans text-zinc-400">Select manufacturer to filter available models</p>
+                  <p className="text-[11px] font-sans text-zinc-400">
+                    Select manufacturer to filter available models
+                  </p>
                 </div>
                 <button
                   type="button"
@@ -868,8 +887,12 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                       }`}
                     >
                       <div>
-                        <span className="text-sm sm:text-base font-sans font-bold tracking-tight block">{brand.name}</span>
-                        <span className={`text-[11px] ${isSelected ? "text-zinc-300" : "text-zinc-400"}`}>
+                        <span className="text-sm sm:text-base font-sans font-bold tracking-tight block">
+                          {brand.name}
+                        </span>
+                        <span
+                          className={`text-[11px] ${isSelected ? "text-zinc-300" : "text-zinc-400"}`}
+                        >
                           {brand.models.length} models available
                         </span>
                       </div>
@@ -925,7 +948,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                   <h3 className="font-serif text-base sm:text-lg font-bold uppercase tracking-tight text-zinc-950">
                     Choose Your {selectedBrand} Model
                   </h3>
-                  <p className="text-[11px] font-sans text-zinc-400">Search or pick your exact device variant</p>
+                  <p className="text-[11px] font-sans text-zinc-400">
+                    Search or pick your exact device variant
+                  </p>
                 </div>
                 <button
                   type="button"
@@ -979,7 +1004,9 @@ export function AccessoryProductDetail({ product }: AccessoryProductDetailProps)
                             : "border-zinc-200/80 bg-white hover:border-black/30 hover:bg-zinc-50/80 text-zinc-800 font-medium"
                         }`}
                       >
-                        <span className="text-xs sm:text-sm font-sans tracking-tight">{modelName}</span>
+                        <span className="text-xs sm:text-sm font-sans tracking-tight">
+                          {modelName}
+                        </span>
                         <div
                           className={`w-4 h-4 rounded-full flex items-center justify-center transition-all ${
                             isSelected

@@ -25,11 +25,8 @@ type TabType = "details" | "washcare" | "shipping";
 
 export function UniversalProductDetail({ product }: UniversalProductDetailProps) {
   const gallery = useMemo(
-    () =>
-      product.gallery && product.gallery.length > 0
-        ? product.gallery
-        : [product.image],
-    [product.gallery, product.image]
+    () => (product.gallery && product.gallery.length > 0 ? product.gallery : [product.image]),
+    [product.gallery, product.image],
   );
 
   const primaryImage = gallery[0] || product.image;
@@ -113,8 +110,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
     };
   }, [product.id]);
 
-  const isOverlapTriggered =
-    activeMobileIdx >= lastIndex || isLastImageInView;
+  const isOverlapTriggered = activeMobileIdx >= lastIndex || isLastImageInView;
 
   const addToCart = useCart((s) => s.add);
   const setCartOpen = useCart((s) => s.setOpen);
@@ -165,12 +161,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
       {/* Header Spacer */}
       <div className="h-14 sm:h-16 bg-white" />
 
-
-
       {/* Main Grid Layout Container */}
       <div className="mx-auto max-w-[1720px] px-4 sm:px-6 md:px-8 pt-0 lg:pt-3.5 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-start">
-
           {/* ========================================================================= */}
           {/* MOBILE ONLY: 100% FULL-BLEED CAROUSEL                                     */}
           {/* ========================================================================= */}
@@ -214,8 +207,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     key={i}
                     type="button"
                     onClick={() => scrollToMobileIndex(i)}
-                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${activeMobileIdx === i ? "w-6 bg-black" : "w-1.5 bg-black/20"
-                      }`}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      activeMobileIdx === i ? "w-6 bg-black" : "w-1.5 bg-black/20"
+                    }`}
                     aria-label={`View angle ${i + 1}`}
                   />
                 ))}
@@ -281,14 +275,16 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                   setIsWishlisted(!isWishlisted);
                 }}
                 aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                className={`absolute top-4 right-4 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${isWishlisted
+                className={`absolute top-4 right-4 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${
+                  isWishlisted
                     ? "bg-black text-white"
                     : "bg-white/90 hover:bg-white text-zinc-800 hover:scale-105 active:scale-95 border border-black/10"
-                  }`}
+                }`}
               >
                 <Bookmark
-                  className={`h-4 w-4 sm:h-4.5 sm:w-4.5 transition-transform ${isWishlisted ? "fill-white text-white scale-110" : "text-zinc-800"
-                    }`}
+                  className={`h-4 w-4 sm:h-4.5 sm:w-4.5 transition-transform ${
+                    isWishlisted ? "fill-white text-white scale-110" : "text-zinc-800"
+                  }`}
                 />
               </button>
 
@@ -324,51 +320,50 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
           {/* COLUMN 2: CENTER VERTICAL STREAM OF SECONDARY ANGLES                       */}
           {/* ========================================================================= */}
           <div className="hidden lg:block lg:col-span-4 xl:col-span-4 space-y-3.5 -ml-2.5 sm:-ml-3">
-            {secondaryAngles.length > 0 ? (
-              secondaryAngles.map((imgSrc, idx) => {
-                const angleNumber = idx + 2;
-                const isLast = idx + 1 === lastIndex;
+            {secondaryAngles.length > 0
+              ? secondaryAngles.map((imgSrc, idx) => {
+                  const angleNumber = idx + 2;
+                  const isLast = idx + 1 === lastIndex;
 
-                return (
-                  <div
-                    key={idx}
-                    ref={isLast ? lastImageRef : null}
-                    onClick={() => openLightbox(idx + 1)}
-                    className="relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4.2] w-full bg-white rounded-[24px] overflow-hidden border border-[#e4e4e7] hover:border-zinc-400 shadow-2xs transition-all duration-300 group select-none cursor-zoom-in"
-                  >
-                    <img
-                      src={imgSrc}
-                      alt={`${product.name} — angle ${angleNumber}`}
-                      loading={idx < 2 ? "eager" : "lazy"}
-                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-102"
-                    />
+                  return (
+                    <div
+                      key={idx}
+                      ref={isLast ? lastImageRef : null}
+                      onClick={() => openLightbox(idx + 1)}
+                      className="relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4.2] w-full bg-white rounded-[24px] overflow-hidden border border-[#e4e4e7] hover:border-zinc-400 shadow-2xs transition-all duration-300 group select-none cursor-zoom-in"
+                    >
+                      <img
+                        src={imgSrc}
+                        alt={`${product.name} — angle ${angleNumber}`}
+                        loading={idx < 2 ? "eager" : "lazy"}
+                        className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-102"
+                      />
 
-                    {/* Angle Tag */}
-                    <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur-xs text-white text-[10px] font-sans px-2.5 py-1 rounded-full flex items-center gap-1">
-                      <span>Angle {angleNumber} of {gallery.length}</span>
-                      <span className="text-zinc-400">· Click to zoom</span>
+                      {/* Angle Tag */}
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur-xs text-white text-[10px] font-sans px-2.5 py-1 rounded-full flex items-center gap-1">
+                        <span>
+                          Angle {angleNumber} of {gallery.length}
+                        </span>
+                        <span className="text-zinc-400">· Click to zoom</span>
+                      </div>
                     </div>
-                  </div>
-                );
-              })
-            ) : null}
+                  );
+                })
+              : null}
           </div>
 
           {/* ========================================================================= */}
           {/* COLUMN 3: RIGHT STICKY PURCHASE PANEL (PERMANENTLY PINNED ALONGSIDE GALLERY) */}
           {/* ========================================================================= */}
           <div className="col-span-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-20 lg:self-start space-y-3 pr-0.5 pt-0 sm:pt-2 lg:pt-16">
-
             {/* ----------------------------------------------------------------------- */}
             {/* CARD 1: PURCHASE SELECTION BOX (DESKTOP STICKY OVERLAP ONLY)           */}
             {/* ----------------------------------------------------------------------- */}
             <div
-              className={`bg-white border border-[#e4e4e7] rounded-[18px] p-4 sm:p-5 space-y-2.5 transition-all duration-500 relative z-10 shadow-2xs ${isOverlapTriggered
-                  ? "lg:sticky lg:top-24 lg:z-20 lg:shadow-md"
-                  : ""
-                }`}
+              className={`bg-white border border-[#e4e4e7] rounded-[18px] p-4 sm:p-5 space-y-2.5 transition-all duration-500 relative z-10 shadow-2xs ${
+                isOverlapTriggered ? "lg:sticky lg:top-24 lg:z-20 lg:shadow-md" : ""
+              }`}
             >
-
               {/* Row 1: Product Title & Bookmark & Price & Size Guide */}
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -381,8 +376,11 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       className="p-0.5 text-zinc-700 hover:text-black transition-colors inline-flex cursor-pointer"
                     >
                       <Bookmark
-                        className={`h-4 w-4 transition-all ${isWishlisted ? "fill-zinc-800 text-zinc-800" : "fill-zinc-400 text-zinc-400"
-                          }`}
+                        className={`h-4 w-4 transition-all ${
+                          isWishlisted
+                            ? "fill-zinc-800 text-zinc-800"
+                            : "fill-zinc-400 text-zinc-400"
+                        }`}
                       />
                     </button>
                   </h1>
@@ -415,12 +413,13 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                         type="button"
                         disabled={isSoldOut}
                         onClick={() => setSelectedSize(s)}
-                        className={`h-9 sm:h-10 rounded-full font-semibold text-[11px] transition-all cursor-pointer flex items-center justify-center ${isSoldOut
+                        className={`h-9 sm:h-10 rounded-full font-semibold text-[11px] transition-all cursor-pointer flex items-center justify-center ${
+                          isSoldOut
                             ? "bg-zinc-50 border border-zinc-200 text-zinc-400 line-through cursor-not-allowed opacity-50"
                             : isSelected
                               ? "bg-[#18181b] text-white border border-[#18181b] shadow-2xs"
                               : "bg-white border border-[#e4e4e7] text-zinc-800 hover:border-black"
-                          }`}
+                        }`}
                       >
                         {s}
                       </button>
@@ -451,26 +450,26 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                   BUY NOW
                 </button>
               </div>
-
             </div>
 
             {/* ----------------------------------------------------------------------- */}
             {/* CARD 2: DETAILS & DESCRIPTION TAB CARD (DESKTOP UNDERLAP ONLY)          */}
             {/* ----------------------------------------------------------------------- */}
             <div
-              className={`bg-white border border-[#e4e4e7] rounded-[18px] p-4 sm:p-5 shadow-2xs transition-all duration-500 relative z-10 mt-3.5 ${isOverlapTriggered ? "lg:-mt-5 lg:shadow-md" : ""
-                }`}
+              className={`bg-white border border-[#e4e4e7] rounded-[18px] p-4 sm:p-5 shadow-2xs transition-all duration-500 relative z-10 mt-3.5 ${
+                isOverlapTriggered ? "lg:-mt-5 lg:shadow-md" : ""
+              }`}
             >
-
               {/* Tabs Header */}
               <div className="flex border-b border-zinc-200/90 pb-2.5 justify-between items-center text-center">
                 <button
                   type="button"
                   onClick={() => setActiveTab("details")}
-                  className={`pb-2.5 -mb-[11px] font-sans text-xs sm:text-[13px] transition-all cursor-pointer ${activeTab === "details"
+                  className={`pb-2.5 -mb-[11px] font-sans text-xs sm:text-[13px] transition-all cursor-pointer ${
+                    activeTab === "details"
                       ? "border-b-[2.5px] border-zinc-800 text-zinc-950 font-bold"
                       : "border-b-[2.5px] border-transparent text-zinc-400 hover:text-zinc-700 font-medium"
-                    }`}
+                  }`}
                 >
                   Details & Description
                 </button>
@@ -478,10 +477,11 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 <button
                   type="button"
                   onClick={() => setActiveTab("washcare")}
-                  className={`pb-2.5 -mb-[11px] font-sans text-xs sm:text-[13px] transition-all cursor-pointer ${activeTab === "washcare"
+                  className={`pb-2.5 -mb-[11px] font-sans text-xs sm:text-[13px] transition-all cursor-pointer ${
+                    activeTab === "washcare"
                       ? "border-b-[2.5px] border-zinc-800 text-zinc-950 font-bold"
                       : "border-b-[2.5px] border-transparent text-zinc-400 hover:text-zinc-700 font-medium"
-                    }`}
+                  }`}
                 >
                   Washcare
                 </button>
@@ -489,10 +489,11 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                 <button
                   type="button"
                   onClick={() => setActiveTab("shipping")}
-                  className={`pb-2.5 -mb-[11px] font-sans text-xs sm:text-[13px] transition-all cursor-pointer ${activeTab === "shipping"
+                  className={`pb-2.5 -mb-[11px] font-sans text-xs sm:text-[13px] transition-all cursor-pointer ${
+                    activeTab === "shipping"
                       ? "border-b-[2.5px] border-zinc-800 text-zinc-950 font-bold"
                       : "border-b-[2.5px] border-transparent text-zinc-400 hover:text-zinc-700 font-medium"
-                    }`}
+                  }`}
                 >
                   Shipping
                 </button>
@@ -513,7 +514,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                     >
                       {/* Details Section */}
                       <div>
-                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">Details</p>
+                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">
+                          Details
+                        </p>
                         <div className="space-y-0.5 text-zinc-600 text-xs sm:text-[12px] leading-snug font-normal pl-4">
                           {(
                             product.details || [
@@ -530,7 +533,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
 
                       {/* Description Section */}
                       <div>
-                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">Description</p>
+                        <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">
+                          Description
+                        </p>
                         <div className="space-y-2 text-zinc-600 text-xs sm:text-[12px] leading-relaxed font-normal">
                           {(product.description || "").split("\n\n").map((paragraph, idx) => {
                             if (!paragraph) return null;
@@ -563,7 +568,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       transition={{ duration: 0.12 }}
                       className="space-y-2"
                     >
-                      <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">Washcare Instructions</p>
+                      <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">
+                        Washcare Instructions
+                      </p>
                       <div className="space-y-1 text-zinc-600 text-xs sm:text-[12px] leading-snug font-normal pl-4">
                         {(
                           product.washcare || [
@@ -589,7 +596,9 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                       transition={{ duration: 0.12 }}
                       className="space-y-2"
                     >
-                      <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">Shipping Information</p>
+                      <p className="font-bold text-zinc-950 text-xs sm:text-[13px] mb-1.5">
+                        Shipping Information
+                      </p>
                       <div className="space-y-1 text-zinc-600 text-xs sm:text-[12px] leading-snug font-normal pl-4">
                         {(
                           product.shippingInfo || [
@@ -605,18 +614,14 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                   )}
                 </AnimatePresence>
               </div>
-
             </div>
-
           </div>
-
         </div>
 
         {/* ========================================================================= */}
         {/* RECENTLY VIEWED & STYLING IDEAS SECTIONS (Matches Image 1 Bottom Layout)    */}
         {/* ========================================================================= */}
         <div className="mt-16 space-y-12 border-t border-zinc-200/80 pt-10">
-
           {/* Recently Viewed Grid */}
           <div>
             <h3 className="font-display font-bold text-zinc-950 text-base sm:text-lg uppercase tracking-wider mb-4">
@@ -640,9 +645,7 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
               ))}
             </div>
           </div>
-
         </div>
-
       </div>
 
       {/* Fullscreen High-Definition Lightbox Modal */}
@@ -696,10 +699,11 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
                   <button
                     key={idx}
                     onClick={() => setLightboxIdx(idx)}
-                    className={`w-14 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${lightboxIdx === idx
+                    className={`w-14 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                      lightboxIdx === idx
                         ? "border-white scale-105"
                         : "border-white/20 opacity-60 hover:opacity-100"
-                      }`}
+                    }`}
                   >
                     <img src={thumb} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -744,7 +748,8 @@ export function UniversalProductDetail({ product }: UniversalProductDetailProps)
               </div>
 
               <p className="text-xs text-zinc-600 font-sans">
-                Our silhouettes are cut with an intentional boxy drop-shoulder drape. Take your regular size for the intended streetwear fit, or size down for a standard fit.
+                Our silhouettes are cut with an intentional boxy drop-shoulder drape. Take your
+                regular size for the intended streetwear fit, or size down for a standard fit.
               </p>
 
               {/* Measurement Table */}

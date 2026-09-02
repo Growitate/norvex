@@ -1,3 +1,5 @@
+import bagCybergothCross from "@/assets/bag_cybergoth_cross.jpg";
+import bagY2kStarPatent from "@/assets/bag_y2k_star_patent.jpg";
 import bagShoulderChain from "@/assets/bag_shoulder_chain_1786114752412.png";
 import bagCrossbodyPatent from "@/assets/bag_crossbody_patent_1786114770311.png";
 import bagHarnessTote from "@/assets/bag_harness_tote_1786114785960.png";
@@ -63,7 +65,16 @@ export type ProductColor = {
 
 export type WhatFitsItem = {
   name: string;
-  iconName: "phone" | "wallet" | "keys" | "headphones" | "cosmetics" | "bottle" | "tablet" | "glasses" | "notebook";
+  iconName:
+    | "phone"
+    | "wallet"
+    | "keys"
+    | "headphones"
+    | "cosmetics"
+    | "bottle"
+    | "tablet"
+    | "glasses"
+    | "notebook";
   fits: boolean;
   note: string;
 };
@@ -74,12 +85,19 @@ export type Product = {
   price: number;
   image: string;
   gallery?: string[];
-  category: "Shoulder Bags" | "Crossbody" | "Totes & Backpacks" | "Mini Bags" | "Apparel" | "Accessories";
+  category:
+    | "Shoulder Bags"
+    | "Crossbody"
+    | "Totes & Backpacks"
+    | "Mini Bags"
+    | "Apparel"
+    | "Accessories";
   department?: "female" | "male" | "unisex";
   isBag: boolean;
   isAccessory?: boolean;
   isPhoneCase?: boolean;
   isNew?: boolean;
+  isCustomUpdated?: boolean;
   sku?: string;
   shortDescription?: string;
   description: string;
@@ -109,13 +127,7 @@ export const products: Product[] = [
     name: "Gothic Monster Claw Embossed Soft Silicone Case",
     price: 249,
     image: caseGothicClaw,
-    gallery: [
-      caseGothicClaw,
-      caseGothicClaw,
-      caseGothicClaw,
-      caseGothicClaw,
-      caseGothicClaw,
-    ],
+    gallery: [caseGothicClaw, caseGothicClaw, caseGothicClaw, caseGothicClaw, caseGothicClaw],
     category: "Accessories",
     department: "unisex",
     isBag: false,
@@ -123,7 +135,8 @@ export const products: Product[] = [
     isPhoneCase: true,
     isNew: true,
     sku: "NV-2026-MC01",
-    shortDescription: "Precision laser-cut shockproof silicone case with high-density UV embossed gothic monster claw & tribal calligraphy artwork.",
+    shortDescription:
+      "Precision laser-cut shockproof silicone case with high-density UV embossed gothic monster claw & tribal calligraphy artwork.",
     description:
       "Crafted with premium shock-absorbing clear TPU bumpers and a matte anti-fingerprint backplate. Features ultra-fine 3D UV embossed gothic monster claw art, dragon typography, and thorny barbed wire borders. Engineered with raised 1.5mm lips for screen and camera lens protection.",
     details: [
@@ -157,19 +170,14 @@ export const products: Product[] = [
     name: "Silver Eyelet Distressed Dad Cap",
     price: 899,
     image: productCap,
-    gallery: [
-      productCap,
-      productCap,
-      productCap,
-      productCap,
-      productCap,
-    ],
+    gallery: [productCap, productCap, productCap, productCap, productCap],
     category: "Accessories",
     department: "unisex",
     isBag: false,
     isNew: false,
     sku: "NV-2026-CP04",
-    shortDescription: "Washed vintage cotton twill with silver metal eyelet grommets and embroidered gothic cross.",
+    shortDescription:
+      "Washed vintage cotton twill with silver metal eyelet grommets and embroidered gothic cross.",
     description:
       "Vintage-washed unstructured 6-panel dad cap adorned with silver metal piercing grommets across the curved brim and 3D gothic cross embroidery on the crown.",
     details: [
@@ -217,7 +225,8 @@ export const products: Product[] = [
     isBag: false,
     isNew: true,
     sku: "NV-2026-FT01",
-    shortDescription: "240 GSM bio-washed ribbed cotton with reflective metallic chrome tribal artwork and cropped silhouette.",
+    shortDescription:
+      "240 GSM bio-washed ribbed cotton with reflective metallic chrome tribal artwork and cropped silhouette.",
     description:
       "Engineered from premium 240 GSM stretch cotton rib with a fitted baby tee crop cut. Finished with a liquid chrome tribal chest motif and double-needle contrast stitching. Looks effortless styled with low-rise cargo pants or pleated hardware skirts.",
     details: [
@@ -263,7 +272,8 @@ export const products: Product[] = [
     isBag: false,
     isNew: true,
     sku: "NV-2026-FH02",
-    shortDescription: "480 GSM French terry cotton with mineral fade patina, custom cross zipper pull, and tonal embroidery.",
+    shortDescription:
+      "480 GSM French terry cotton with mineral fade patina, custom cross zipper pull, and tonal embroidery.",
     description:
       "Cut in an exaggerated slouchy drape from ultra-plush 480 GSM French terry. Features hand-abraded distressed seams, subtle tonal gothic chest embroidery, and a solid steel custom cross zipper slider. Built for cozy streetwear layering.",
     details: [
@@ -308,7 +318,8 @@ export const products: Product[] = [
     isBag: false,
     isNew: true,
     sku: "NV-2026-FS03",
-    shortDescription: "Structured cotton twill with modular bellows cargo pockets, double grommet belt, and detachable curb chain.",
+    shortDescription:
+      "Structured cotton twill with modular bellows cargo pockets, double grommet belt, and detachable curb chain.",
     description:
       "The definitive Y2K subculture statement skirt. Crafted from heavyweight structured black cotton twill with knife pleats, snap cargo pockets, and an integrated double eyelet grommet belt featuring detachable silver chains and skull charms.",
     details: [
@@ -355,7 +366,8 @@ export const products: Product[] = [
     isBag: false,
     isNew: true,
     sku: "NV-2026-HD01",
-    shortDescription: "500 GSM French terry cotton with hand-distressed seams, gothic chest typography, and oversized boxy drape.",
+    shortDescription:
+      "500 GSM French terry cotton with hand-distressed seams, gothic chest typography, and oversized boxy drape.",
     description:
       "Engineered from ultra-heavy 500 GSM 100% French terry cotton, featuring custom mineral acid-wash treatments and distressed edge grinding. Cut with an exaggerated drop-shoulder and wide boxy torso for maximum streetwear aesthetic silhouette.",
     details: [
@@ -406,7 +418,8 @@ export const products: Product[] = [
     isBag: false,
     isNew: true,
     sku: "NV-2026-TE02",
-    shortDescription: "330 GSM heavy terrycotton with 8,00,000 stitches back embroidery tiger bonsai artwork.",
+    shortDescription:
+      "330 GSM heavy terrycotton with 8,00,000 stitches back embroidery tiger bonsai artwork.",
     description:
       "Over eight lakh stitches. a tiger descending through a bonsai, cranes overhead, clouds rolling across the shoulders — the full back built entirely in machine embroidery, thread by thread, in oranges, greens and golds against black. this isn't a print. every line you see is stitched.\n\nCut from 100% terry cotton at a substantial 330gsm — a heavyweight base with the structure to carry embroidery this dense and hold its drape through the day.\n\nThe fit runs oversized and sits larger than a standard tee, so refer to the size chart before ordering. pairs clean with denims, cargos or relaxed trousers.\n\nmodel measurement - is 6\" and wears a size s.",
     details: [
@@ -428,9 +441,7 @@ export const products: Product[] = [
     ],
     sizes: ["XXXS", "XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
     soldOutSizes: [],
-    colors: [
-      { name: "Onyx Black", hex: "#18181b" },
-    ],
+    colors: [{ name: "Onyx Black", hex: "#18181b" }],
   },
   {
     id: "tactical-multi-pocket-cargo",
@@ -450,7 +461,8 @@ export const products: Product[] = [
     isBag: false,
     isNew: false,
     sku: "NV-2026-CG03",
-    shortDescription: "Water-repellent ripstop parachute nylon with 8 modular pockets, silver D-rings, and toggle bungee hems.",
+    shortDescription:
+      "Water-repellent ripstop parachute nylon with 8 modular pockets, silver D-rings, and toggle bungee hems.",
     description:
       "Engineered for tactical versatility and dramatic drape. Crafted from matte lightweight ripstop nylon featuring 8 modular bellows pockets, chrome D-ring loops, and adjustable ankle bungee cinches to toggle between wide-leg and tapered balloon silhouettes.",
     details: [
@@ -486,19 +498,15 @@ export const products: Product[] = [
     id: "cybergoth-chain-shoulder",
     name: "Cybergoth Metal Chain Shoulder Bag",
     price: 1499,
-    image: bagShoulderChain,
-    gallery: [
-      bagShoulderChain,
-      modelShoulderBag,
-      bagGothicSilverCrossbody,
-      modelBag2,
-    ],
+    image: bagCybergothCross,
+    gallery: [bagCybergothCross, modelShoulderBag, bagGothicSilverCrossbody, modelBag2],
     category: "Shoulder Bags",
     department: "female",
     isBag: true,
     isNew: true,
     sku: "NV-2026-CS01",
-    shortDescription: "Silky, metallic sheen distressed black leather with heavy silver curb chains & cyber hardware.",
+    shortDescription:
+      "Silky, metallic sheen distressed black leather with heavy silver curb chains & cyber hardware.",
     description:
       "Crafted from premium black leather with heavy silver chrome chains, metallic buckle hardware, and industrial studs. A signature Y2K statement piece designed for bold self-expression.",
     storyTitle: "Sculpted Cyber Aesthetics | The Metal Chain Drop",
@@ -527,14 +535,54 @@ export const products: Product[] = [
       "Care: Clean with a soft, slightly damp cloth. Use dedicated leather balm every 3 months. Avoid prolonged direct moisture.",
     ],
     whatFits: [
-      { name: "iPhone 16 Pro Max / Plus", iconName: "phone", fits: true, note: "Fits comfortably with case" },
-      { name: "Cardholder / Slim Wallet", iconName: "wallet", fits: true, note: "Fits easily in main or slip pocket" },
-      { name: "Key Fob & House Keys", iconName: "keys", fits: true, note: "Quick access with interior key loop" },
-      { name: "AirPods Pro / Wireless Earbuds", iconName: "headphones", fits: true, note: "Fits inside slip pocket" },
-      { name: "Lip Gloss, Perfume & Compact", iconName: "cosmetics", fits: true, note: "Fits in zip security pocket" },
-      { name: "Sunglasses in Hard Case", iconName: "glasses", fits: true, note: "Fits horizontally with ease" },
-      { name: "500ml Slim Water Bottle", iconName: "bottle", fits: false, note: "Too tall for zipped closure" },
-      { name: "iPad Mini / 8-inch Reader", iconName: "tablet", fits: false, note: "Exceeds bag width" },
+      {
+        name: "iPhone 16 Pro Max / Plus",
+        iconName: "phone",
+        fits: true,
+        note: "Fits comfortably with case",
+      },
+      {
+        name: "Cardholder / Slim Wallet",
+        iconName: "wallet",
+        fits: true,
+        note: "Fits easily in main or slip pocket",
+      },
+      {
+        name: "Key Fob & House Keys",
+        iconName: "keys",
+        fits: true,
+        note: "Quick access with interior key loop",
+      },
+      {
+        name: "AirPods Pro / Wireless Earbuds",
+        iconName: "headphones",
+        fits: true,
+        note: "Fits inside slip pocket",
+      },
+      {
+        name: "Lip Gloss, Perfume & Compact",
+        iconName: "cosmetics",
+        fits: true,
+        note: "Fits in zip security pocket",
+      },
+      {
+        name: "Sunglasses in Hard Case",
+        iconName: "glasses",
+        fits: true,
+        note: "Fits horizontally with ease",
+      },
+      {
+        name: "500ml Slim Water Bottle",
+        iconName: "bottle",
+        fits: false,
+        note: "Too tall for zipped closure",
+      },
+      {
+        name: "iPad Mini / 8-inch Reader",
+        iconName: "tablet",
+        fits: false,
+        note: "Exceeds bag width",
+      },
     ],
     sizes: ["One Size"],
     colors: [
@@ -547,19 +595,15 @@ export const products: Product[] = [
     id: "y2k-patent-crossbody",
     name: "Y2K Patent Leather Crossbody Bag",
     price: 1299,
-    image: bagCrossbodyPatent,
-    gallery: [
-      bagCrossbodyPatent,
-      modelBag2,
-      modelShoulderBag,
-      bagGothicSilverCrossbody,
-    ],
+    image: bagY2kStarPatent,
+    gallery: [bagY2kStarPatent, modelBag2, modelShoulderBag, bagGothicSilverCrossbody],
     category: "Crossbody",
     department: "female",
     isBag: true,
     isNew: true,
     sku: "NV-2026-PC02",
-    shortDescription: "High-gloss mirror patent leather with polished grommet belt strap and sleek dark silhouette.",
+    shortDescription:
+      "High-gloss mirror patent leather with polished grommet belt strap and sleek dark silhouette.",
     description:
       "High-gloss black patent leather shoulder bag featuring silver grommet belt straps, polished metal buckles, and a sleek dark aesthetic profile.",
     storyTitle: "High-Gloss Nostalgia | Y2K Mirror Patent",
@@ -587,12 +631,32 @@ export const products: Product[] = [
       "Care: Wipe clean with microfiber cloth. Keep away from direct high heat sources.",
     ],
     whatFits: [
-      { name: "iPhone 16 Pro Max", iconName: "phone", fits: true, note: "Slides smoothly into main compartment" },
-      { name: "Compact Wallet & Cards", iconName: "wallet", fits: true, note: "Fits inside inner slip pocket" },
+      {
+        name: "iPhone 16 Pro Max",
+        iconName: "phone",
+        fits: true,
+        note: "Slides smoothly into main compartment",
+      },
+      {
+        name: "Compact Wallet & Cards",
+        iconName: "wallet",
+        fits: true,
+        note: "Fits inside inner slip pocket",
+      },
       { name: "Keys & Car Fob", iconName: "keys", fits: true, note: "Fits easily" },
       { name: "AirPods / Earbuds", iconName: "headphones", fits: true, note: "Fits easily" },
-      { name: "Lipsticks & Pocket Mirror", iconName: "cosmetics", fits: true, note: "Fits in inner zip pocket" },
-      { name: "Sunglasses (Soft Pouch)", iconName: "glasses", fits: true, note: "Fits with soft pouch" },
+      {
+        name: "Lipsticks & Pocket Mirror",
+        iconName: "cosmetics",
+        fits: true,
+        note: "Fits in inner zip pocket",
+      },
+      {
+        name: "Sunglasses (Soft Pouch)",
+        iconName: "glasses",
+        fits: true,
+        note: "Fits with soft pouch",
+      },
       { name: "500ml Water Bottle", iconName: "bottle", fits: false, note: "Exceeds bag capacity" },
     ],
     sizes: ["One Size"],
@@ -607,18 +671,14 @@ export const products: Product[] = [
     name: "Gothic Buckle Harness Tote",
     price: 1899,
     image: bagHarnessTote,
-    gallery: [
-      bagHarnessTote,
-      modelSilverTote,
-      bagShoulderChain,
-      modelShoulderBag,
-    ],
+    gallery: [bagHarnessTote, modelSilverTote, bagShoulderChain, modelShoulderBag],
     category: "Totes & Backpacks",
     department: "unisex",
     isBag: true,
     isNew: true,
     sku: "NV-2026-HT03",
-    shortDescription: "Heavyweight structured canvas & leather tote with tactical harness straps and dual utility pockets.",
+    shortDescription:
+      "Heavyweight structured canvas & leather tote with tactical harness straps and dual utility pockets.",
     description:
       "Heavyweight black canvas and leather tote engineered with industrial harness webbing, metallic D-rings, and heavy zipper compartments.",
     storyTitle: "Tactical Brutalism | Heavy Harness Carry",
@@ -634,7 +694,7 @@ export const products: Product[] = [
     details: [
       "Heavyweight 20oz storm-proof cotton canvas & full-grain leather trims",
       "Tactical nylon webbing harness with heavy-duty silver D-rings",
-      "Padded internal laptop compartment (fits up to 15.6\" devices)",
+      'Padded internal laptop compartment (fits up to 15.6" devices)',
       "Dual exterior quick-stash cargo pockets with snap buckles",
       "Heavy gauge dual two-way metal YKK-style zippers",
       "Reinforced leather dual top handles and detachable padded crossbody strap",
@@ -646,13 +706,43 @@ export const products: Product[] = [
       "Care: Spot clean with damp cloth. Air dry away from direct sunlight.",
     ],
     whatFits: [
-      { name: "15\" MacBook Pro / Laptop", iconName: "tablet", fits: true, note: "Padded sleeve fits laptops up to 15.6\"" },
-      { name: "iPad Pro & Sketchbooks", iconName: "notebook", fits: true, note: "Fits multiple books & tablets" },
-      { name: "1L Water Bottle / Thermos", iconName: "bottle", fits: true, note: "Fits upright in dedicated bottle sleeve" },
+      {
+        name: '15" MacBook Pro / Laptop',
+        iconName: "tablet",
+        fits: true,
+        note: 'Padded sleeve fits laptops up to 15.6"',
+      },
+      {
+        name: "iPad Pro & Sketchbooks",
+        iconName: "notebook",
+        fits: true,
+        note: "Fits multiple books & tablets",
+      },
+      {
+        name: "1L Water Bottle / Thermos",
+        iconName: "bottle",
+        fits: true,
+        note: "Fits upright in dedicated bottle sleeve",
+      },
       { name: "Large Wallet & Organizers", iconName: "wallet", fits: true, note: "Fits easily" },
-      { name: "Full Size Headphones Case", iconName: "headphones", fits: true, note: "Fits over-ear headphones case" },
-      { name: "iPhone 16 Pro Max", iconName: "phone", fits: true, note: "Quick access in exterior pocket" },
-      { name: "Cosmetics Pouch & Daily Kit", iconName: "cosmetics", fits: true, note: "Plenty of extra volume" },
+      {
+        name: "Full Size Headphones Case",
+        iconName: "headphones",
+        fits: true,
+        note: "Fits over-ear headphones case",
+      },
+      {
+        name: "iPhone 16 Pro Max",
+        iconName: "phone",
+        fits: true,
+        note: "Quick access in exterior pocket",
+      },
+      {
+        name: "Cosmetics Pouch & Daily Kit",
+        iconName: "cosmetics",
+        fits: true,
+        note: "Plenty of extra volume",
+      },
     ],
     sizes: ["One Size"],
     colors: [
@@ -666,18 +756,14 @@ export const products: Product[] = [
     name: "Vintage Distressed Leather Mini Satchel",
     price: 1199,
     image: bagMiniSatchel,
-    gallery: [
-      bagMiniSatchel,
-      modelBag2,
-      modelShoulderBag,
-      bagCrossbodyPatent,
-    ],
+    gallery: [bagMiniSatchel, modelBag2, modelShoulderBag, bagCrossbodyPatent],
     category: "Mini Bags",
     department: "female",
     isBag: true,
     isNew: true,
     sku: "NV-2026-MS04",
-    shortDescription: "Hand-finished oiled distressed leather with twin front buckles and chunky curb chain strap.",
+    shortDescription:
+      "Hand-finished oiled distressed leather with twin front buckles and chunky curb chain strap.",
     description:
       "Hand-finished distressed dark leather mini satchel with double chrome buckles and a heavy silver curb chain shoulder strap.",
     storyTitle: "Raw Heritage | Hand-Finished Distressed Satchel",
@@ -704,13 +790,23 @@ export const products: Product[] = [
       "Care: Use leather wax/conditioner to nourish the patina. Avoid soaking.",
     ],
     whatFits: [
-      { name: "iPhone 16 Pro / Smartphone", iconName: "phone", fits: true, note: "Fits horizontally" },
+      {
+        name: "iPhone 16 Pro / Smartphone",
+        iconName: "phone",
+        fits: true,
+        note: "Fits horizontally",
+      },
       { name: "Cardholder & Cash", iconName: "wallet", fits: true, note: "Fits in card slots" },
       { name: "Keys & Keychain", iconName: "keys", fits: true, note: "Fits comfortably" },
       { name: "AirPods / Earbuds", iconName: "headphones", fits: true, note: "Fits inside" },
       { name: "Lip Balm & Eyedrops", iconName: "cosmetics", fits: true, note: "Fits easily" },
       { name: "Slim Sunglasses", iconName: "glasses", fits: true, note: "Fits in soft pouch" },
-      { name: "Water Bottle", iconName: "bottle", fits: false, note: "Exceeds mini satchel capacity" },
+      {
+        name: "Water Bottle",
+        iconName: "bottle",
+        fits: false,
+        note: "Exceeds mini satchel capacity",
+      },
     ],
     sizes: ["One Size"],
     colors: [
@@ -724,18 +820,14 @@ export const products: Product[] = [
     name: "Metallic Chrome & Leather Cyber Crossbody",
     price: 1599,
     image: bagGothicSilverCrossbody,
-    gallery: [
-      bagGothicSilverCrossbody,
-      modelSilverTote,
-      modelShoulderBag,
-      bagShoulderChain,
-    ],
+    gallery: [bagGothicSilverCrossbody, modelSilverTote, modelShoulderBag, bagShoulderChain],
     category: "Crossbody",
     department: "unisex",
     isBag: true,
     isNew: true,
     sku: "NV-2026-GC05",
-    shortDescription: "Reflective metallic silver leather paneling, sculpted skull charms, and dual chrome link straps.",
+    shortDescription:
+      "Reflective metallic silver leather paneling, sculpted skull charms, and dual chrome link straps.",
     description:
       "Luxury gothic cyber aesthetic crossbody bag crafted with metallic silver trims, heavy chrome buckles, skull charms, and dual curb chain straps.",
     storyTitle: "Cybernetic Alchemy | The Silver Drop",
@@ -766,7 +858,12 @@ export const products: Product[] = [
       { name: "Wallet / Card Case", iconName: "wallet", fits: true, note: "Fits easily" },
       { name: "Car Keys & House Keys", iconName: "keys", fits: true, note: "Fits easily" },
       { name: "AirPods Case", iconName: "headphones", fits: true, note: "Fits easily" },
-      { name: "Makeup Essentials", iconName: "cosmetics", fits: true, note: "Fits in divider pocket" },
+      {
+        name: "Makeup Essentials",
+        iconName: "cosmetics",
+        fits: true,
+        note: "Fits in divider pocket",
+      },
       { name: "Sunglasses", iconName: "glasses", fits: true, note: "Fits in main space" },
       { name: "500ml Flask", iconName: "bottle", fits: false, note: "Exceeds height" },
     ],
@@ -782,15 +879,14 @@ export const products: Product[] = [
     name: "Metallic Chrome Gothic Mini Tote",
     price: 1699,
     image: modelSilverTote,
-    gallery: [
-      modelSilverTote,
-    ],
+    gallery: [modelSilverTote],
     category: "Mini Bags",
     department: "female",
     isBag: true,
     isNew: false,
     sku: "NV-2026-MT06",
-    shortDescription: "Liquid silver structured box tote with cross charms, top grab handles, and crossbody chain.",
+    shortDescription:
+      "Liquid silver structured box tote with cross charms, top grab handles, and crossbody chain.",
     description:
       "Limited edition metallic silver handbag studded with gothic hardware, cross charms, and a detachable curb chain.",
     storyTitle: "Liquid Metal Form | Statement Box Tote",
@@ -816,7 +912,12 @@ export const products: Product[] = [
       "Care: Keep in protective dust bag when not in use.",
     ],
     whatFits: [
-      { name: "iPhone 16 Pro Max", iconName: "phone", fits: true, note: "Fits upright or horizontal" },
+      {
+        name: "iPhone 16 Pro Max",
+        iconName: "phone",
+        fits: true,
+        note: "Fits upright or horizontal",
+      },
       { name: "Medium Size Wallet", iconName: "wallet", fits: true, note: "Fits easily" },
       { name: "Keys & Small Essentials", iconName: "keys", fits: true, note: "Fits easily" },
       { name: "AirPods Pro", iconName: "headphones", fits: true, note: "Fits in side pocket" },
@@ -834,15 +935,14 @@ export const products: Product[] = [
     name: "Dark Aesthetic Ring Shoulder Bag",
     price: 1599,
     image: modelShoulderBag,
-    gallery: [
-      modelShoulderBag,
-    ],
+    gallery: [modelShoulderBag],
     category: "Shoulder Bags",
     department: "female",
     isBag: true,
     isNew: false,
     sku: "NV-2026-RS07",
-    shortDescription: "Textured grain leather with double shoulder straps, central O-ring harness, and multi-chain drops.",
+    shortDescription:
+      "Textured grain leather with double shoulder straps, central O-ring harness, and multi-chain drops.",
     description:
       "Textured black leather bag with double shoulder straps, silver O-ring harness detail, and multi-chain drop accents.",
     storyTitle: "Sensual Hardware | O-Ring Shoulder Drop",
@@ -885,4 +985,30 @@ export const products: Product[] = [
   },
 ];
 
-export const getProduct = (id: string) => products.find((p) => p.id === id);
+export const getProduct = (id: string): Product | undefined => {
+  const base = products.find((p) => p.id === id);
+  if (typeof window !== "undefined") {
+    try {
+      const raw = localStorage.getItem("norva_products_db_v2");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          const found = parsed.find((p: Product) => p.id === id);
+          if (found) {
+            if (base && !found.isCustomUpdated) {
+              return {
+                ...found,
+                image: base.image,
+                gallery: base.gallery ? base.gallery : found.gallery,
+              };
+            }
+            return found;
+          }
+        }
+      }
+    } catch {
+      // fallback to static list
+    }
+  }
+  return base;
+};

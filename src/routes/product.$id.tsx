@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { getProduct, type Product } from "@/lib/products";
+import { useProduct } from "@/lib/db";
 import { BagProductDetail } from "@/components/BagProductDetail";
 import { UniversalProductDetail } from "@/components/UniversalProductDetail";
 import { AccessoryProductDetail } from "@/components/AccessoryProductDetail";
@@ -50,7 +51,9 @@ export const Route = createFileRoute("/product/$id")({
 });
 
 function ProductRouteComponent() {
-  const product = Route.useLoaderData() as Product;
+  const initialProduct = Route.useLoaderData() as Product;
+  const liveProduct = useProduct(initialProduct.id);
+  const product = liveProduct || initialProduct;
 
   // 1. Bag products use the Liebeskind Berlin styled bag template
   if (product.isBag) {

@@ -1,7 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Phone, Mail, Instagram, ArrowRight, CheckCircle2, Sparkles, ShieldCheck, Clock, MessageSquare } from "lucide-react";
-import modelBag3 from "@/assets/model_banner_bag_3_1786114733990.png";
+import {
+  Phone,
+  Mail,
+  Instagram,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  ShieldCheck,
+  Clock,
+  MessageSquare,
+} from "lucide-react";
+import contactCraft from "@/assets/contact_craft.jpg";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -9,10 +19,14 @@ export const Route = createFileRoute("/contact")({
       { title: "Contact — Norva Store" },
       {
         name: "description",
-        content: "Get in touch with Norva Store. WhatsApp +91 9971303047, Email norvastorex@gmail.com or DM @norvaxstore.",
+        content:
+          "Get in touch with Norva Store. WhatsApp +91 9971303047, Email norvastorex@gmail.com or DM @norvaxstore.",
       },
       { property: "og:title", content: "Contact — Norva Store" },
-      { property: "og:description", content: "Talk to us. WhatsApp, Email, Instagram, or drop a message." },
+      {
+        property: "og:description",
+        content: "Talk to us. WhatsApp, Email, Instagram, or drop a message.",
+      },
     ],
   }),
   component: Contact,
@@ -28,7 +42,6 @@ function Contact() {
 
       <section className="bg-white py-16 sm:py-24 text-zinc-900 min-h-screen">
         <div className="mx-auto max-w-[1500px] px-4 md:px-8 space-y-12 sm:space-y-16">
-
           {/* Header */}
           <header className="text-center max-w-2xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 text-white text-[11px] font-display font-semibold tracking-widest uppercase shadow-md">
@@ -40,18 +53,18 @@ function Contact() {
             </h1>
 
             <p className="font-sans text-sm sm:text-base text-zinc-600 leading-relaxed">
-              Have a question about your order, statement bag drops, or shipping? Our customer care team is here to help.
+              Have a question about your order, statement bag drops, or shipping? Our customer care
+              team is here to help.
             </p>
           </header>
 
           {/* 3-Column Luxury Editorial Grid */}
           <div className="grid gap-8 lg:grid-cols-12 items-stretch">
-
             {/* Left Column: Campaign Image Card (4 cols) */}
             <div className="lg:col-span-4 relative min-h-[420px] lg:min-h-full rounded-3xl overflow-hidden border border-black/10 shadow-md group">
               <img
-                src={modelBag3}
-                alt="NØRVA Store Model Campaign"
+                src={contactCraft}
+                alt="NØRVA Craft & Atelier Support"
                 className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -79,7 +92,6 @@ function Contact() {
               </div>
 
               <div className="space-y-6">
-
                 {/* Phone / WhatsApp */}
                 <div className="space-y-2 border-b border-black/5 pb-5">
                   <div className="flex items-center gap-3">
@@ -166,7 +178,6 @@ function Contact() {
                     <ArrowRight className="h-3.5 w-3.5" />
                   </a>
                 </div>
-
               </div>
 
               {/* Bottom Support Badge */}
@@ -192,7 +203,10 @@ function Contact() {
                 className="space-y-4"
               >
                 <div className="space-y-1.5">
-                  <label htmlFor="contact-name" className="block font-sans text-xs font-semibold uppercase tracking-wider text-zinc-700">
+                  <label
+                    htmlFor="contact-name"
+                    className="block font-sans text-xs font-semibold uppercase tracking-wider text-zinc-700"
+                  >
                     Name
                   </label>
                   <input
@@ -205,7 +219,10 @@ function Contact() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="contact-email" className="block font-sans text-xs font-semibold uppercase tracking-wider text-zinc-700">
+                  <label
+                    htmlFor="contact-email"
+                    className="block font-sans text-xs font-semibold uppercase tracking-wider text-zinc-700"
+                  >
                     Email
                   </label>
                   <input
@@ -218,7 +235,10 @@ function Contact() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="contact-message" className="block font-sans text-xs font-semibold uppercase tracking-wider text-zinc-700">
+                  <label
+                    htmlFor="contact-message"
+                    className="block font-sans text-xs font-semibold uppercase tracking-wider text-zinc-700"
+                  >
                     Message
                   </label>
                   <textarea
@@ -248,9 +268,7 @@ function Contact() {
                 </button>
               </form>
             </div>
-
           </div>
-
         </div>
       </section>
     </>

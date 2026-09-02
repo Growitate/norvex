@@ -14,7 +14,11 @@ export function Marquee({
   size = "sm",
 }: Props) {
   const speedCls =
-    speed === "slow" ? "animate-marquee-slow" : speed === "fast" ? "animate-marquee-fast" : "animate-marquee";
+    speed === "slow"
+      ? "animate-marquee-slow"
+      : speed === "fast"
+        ? "animate-marquee-fast"
+        : "animate-marquee";
   const sizeCls =
     size === "lg"
       ? "text-2xl sm:text-3xl font-bold tracking-[0.2em]"
@@ -25,7 +29,9 @@ export function Marquee({
   const loop = [...items, ...items, ...items, ...items];
   return (
     <div className={`relative overflow-hidden w-full flex items-center ${className}`}>
-      <div className={`flex w-max items-center ${speedCls} font-display uppercase text-zinc-900 ${sizeCls}`}>
+      <div
+        className={`flex w-max items-center ${speedCls} font-display uppercase text-zinc-900 ${sizeCls}`}
+      >
         {loop.map((t, i) => (
           <span key={i} className="inline-flex shrink-0 items-center gap-6 pr-6">
             <span>{t}</span>

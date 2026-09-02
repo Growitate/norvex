@@ -38,7 +38,9 @@ export const useCart = create<CartState>((set, get) => ({
       return { items: [...s.items, { ...item, qty: 1 }], open: true };
     }),
   remove: (id, size) =>
-    set((s) => ({ items: s.items.filter((i) => !(i.id === id && i.size === size)) })),
+    set((s) => ({
+      items: s.items.filter((i) => !(i.id === id && i.size === size)),
+    })),
   clear: () => set({ items: [] }),
   count: () => get().items.reduce((n, i) => n + i.qty, 0),
   total: () => get().items.reduce((n, i) => n + i.qty * i.price, 0),

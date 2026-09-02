@@ -344,8 +344,9 @@ export function HeroSlider() {
               <button
                 key={`dot-${i}`}
                 type="button"
-                className={`hs-dot h-[7px] rounded-[4px] border-none p-0 cursor-pointer pointer-events-auto transition-all duration-350 ${isActive ? "w-[28px] bg-black" : "w-[7px] bg-black/30"
-                  }`}
+                className={`hs-dot h-[7px] rounded-[4px] border-none p-0 cursor-pointer pointer-events-auto transition-all duration-350 ${
+                  isActive ? "w-[28px] bg-black" : "w-[7px] bg-black/30"
+                }`}
                 onClick={() => {
                   if (isDesktop) return;
                   const state = stateRef.current;

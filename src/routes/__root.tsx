@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -137,9 +138,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/portal-secure-x98f2k3");
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || isAdmin) return;
 
     let lenisInstance: any = null;
     let animationFrameId: number;
@@ -157,7 +160,6 @@ function RootComponent() {
           syncTouch: false,
         });
 
-        let lastTime = 0;
         function raf(time: number) {
           if (lenisInstance) {
             lenisInstance.raf(time);
@@ -175,7 +177,17 @@ function RootComponent() {
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
       if (lenisInstance) lenisInstance.destroy();
     };
-  }, []);
+  }, [isAdmin]);
+
+  if (isAdmin) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <main className="min-h-screen bg-black">
+          <Outlet />
+        </main>
+      </QueryClientProvider>
+    );
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -9,9 +9,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const addToCart = useCart((s) => s.add);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
-  const [selectedSize, setSelectedSize] = useState(
-    product.sizes?.[0] || "One Size"
-  );
+  const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || "One Size");
   const [addedAnimation, setAddedAnimation] = useState(false);
 
   const colors = product.colors || [
@@ -23,8 +21,8 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
     product.sizes && product.sizes.length > 1
       ? product.sizes
       : product.category === "Apparel"
-      ? ["XS", "S", "M", "L", "XL", "XXL"]
-      : [];
+        ? ["XS", "S", "M", "L", "XL", "XXL"]
+        : [];
 
   const handleQuickAdd = (e: React.MouseEvent, chosenSize?: string) => {
     e.preventDefault();

@@ -11,7 +11,13 @@ export default defineConfig({
     server: {
       host: "0.0.0.0",
       port: 6071,
-      allowedHosts: ["norvex.cyberpunk.co.in", ".norvex.cyberpunk.co.in", "oddly.cyberpubk.co.in", "oddly.cyberpunk.co.in", "norva.cyberpunk.co.in"],
+      allowedHosts: [
+        "norvex.cyberpunk.co.in",
+        ".norvex.cyberpunk.co.in",
+        "oddly.cyberpubk.co.in",
+        "oddly.cyberpunk.co.in",
+        "norva.cyberpunk.co.in",
+      ],
     },
   },
   tanstackStart: {

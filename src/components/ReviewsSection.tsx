@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Star } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { Star } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface Review {
   id: string;
@@ -12,45 +12,45 @@ export interface Review {
 
 const REVIEWS: Review[] = [
   {
-    id: '1',
-    author: 'Rohan Sharma',
-    title: 'Absolutely next level baggy fit',
-    text: 'I have been searching for proper oversized streetwear pants in India for months and this is it. The drape is perfect, heavy cotton, sits beautifully on sneakers. Ordering the grey one next!',
+    id: "1",
+    author: "Rohan Sharma",
+    title: "Absolutely next level baggy fit",
+    text: "I have been searching for proper oversized streetwear pants in India for months and this is it. The drape is perfect, heavy cotton, sits beautifully on sneakers. Ordering the grey one next!",
     rating: 5,
   },
   {
-    id: '2',
-    author: 'Sanya Sen',
-    title: 'Sensational fabric & drop',
-    text: 'Super cozy, heavyweight feel, and the silhouette is perfectly street. The details on the waistband and pocket lining are very premium. NORVA is doing it right.',
+    id: "2",
+    author: "Sanya Sen",
+    title: "Sensational fabric & drop",
+    text: "Super cozy, heavyweight feel, and the silhouette is perfectly street. The details on the waistband and pocket lining are very premium. NORVA is doing it right.",
     rating: 5,
   },
   {
-    id: '3',
-    author: 'Rhea Malhotra',
-    title: 'Best statement bag I own',
-    text: 'The silver chain hardware and patent leather finish are incredible quality. Got so many compliments everywhere. Definitely buying the harness tote next!',
+    id: "3",
+    author: "Rhea Malhotra",
+    title: "Best statement bag I own",
+    text: "The silver chain hardware and patent leather finish are incredible quality. Got so many compliments everywhere. Definitely buying the harness tote next!",
     rating: 5,
   },
   {
-    id: '4',
-    author: 'Aarav Sharma',
-    title: 'Unmatched gothic aesthetic',
-    text: 'Heavyweight metal buckles, sturdy stitching, and fits everything I need for night events. Absolutely worth every rupee!',
+    id: "4",
+    author: "Aarav Sharma",
+    title: "Unmatched gothic aesthetic",
+    text: "Heavyweight metal buckles, sturdy stitching, and fits everything I need for night events. Absolutely worth every rupee!",
     rating: 5,
   },
   {
-    id: '5',
-    author: 'Ananya Patel',
-    title: 'Top tier streetwear quality',
+    id: "5",
+    author: "Ananya Patel",
+    title: "Top tier streetwear quality",
     text: "The hoodie weight is crazy good, 450GSM minimum feel. Doesn't lose shape after washing. NORVA is setting new benchmarks.",
     rating: 5,
   },
   {
-    id: '6',
-    author: 'Kabir Verma',
-    title: 'Insane attention to detail',
-    text: 'From the custom zipper pulls to the custom inner tags, everything feels luxury level without the crazy designer markup.',
+    id: "6",
+    author: "Kabir Verma",
+    title: "Insane attention to detail",
+    text: "From the custom zipper pulls to the custom inner tags, everything feels luxury level without the crazy designer markup.",
     rating: 5,
   },
 ];
