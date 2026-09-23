@@ -35,3 +35,9 @@ dist-ssr
 *.zip
 deploy_static/
 
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+

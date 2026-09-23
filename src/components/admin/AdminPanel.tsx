@@ -5,24 +5,26 @@ import {
   Package,
   ShoppingBag,
   ShieldCheck,
-  Layers,
+  FolderTree,
   RefreshCw,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/adminAuth";
 import { ProductList } from "./ProductList";
+import { CategoryList } from "./CategoryList";
 import { OrdersList } from "./OrdersList";
-import { useProducts, useOrders, resetDatabaseToDefaults } from "@/lib/db";
+import { useProducts, useCategories, useOrders, resetDatabaseToDefaults } from "@/lib/db";
 
 export function AdminPanel() {
   const { logout } = useAdminAuth();
-  const [activeTab, setActiveTab] = useState<"products" | "orders">("products");
+  const [activeTab, setActiveTab] = useState<"products" | "categories" | "orders">("products");
   const products = useProducts();
+  const categories = useCategories();
   const orders = useOrders();
 
   const handleResetDefaults = () => {
     if (
       window.confirm(
-        "Reset database to default initial products and sample orders? Any custom edits will be reverted.",
+        "Reset database to default initial products, categories and sample orders? Any custom edits will be reverted.",
       )
     ) {
       resetDatabaseToDefaults();
@@ -63,7 +65,7 @@ export function AdminPanel() {
               <button
                 onClick={handleResetDefaults}
                 title="Reset to Initial Data"
-                className="p-1.5 text-zinc-500 hover:text-zinc-300 border border-zinc-900 hover:border-zinc-700 bg-zinc-950 transition-colors"
+                className="p-1.5 text-zinc-500 hover:text-zinc-300 border border-zinc-900 hover:border-zinc-700 bg-zinc-950 transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-4 h-4" />
               </button>
@@ -78,11 +80,11 @@ export function AdminPanel() {
             </div>
           </div>
 
-          {/* Sub Navigation Bar: Strict 2 Tabs (Products & Orders) */}
-          <div className="flex border-t border-zinc-900 gap-6">
+          {/* Sub Navigation Bar: 3 Clean Tabs */}
+          <div className="flex border-t border-zinc-900 gap-6 overflow-x-auto scrollbar-none">
             <button
               onClick={() => setActiveTab("products")}
-              className={`py-3 text-xs font-display uppercase tracking-widest font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+              className={`py-3 text-xs font-display uppercase tracking-widest font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer shrink-0 ${
                 activeTab === "products"
                   ? "border-white text-white"
                   : "border-transparent text-zinc-500 hover:text-zinc-300"
@@ -96,8 +98,23 @@ export function AdminPanel() {
             </button>
 
             <button
+              onClick={() => setActiveTab("categories")}
+              className={`py-3 text-xs font-display uppercase tracking-widest font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer shrink-0 ${
+                activeTab === "categories"
+                  ? "border-white text-white"
+                  : "border-transparent text-zinc-500 hover:text-zinc-300"
+              }`}
+            >
+              <FolderTree className="w-4 h-4" />
+              <span>Category Management</span>
+              <span className="ml-1 text-[10px] font-mono px-1.5 py-0.2 bg-zinc-900 border border-zinc-800 text-zinc-400">
+                {categories.length}
+              </span>
+            </button>
+
+            <button
               onClick={() => setActiveTab("orders")}
-              className={`py-3 text-xs font-display uppercase tracking-widest font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+              className={`py-3 text-xs font-display uppercase tracking-widest font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer shrink-0 ${
                 activeTab === "orders"
                   ? "border-white text-white"
                   : "border-transparent text-zinc-500 hover:text-zinc-300"
@@ -115,7 +132,9 @@ export function AdminPanel() {
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === "products" ? <ProductList /> : <OrdersList />}
+        {activeTab === "products" && <ProductList />}
+        {activeTab === "categories" && <CategoryList />}
+        {activeTab === "orders" && <OrdersList />}
       </main>
     </div>
   );

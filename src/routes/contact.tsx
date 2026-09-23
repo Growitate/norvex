@@ -20,12 +20,12 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Get in touch with Norva Store. WhatsApp +91 9971303047, Email norvastorex@gmail.com or DM @norvaxstore.",
+          "Get in touch with Norva Store. Email norvastorex@gmail.com or DM us on Instagram @norvaxstore.",
       },
       { property: "og:title", content: "Contact — Norva Store" },
       {
         property: "og:description",
-        content: "Talk to us. WhatsApp, Email, Instagram, or drop a message.",
+        content: "Talk to us via Email, Instagram Direct, or drop a message.",
       },
     ],
   }),
@@ -77,7 +77,7 @@ function Contact() {
                   Always Ready To Assist You.
                 </h3>
                 <p className="font-sans text-[11px] sm:text-xs text-zinc-200 leading-relaxed">
-                  We reply within a few hours on WhatsApp and email during business drops.
+                  We reply within a few hours on Instagram and email during business drops.
                 </p>
               </div>
             </div>
@@ -92,64 +92,8 @@ function Contact() {
               </div>
 
               <div className="space-y-5 sm:space-y-6">
-                {/* Phone / WhatsApp */}
-                <div className="space-y-2 border-b border-black/5 pb-4 sm:pb-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-black/15 flex items-center justify-center text-zinc-900 shrink-0 shadow-xs">
-                      <Phone className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
-                    </div>
-                    <div>
-                      <span className="font-display text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">
-                        WhatsApp / Phone
-                      </span>
-                      <a
-                        href="https://wa.me/919971303047"
-                        className="font-sans text-sm sm:text-base font-semibold text-zinc-900 hover:text-zinc-600 transition-colors"
-                      >
-                        +91 9971303047
-                      </a>
-                    </div>
-                  </div>
-                  <a
-                    href="https://wa.me/919971303047"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-display font-semibold uppercase tracking-wider text-zinc-700 hover:text-black transition-colors pt-1"
-                  >
-                    <span>Chat on WhatsApp</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-
-                {/* Email */}
-                <div className="space-y-2 border-b border-black/5 pb-4 sm:pb-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-black/15 flex items-center justify-center text-zinc-900 shrink-0 shadow-xs">
-                      <Mail className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="font-display text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">
-                        Email Support
-                      </span>
-                      <a
-                        href="mailto:norvastorex@gmail.com"
-                        className="font-sans text-xs sm:text-base font-semibold text-zinc-900 hover:text-zinc-600 transition-colors break-all"
-                      >
-                        norvastorex@gmail.com
-                      </a>
-                    </div>
-                  </div>
-                  <a
-                    href="mailto:norvastorex@gmail.com"
-                    className="inline-flex items-center gap-1.5 text-xs font-display font-semibold uppercase tracking-wider text-zinc-700 hover:text-black transition-colors pt-1"
-                  >
-                    <span>Send Email</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-
                 {/* Instagram */}
-                <div className="space-y-2">
+                <div className="space-y-2 border-b border-black/5 pb-4 sm:pb-5">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-black/15 flex items-center justify-center text-zinc-900 shrink-0 shadow-xs">
                       <Instagram className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
@@ -174,7 +118,34 @@ function Contact() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs font-display font-semibold uppercase tracking-wider text-zinc-700 hover:text-black transition-colors pt-1"
                   >
-                    <span>Follow on Instagram</span>
+                    <span>DM on Instagram</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+
+                {/* Email */}
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-black/15 flex items-center justify-center text-zinc-900 shrink-0 shadow-xs">
+                      <Mail className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="font-display text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">
+                        Email Support
+                      </span>
+                      <a
+                        href="mailto:norvastorex@gmail.com"
+                        className="font-sans text-xs sm:text-base font-semibold text-zinc-900 hover:text-zinc-600 transition-colors break-all"
+                      >
+                        norvastorex@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                  <a
+                    href="mailto:norvastorex@gmail.com"
+                    className="inline-flex items-center gap-1.5 text-xs font-display font-semibold uppercase tracking-wider text-zinc-700 hover:text-black transition-colors pt-1"
+                  >
+                    <span>Send Email</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </a>
                 </div>

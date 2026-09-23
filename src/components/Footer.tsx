@@ -68,11 +68,10 @@ export function Footer() {
                 <button
                   type="submit"
                   disabled={!agreed}
-                  className={`absolute right-0 font-display text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                    agreed
+                  className={`absolute right-0 font-display text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${agreed
                       ? "text-zinc-950 hover:text-zinc-600"
                       : "text-zinc-400 cursor-not-allowed"
-                  }`}
+                    }`}
                 >
                   {subscribed ? (
                     <span className="inline-flex items-center gap-1 text-emerald-600">
@@ -166,9 +165,8 @@ export function Footer() {
               </button>
 
               <div
-                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${
-                  openSection === "brand" ? "block" : "hidden sm:block"
-                }`}
+                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${openSection === "brand" ? "block" : "hidden sm:block"
+                  }`}
               >
                 <p>
                   <Link to="/about" className="hover:text-black transition-colors">
@@ -177,7 +175,7 @@ export function Footer() {
                 </p>
                 <p>
                   <Link to="/shop" className="hover:text-black transition-colors">
-                    Norva News
+
                   </Link>
                 </p>
                 <p>
@@ -212,9 +210,8 @@ export function Footer() {
               </button>
 
               <div
-                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${
-                  openSection === "support" ? "block" : "hidden sm:block"
-                }`}
+                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${openSection === "support" ? "block" : "hidden sm:block"
+                  }`}
               >
                 <p>
                   <Link
@@ -231,7 +228,7 @@ export function Footer() {
                   </Link>
                 </p>
                 <p>
-                  <Link to="/contact" className="hover:text-black transition-colors">
+                  <Link to="/faq" className="hover:text-black transition-colors">
                     FAQ
                   </Link>
                 </p>
@@ -262,9 +259,8 @@ export function Footer() {
               </button>
 
               <div
-                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${
-                  openSection === "policies" ? "block" : "hidden sm:block"
-                }`}
+                className={`mt-3.5 space-y-2 text-xs font-sans text-zinc-600 ${openSection === "policies" ? "block" : "hidden sm:block"
+                  }`}
               >
                 <p>
                   <Link

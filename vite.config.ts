@@ -17,6 +17,8 @@ export default defineConfig({
         "oddly.cyberpubk.co.in",
         "oddly.cyberpunk.co.in",
         "norva.cyberpunk.co.in",
+        "norvastore.in",
+        ".norvastore.in",
       ],
     },
   },

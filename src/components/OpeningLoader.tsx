@@ -11,16 +11,15 @@ export function OpeningLoader() {
       document.body.style.overflow = "hidden";
     }
 
-    // 1400ms display, then exit animation smooth transition
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       setVisible(false);
       if (typeof window !== "undefined") {
         document.body.style.overflow = "";
       }
-    }, 1400);
+    }, 1300);
 
     return () => {
-      clearTimeout(t);
+      clearTimeout(timer);
       if (typeof window !== "undefined") {
         document.body.style.overflow = "";
       }
@@ -35,52 +34,40 @@ export function OpeningLoader() {
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.04,
-            filter: "blur(4px)",
-            transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+            transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
           }}
           style={{
             position: "fixed",
             inset: 0,
             zIndex: 100000,
-            backgroundColor: "#000",
+            backgroundColor: "#000000",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             pointerEvents: "none",
             userSelect: "none",
           }}
         >
-          {/* Animated Norva Splash Logo */}
+          {/* Pure clean Norva logo without any boxes, outlines, or borders */}
           <motion.img
             src={splashLogo}
             alt="NORVA"
-            initial={{ opacity: 0, scale: 0.92, y: 10 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{
-              opacity: [0, 1, 0.85, 1],
-              scale: [0.92, 1, 0.98, 1],
-              y: 0,
+              opacity: [0, 1, 0.35, 0.9, 0.9],
+              scale: [0.95, 1, 1, 1, 1],
             }}
             transition={{
               duration: 1.3,
-              times: [0, 0.4, 0.7, 1],
-              ease: [0.22, 1, 0.36, 1],
+              times: [0, 0.35, 0.65, 0.85, 1],
+              ease: [0.4, 0, 0.2, 1],
             }}
             style={{
               width: "min(80vw, 420px)",
               height: "auto",
               objectFit: "contain",
-              mixBlendMode: "screen",
+              display: "block",
             }}
-          />
-
-          {/* Minimalist Progress Line indicator */}
-          <motion.div
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "120px", opacity: 0.8 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            className="h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent mt-6 rounded-full"
           />
         </motion.div>
       )}

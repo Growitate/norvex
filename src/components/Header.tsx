@@ -7,12 +7,12 @@ import {
   ArrowRight,
   User,
   Heart,
-  MessageCircle,
   Mail,
   Instagram,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "@/lib/cart";
+import { useCategories } from "@/lib/db";
 import { CartDrawer } from "./CartDrawer";
 import { SearchModal } from "./SearchModal";
 import logoWhite from "@/assets/norva_logo_white.png";
@@ -20,6 +20,7 @@ import logoDark from "@/assets/norva_logo_dark.png";
 
 export function Header() {
   const navigate = useNavigate();
+  const categories = useCategories();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -305,75 +306,36 @@ export function Header() {
               {/* 3. MAIN SCROLLABLE CONTENT */}
               <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-6 sm:py-8 flex flex-col justify-between scrollbar-none space-y-8">
                 <div className="space-y-7">
-                  {/* LARGE EDITORIAL HEADING AREA */}
+                  {/* LARGE EDITORIAL HEADING AREA (Top 2 Featured/Primary Categories) */}
                   <div className="space-y-0.5">
-                    <Link
-                      to="/shop"
-                      search={{ category: "Clothing" }}
-                      onClick={() => setMenuOpen(false)}
-                      className="block font-serif text-[32px] sm:text-[36px] font-bold text-[#2a1711] hover:text-black tracking-tight leading-[1.08] transition-colors"
-                    >
-                      Clothing
-                    </Link>
-                    <Link
-                      to="/shop"
-                      search={{ category: "Women exclusive" }}
-                      onClick={() => setMenuOpen(false)}
-                      className="block font-serif text-[32px] sm:text-[36px] font-bold text-[#2a1711] hover:text-black tracking-tight leading-[1.08] transition-colors"
-                    >
-                      Women exclusive
-                    </Link>
+                    {categories.slice(0, 2).map((cat) => (
+                      <Link
+                        key={cat.id}
+                        to="/shop"
+                        search={{ category: cat.slug || cat.name }}
+                        onClick={() => setMenuOpen(false)}
+                        className="block font-serif text-[32px] sm:text-[36px] font-bold text-[#2a1711] hover:text-black tracking-tight leading-[1.08] transition-colors"
+                      >
+                        {cat.name}
+                      </Link>
+                    ))}
                   </div>
 
                   {/* 4. PRODUCT CATEGORIES (With Right Arrows →) */}
                   <ul className="space-y-4 pt-1">
-                    <li>
-                      <Link
-                        to="/shop"
-                        search={{ category: "Clothing" }}
-                        onClick={() => setMenuOpen(false)}
-                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
-                      >
-                        <span>Clothing</span>
-                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        to="/shop"
-                        search={{ category: "Accessories" }}
-                        onClick={() => setMenuOpen(false)}
-                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
-                      >
-                        <span>Accessories</span>
-                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        to="/shop"
-                        search={{ category: "Women exclusive" }}
-                        onClick={() => setMenuOpen(false)}
-                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
-                      >
-                        <span>Women exclusive</span>
-                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        to="/shop"
-                        search={{ category: "Mens exclusive" }}
-                        onClick={() => setMenuOpen(false)}
-                        className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
-                      >
-                        <span>Mens exclusive</span>
-                        <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
-                      </Link>
-                    </li>
+                    {categories.map((cat) => (
+                      <li key={cat.id}>
+                        <Link
+                          to="/shop"
+                          search={{ category: cat.slug || cat.name }}
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center justify-between group py-1 text-zinc-900 hover:text-black font-sans text-[15px] sm:text-base font-medium tracking-tight transition-colors"
+                        >
+                          <span>{cat.name}</span>
+                          <ArrowRight className="h-4 w-4 stroke-[1.5] text-zinc-600 transition-transform duration-200 group-hover:translate-x-1.5" />
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
 
                   {/* 5. LOWER SECTION: BRAND & ESSENTIAL NAVIGATION */}
@@ -447,29 +409,20 @@ export function Header() {
 
                   <div className="flex items-center gap-2.5">
                     <a
-                      href="https://wa.me/919971303047"
+                      href="https://www.instagram.com/norvaxstore?igsh=MWxubzhoZHNmN3B5aA=="
                       target="_blank"
                       rel="noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 py-2 px-3 rounded-md text-[11px] font-display uppercase tracking-wider font-semibold transition-colors shadow-xs"
+                      className="flex-1 flex items-center justify-center gap-2 border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 py-2.5 px-3 rounded-md text-[11px] font-display uppercase tracking-wider font-semibold transition-colors shadow-xs"
                     >
-                      <MessageCircle className="h-3.5 w-3.5" />
-                      <span>WhatsApp</span>
+                      <Instagram className="h-3.5 w-3.5" />
+                      <span>Instagram DM</span>
                     </a>
                     <a
                       href="mailto:norvastorex@gmail.com"
-                      className="flex-1 flex items-center justify-center gap-2 border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 py-2 px-3 rounded-md text-[11px] font-display uppercase tracking-wider font-semibold transition-colors shadow-xs"
+                      className="flex-1 flex items-center justify-center gap-2 border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 py-2.5 px-3 rounded-md text-[11px] font-display uppercase tracking-wider font-semibold transition-colors shadow-xs"
                     >
                       <Mail className="h-3.5 w-3.5" />
                       <span>Email</span>
-                    </a>
-                    <a
-                      href="https://instagram.com/norvaxstore"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Instagram"
-                      className="flex items-center justify-center border border-black/15 bg-white hover:bg-black hover:text-white text-zinc-900 p-2 rounded-md transition-colors shadow-xs"
-                    >
-                      <Instagram className="h-3.5 w-3.5" />
                     </a>
                   </div>
 

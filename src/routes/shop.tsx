@@ -1,13 +1,9 @@
 import { createFileRoute, useSearch, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { type Product } from "@/lib/products";
-import { useProducts } from "@/lib/db";
+import { useProducts, useCategories } from "@/lib/db";
 import { SlidersHorizontal, Check } from "lucide-react";
-
-const CATEGORIES = ["All", "Clothing", "Accessories", "Women exclusive", "Mens exclusive"] as const;
-
-type Cat = (typeof CATEGORIES)[number];
 
 type ShopSearch = {
   category?: string;
@@ -39,8 +35,9 @@ export const Route = createFileRoute("/shop")({
   component: Shop,
 });
 
-function matchesCategory(product: Product, selectedCategory: Cat | string): boolean {
-  if (!selectedCategory || selectedCategory === "All") return true;
+function matchesCategory(product: Product, selectedCategory: string): boolean {
+  if (!selectedCategory || selectedCategory === "All" || selectedCategory.toLowerCase() === "all")
+    return true;
 
   const catLower = selectedCategory.toLowerCase().trim();
 
@@ -49,7 +46,7 @@ function matchesCategory(product: Product, selectedCategory: Cat | string): bool
   }
 
   if (catLower === "accessories") {
-    return product.category === "Accessories";
+    return product.category === "Accessories" || product.isAccessory === true;
   }
 
   if (
@@ -70,25 +67,37 @@ function matchesCategory(product: Product, selectedCategory: Cat | string): bool
     return product.department === "male";
   }
 
-  if (catLower === "bags") {
-    return product.isBag;
+  if (catLower === "bags" || catLower === "bag") {
+    return Boolean(product.isBag);
   }
 
-  return product.category.toLowerCase() === catLower;
+  return Boolean(
+    product.category.toLowerCase().trim() === catLower ||
+      (product.sku && product.sku.toLowerCase().includes(catLower)),
+  );
 }
 
 function Shop() {
   const products = useProducts();
+  const dynamicCategories = useCategories();
   const search = useSearch({ from: "/shop" });
   const navigate = useNavigate();
-  const [cat, setCat] = useState<Cat>("All");
+  const [cat, setCat] = useState<string>("All");
   const [sortBy, setSortBy] = useState<string>("featured");
   const [sortOpen, setSortOpen] = useState<boolean>(false);
+
+  const categoryList = useMemo(() => {
+    const list = ["All"];
+    dynamicCategories.forEach((c) => {
+      if (!list.includes(c.name)) list.push(c.name);
+    });
+    return list;
+  }, [dynamicCategories]);
 
   useEffect(() => {
     if (search.category) {
       const decoded = decodeURIComponent(search.category);
-      const matched = CATEGORIES.find(
+      const matched = categoryList.find(
         (c) =>
           c.toLowerCase() === decoded.toLowerCase() ||
           c.toLowerCase() === search.category?.toLowerCase(),
@@ -99,13 +108,15 @@ function Shop() {
         setCat("All");
       } else if (search.category.toLowerCase().includes("bag")) {
         setCat("Accessories");
+      } else {
+        setCat(decoded);
       }
     } else {
       setCat("All");
     }
-  }, [search.category]);
+  }, [search.category, categoryList]);
 
-  const handleCategoryChange = (newCat: Cat) => {
+  const handleCategoryChange = (newCat: string) => {
     setCat(newCat);
     navigate({
       to: "/shop",
@@ -199,13 +210,13 @@ function Shop() {
             </div>
           </div>
 
-          {/* Borderless Horizontal Category Nav Strip (Red Circled Img 1 section) */}
+          {/* Borderless Horizontal Category Nav Strip */}
           <div
             className="sticky top-[56px] sm:top-[64px] z-20 -mx-4 md:-mx-8 flex items-center gap-6 sm:gap-8 overflow-x-auto bg-white/95 backdrop-blur-md px-4 md:px-8 pt-3 pb-1 scrollbar-none whitespace-nowrap"
             style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
           >
-            {CATEGORIES.map((c) => {
-              const active = c === cat;
+            {categoryList.map((c) => {
+              const active = c.toLowerCase() === cat.toLowerCase();
               return (
                 <button
                   key={c}

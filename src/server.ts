@@ -5,6 +5,8 @@ import { renderErrorPage } from "./lib/error-page";
 
 import { createStartHandler, defaultStreamHandler } from "@tanstack/react-start/server";
 
+import { handleApiRequest } from "./lib/serverApi";
+
 const startHandler = createStartHandler(defaultStreamHandler);
 
 // h3 swallows in-handler throws into a normal 500 Response with body
@@ -29,6 +31,11 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 export default {
   async fetch(request: Request, ...rest: unknown[]) {
     try {
+      const apiResponse = await handleApiRequest(request);
+      if (apiResponse) {
+        return apiResponse;
+      }
+
       const response = await startHandler(request, ...(rest as [any]));
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {

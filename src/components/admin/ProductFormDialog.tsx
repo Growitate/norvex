@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { X, Upload, Plus, Trash2, Check, Image as ImageIcon } from "lucide-react";
+import { X, Upload, Plus, Trash2, Check, Image as ImageIcon, Sparkles, Loader2 } from "lucide-react";
 import { type Product } from "@/lib/products";
-import { addProduct, updateProduct } from "@/lib/db";
+import { addProduct, updateProduct, useCategories } from "@/lib/db";
+import { compressImage } from "@/lib/imageUtils";
 
 interface ProductFormDialogProps {
   isOpen: boolean;
@@ -10,13 +11,31 @@ interface ProductFormDialogProps {
   onSaved: (product: Product) => void;
 }
 
-const CATEGORIES: Product["category"][] = [
+const DEFAULT_CATEGORIES = [
+  "Clothing",
+  "Accessories",
+  "Women exclusive",
+  "Mens exclusive",
   "Shoulder Bags",
   "Crossbody",
   "Totes & Backpacks",
   "Mini Bags",
   "Apparel",
-  "Accessories",
+];
+
+const PRESET_PRODUCT_IMAGES = [
+  { name: "Shoulder Bag (Leather & Chain)", url: "/assets/bag_shoulder_chain_1786114752412.png" },
+  { name: "Patent Crossbody Bag", url: "/assets/bag_crossbody_patent_1786114770311.png" },
+  { name: "Harness Tote Bag", url: "/assets/bag_harness_tote_1786114785960.png" },
+  { name: "Mini Satchel Bag", url: "/assets/bag_mini_satchel_1786114801666.png" },
+  { name: "Gothic Cross Bag", url: "/assets/bag_cybergoth_cross.jpg" },
+  { name: "Gothic Silver Crossbody", url: "/assets/bag_gothic_silver_crossbody.jpg" },
+  { name: "Heavyweight Boxy Hoodie", url: "/assets/male_hoodie_drop.jpg" },
+  { name: "Tribal Graphic Tee", url: "/assets/male_tee_drop.jpg" },
+  { name: "Tactical D-Ring Cargos", url: "/assets/male_cargo_drop.jpg" },
+  { name: "Y2K Female Crop Top", url: "/assets/female_top_drop.jpg" },
+  { name: "Gothic Pleated Skirt", url: "/assets/female_skirt_drop.jpg" },
+  { name: "Monster Claw Phone Case", url: "/assets/case_gothic_claw.jpg" },
 ];
 
 const DEPARTMENTS: ("unisex" | "female" | "male")[] = ["unisex", "female", "male"];
@@ -27,18 +46,32 @@ export function ProductFormDialog({
   productToEdit,
   onSaved,
 }: ProductFormDialogProps) {
+  const dynamicCategories = useCategories();
   const isEditing = Boolean(productToEdit);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const categoryOptions = Array.from(
+    new Set([
+      ...dynamicCategories.map((c) => c.name),
+      ...DEFAULT_CATEGORIES,
+      ...(productToEdit?.category ? [productToEdit.category] : []),
+    ]),
+  );
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState<number | "">("");
-  const [category, setCategory] = useState<Product["category"]>("Apparel");
+  const [sku, setSku] = useState("");
+  const [isNew, setIsNew] = useState(true);
+  const [category, setCategory] = useState<string>(
+    categoryOptions[0] || "Clothing",
+  );
   const [department, setDepartment] = useState<"unisex" | "female" | "male">("unisex");
   const [description, setDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [sizesInput, setSizesInput] = useState("S, M, L, XL");
   const [images, setImages] = useState<string[]>([]);
   const [newImageUrl, setNewImageUrl] = useState("");
+  const [isCompressing, setIsCompressing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -46,6 +79,8 @@ export function ProductFormDialog({
     if (productToEdit) {
       setName(productToEdit.name || "");
       setPrice(productToEdit.price ?? "");
+      setSku(productToEdit.sku || "");
+      setIsNew(productToEdit.isNew ?? true);
       setCategory(productToEdit.category || "Apparel");
       setDepartment(productToEdit.department || "unisex");
       setDescription(productToEdit.description || "");
@@ -63,11 +98,13 @@ export function ProductFormDialog({
     } else {
       setName("");
       setPrice("");
-      setCategory("Apparel");
+      setSku("");
+      setIsNew(true);
+      setCategory("Shoulder Bags");
       setDepartment("unisex");
       setDescription("");
       setShortDescription("");
-      setSizesInput("S, M, L, XL");
+      setSizesInput("One Size");
       setImages([]);
     }
     setErrorMsg("");
@@ -77,27 +114,44 @@ export function ProductFormDialog({
 
   const handleAddImageUrl = () => {
     if (!newImageUrl.trim()) return;
-    setImages((prev) => [...prev, newImageUrl.trim()]);
+    const trimmed = newImageUrl.trim();
+    if (!images.includes(trimmed)) {
+      setImages((prev) => [...prev, trimmed]);
+    }
     setNewImageUrl("");
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAddPreset = (url: string) => {
+    if (!images.includes(url)) {
+      setImages((prev) => [...prev, url]);
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        if (result) {
-          setImages((prev) => [...prev, result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    setIsCompressing(true);
+    setErrorMsg("");
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    try {
+      const compressedList: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const compressedBase64 = await compressImage(file, 1200, 1200, 0.82);
+        if (compressedBase64) {
+          compressedList.push(compressedBase64);
+        }
+      }
+      setImages((prev) => [...prev, ...compressedList]);
+    } catch (err: any) {
+      console.error("Image processing error:", err);
+      setErrorMsg("Failed to optimize some uploaded images. Please try smaller files or image URLs.");
+    } finally {
+      setIsCompressing(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
@@ -105,7 +159,7 @@ export function ProductFormDialog({
     setImages((prev) => prev.filter((_, idx) => idx !== indexToRemove));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
 
@@ -122,7 +176,12 @@ export function ProductFormDialog({
       return;
     }
 
-    const finalPrimaryImage = images.length > 0 ? images[0] : "/assets/male_hoodie_drop.jpg";
+    const defaultFallbackImage =
+      category.toLowerCase().includes("bag")
+        ? "/assets/bag_shoulder_chain_1786114752412.png"
+        : "/assets/male_hoodie_drop.jpg";
+
+    const finalPrimaryImage = images.length > 0 ? images[0] : defaultFallbackImage;
     const finalGallery = images.length > 0 ? images : [finalPrimaryImage];
 
     const parsedSizes = sizesInput
@@ -137,6 +196,8 @@ export function ProductFormDialog({
         const updated = updateProduct(productToEdit.id, {
           name: name.trim(),
           price: Number(price),
+          sku: sku.trim() || undefined,
+          isNew,
           category,
           department,
           description: description.trim(),
@@ -148,11 +209,15 @@ export function ProductFormDialog({
         if (updated) {
           onSaved(updated);
           onClose();
+        } else {
+          throw new Error("Product was not found in the catalog database.");
         }
       } else {
         const created = addProduct({
           name: name.trim(),
           price: Number(price),
+          sku: sku.trim() || undefined,
+          isNew,
           category,
           department,
           description: description.trim(),
@@ -161,12 +226,16 @@ export function ProductFormDialog({
           gallery: finalGallery,
           sizes: parsedSizes.length > 0 ? parsedSizes : ["One Size"],
         });
-        onSaved(created);
-        onClose();
+        if (created) {
+          onSaved(created);
+          onClose();
+        } else {
+          throw new Error("Failed to save the new product.");
+        }
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setErrorMsg("An error occurred while saving the product.");
+      setErrorMsg(err?.message || "An error occurred while saving the product.");
     } finally {
       setIsSubmitting(false);
     }
@@ -214,7 +283,7 @@ export function ProductFormDialog({
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Cyber Tribal Gothic Heavyweight Tee"
+                placeholder="e.g. Crimson Cross Bag"
                 required
                 className="w-full bg-zinc-900 border border-zinc-800 px-3.5 py-2.5 text-sm text-white focus:border-white focus:outline-none transition-colors"
               />
@@ -242,18 +311,18 @@ export function ProductFormDialog({
             </div>
           </div>
 
-          {/* Category & Department */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Category, Department & SKU */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-[11px] font-mono uppercase tracking-widest text-zinc-400 mb-1.5">
                 Category *
               </label>
               <select
                 value={category}
-                onChange={(e) => setCategory(e.target.value as Product["category"])}
+                onChange={(e) => setCategory(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2.5 text-sm text-white focus:border-white focus:outline-none transition-colors"
               >
-                {CATEGORIES.map((cat) => (
+                {categoryOptions.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
                   </option>
@@ -277,6 +346,36 @@ export function ProductFormDialog({
                 ))}
               </select>
             </div>
+
+            <div>
+              <label className="block text-[11px] font-mono uppercase tracking-widest text-zinc-400 mb-1.5">
+                SKU Code
+              </label>
+              <input
+                type="text"
+                value={sku}
+                onChange={(e) => setSku(e.target.value)}
+                placeholder="crb-1001"
+                className="w-full bg-zinc-900 border border-zinc-800 px-3.5 py-2.5 text-sm text-white font-mono focus:border-white focus:outline-none transition-colors"
+              />
+            </div>
+          </div>
+
+          {/* New Arrival Checkbox Toggle */}
+          <div className="flex items-center gap-2.5 bg-zinc-900/60 border border-zinc-800/80 p-3">
+            <input
+              type="checkbox"
+              id="isNewArrival"
+              checked={isNew}
+              onChange={(e) => setIsNew(e.target.checked)}
+              className="w-4 h-4 accent-white bg-zinc-900 border-zinc-700 cursor-pointer"
+            />
+            <label
+              htmlFor="isNewArrival"
+              className="text-xs font-mono text-zinc-300 cursor-pointer select-none"
+            >
+              Tag as <span className="text-white font-bold">New Arrival</span> (Featured in homepage New Arrivals carousel and badge)
+            </label>
           </div>
 
           {/* Description & Short Description */}
@@ -316,7 +415,7 @@ export function ProductFormDialog({
                 type="text"
                 value={sizesInput}
                 onChange={(e) => setSizesInput(e.target.value)}
-                placeholder="S, M, L, XL or One Size"
+                placeholder="one size, S, M, L, XL"
                 className="w-full bg-zinc-900 border border-zinc-800 px-3.5 py-2 text-sm text-white font-mono focus:border-white focus:outline-none transition-colors"
               />
             </div>
@@ -351,7 +450,7 @@ export function ProductFormDialog({
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(index)}
-                        className="p-1.5 bg-red-600 hover:bg-red-700 text-white rounded-none transition-colors"
+                        className="p-1.5 bg-red-600 hover:bg-red-700 text-white rounded-none transition-colors cursor-pointer"
                         title="Remove image"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -371,14 +470,35 @@ export function ProductFormDialog({
             ) : (
               <div className="p-6 border border-dashed border-zinc-800 text-center mb-4 bg-zinc-900/30">
                 <p className="text-xs text-zinc-500 font-mono">
-                  No images uploaded yet. Upload a local file or provide an image URL.
+                  No images uploaded yet. Select a studio preset below or upload image files.
                 </p>
               </div>
             )}
 
+            {/* Preset Shoot Selection */}
+            <div className="mb-4">
+              <label className="block text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-2 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
+                <span>Quick Preset Studio Shoot Images</span>
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {PRESET_PRODUCT_IMAGES.map((preset) => (
+                  <button
+                    key={preset.url}
+                    type="button"
+                    onClick={() => handleAddPreset(preset.url)}
+                    className="text-[10px] font-mono px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-600 text-zinc-300 hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Plus className="w-3 h-3 text-zinc-500" />
+                    <span>{preset.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Upload & Add URL Controls */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* File Upload Button */}
+              {/* File Upload Button with Canvas Compression */}
               <div>
                 <input
                   type="file"
@@ -391,10 +511,20 @@ export function ProductFormDialog({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full py-2.5 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs font-mono uppercase text-zinc-300 hover:text-white flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  disabled={isCompressing}
+                  className="w-full py-2.5 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs font-mono uppercase text-zinc-300 hover:text-white flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
                 >
-                  <Upload className="w-4 h-4" />
-                  <span>Upload Image Files</span>
+                  {isCompressing ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <span>Optimizing Images...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4" />
+                      <span>Upload & Optimize Image</span>
+                    </>
+                  )}
                 </button>
               </div>
 
@@ -404,13 +534,13 @@ export function ProductFormDialog({
                   type="text"
                   value={newImageUrl}
                   onChange={(e) => setNewImageUrl(e.target.value)}
-                  placeholder="Or paste Image URL..."
+                  placeholder="Or paste image URL / asset path..."
                   className="flex-1 bg-zinc-900 border border-zinc-800 px-3 py-2 text-xs text-white focus:border-white focus:outline-none font-mono"
                 />
                 <button
                   type="button"
                   onClick={handleAddImageUrl}
-                  className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-xs font-mono text-white flex items-center gap-1 border border-zinc-700"
+                  className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-xs font-mono text-white flex items-center gap-1 border border-zinc-700 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add
                 </button>
@@ -423,17 +553,26 @@ export function ProductFormDialog({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 border border-zinc-800 text-xs font-mono uppercase text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
+              className="px-5 py-2.5 border border-zinc-800 text-xs font-mono uppercase text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isCompressing}
               className="px-6 py-2.5 bg-white text-black hover:bg-zinc-200 text-xs font-display uppercase tracking-widest font-bold flex items-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
             >
-              <Check className="w-4 h-4" />
-              <span>{isEditing ? "Save Product Updates" : "Create & Publish Product"}</span>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin text-black" />
+                  <span>Saving Product...</span>
+                </>
+              ) : (
+                <>
+                  <Check className="w-4 h-4" />
+                  <span>{isEditing ? "Save Product Updates" : "Create & Publish Product"}</span>
+                </>
+              )}
             </button>
           </div>
         </form>

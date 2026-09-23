@@ -12,13 +12,13 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Norva Store was created for individuals who see fashion as a form of self-expression. Inspired by Y2K trends, gothic culture, and modern European aesthetics.",
+          "Bold fashion, distinctive accessories, and statement bags curated for those who embrace individuality, confidence, and an unapologetic sense of style.",
       },
       { property: "og:title", content: "About — Norva Store" },
       {
         property: "og:description",
         content:
-          "Express your individuality through bold Y2K, gothic, and dark aesthetic accessories.",
+          "Bold fashion, distinctive accessories, and statement bags curated for those who embrace individuality, confidence, and an unapologetic sense of style.",
       },
       { property: "og:image", content: heroImg },
     ],
@@ -50,8 +50,8 @@ function About() {
             </h1>
 
             <p className="mx-auto max-w-2xl text-sm sm:text-base md:text-lg text-zinc-600 font-sans leading-relaxed px-2">
-              Inspired by Y2K trends, gothic culture, and modern European aesthetics. We curate
-              bold, limited-edition statement accessories designed for fearless self-expression.
+              Bold fashion, distinctive accessories, and statement bags curated for those who
+              embrace individuality, confidence, and an unapologetic sense of style.
             </p>
           </motion.div>
         </div>
@@ -85,30 +85,30 @@ function About() {
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">
-              Norva Store was created for individuals who see fashion as a form of art and identity.
-              Inspired by Y2K aesthetic trends, gothic street culture, and modern dark aesthetics,
-              we curate bold bags and hardware accessories that help you stand out with confidence.
+              Norva Store was created for those who believe style is more than what you wear — it’s
+              an attitude. We curate distinctive menswear, womenswear, statement accessories, and
+              bags designed to bring confidence, character, and individuality to every look.
             </p>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">
-              Every piece is selected to blend premium quality, unique architectural hardware
-              design, and timeless style, allowing you to express your individuality without
-              compromise.
+              Every piece is carefully selected for its bold details, quality, and timeless appeal —
+              from standout silhouettes to accessories that complete the look. Wear it your way. Own
+              the attention.
             </p>
 
             <div className="pt-4 grid grid-cols-2 gap-4 sm:gap-6 border-t border-black/10">
               <div className="bg-zinc-50/70 md:bg-transparent p-3.5 sm:p-0 rounded-xl md:rounded-none border border-black/5 md:border-0">
                 <span className="font-display text-xl sm:text-2xl font-bold text-zinc-900 block">100%</span>
                 <span className="font-sans text-[11px] sm:text-xs text-zinc-500 font-medium">
-                  Curated Limited Drops
+                  CURATED STYLES.
                 </span>
               </div>
               <div className="bg-zinc-50/70 md:bg-transparent p-3.5 sm:p-0 rounded-xl md:rounded-none border border-black/5 md:border-0">
                 <span className="font-display text-xl sm:text-2xl font-bold text-zinc-900 block">
-                  Y2K / GOTH
+                  BOLD COLLECTIONS
                 </span>
                 <span className="font-sans text-[11px] sm:text-xs text-zinc-500 font-medium">
-                  Dark Aesthetic Craft
+                  MENS WEAR. WOMENS WEAR
                 </span>
               </div>
             </div>
@@ -124,9 +124,9 @@ function About() {
           </div>
 
           <blockquote className="font-display font-normal text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight text-zinc-900 leading-[1.3] sm:leading-[1.25] max-w-4xl mx-auto">
-            "Our mission is to make premium Y2K and gothic fashion accessible through carefully
-            curated accessories that empower people to express their unique identity with
-            confidence."
+            "Our mission is to make premium western and Vegas-inspired fashion accessible through
+            carefully curated accessories and bags that empower men and women to express their bold
+            identity with confidence."
           </blockquote>
 
           <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-black/10 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[11px] sm:text-xs font-display uppercase tracking-widest text-zinc-600 font-semibold">
@@ -154,13 +154,13 @@ function About() {
             </span>
 
             <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-zinc-900 leading-tight">
-              Global Destination for Dark Aesthetic Fashion.
+              Global Destination for Bold  Western Style.
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-700 font-sans leading-relaxed">
-              Our vision is to become a globally recognized destination for Y2K, gothic, and dark
-              aesthetic fashion—inspiring a global community that embraces individuality,
-              creativity, and fearless style through statement accessories.
+              Our vision is to become a globally recognized destination for western-inspired fashion
+              — inspiring a global community that embraces freedom, grit, and fearless style through
+              statement accessories and bags for men and women.
             </p>
 
             <div className="pt-2 sm:pt-4">

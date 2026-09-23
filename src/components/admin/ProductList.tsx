@@ -1,17 +1,26 @@
 import { useState } from "react";
 import { Plus, Edit3, Trash2, Search, Layers } from "lucide-react";
 import { type Product } from "@/lib/products";
-import { useProducts, deleteProduct } from "@/lib/db";
+import { useProducts, useCategories, deleteProduct } from "@/lib/db";
 import { ProductFormDialog } from "./ProductFormDialog";
 
 export function ProductList() {
   const products = useProducts();
+  const dynamicCategories = useCategories();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
-  const categories = ["ALL", ...Array.from(new Set(products.map((p) => p.category)))];
+  const categories = [
+    "ALL",
+    ...Array.from(
+      new Set([
+        ...dynamicCategories.map((c) => c.name),
+        ...products.map((p) => p.category),
+      ]),
+    ),
+  ];
 
   const filteredProducts = products.filter((p) => {
     const matchesQuery =

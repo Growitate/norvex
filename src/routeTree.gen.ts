@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as PortalSecureX98f2k3RouteImport } from './routes/portal-secure-x98f2k3'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -25,6 +26,11 @@ const ShopRoute = ShopRouteImport.update({
 const PortalSecureX98f2k3Route = PortalSecureX98f2k3RouteImport.update({
   id: '/portal-secure-x98f2k3',
   path: '/portal-secure-x98f2k3',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/portal-secure-x98f2k3': typeof PortalSecureX98f2k3Route
   '/shop': typeof ShopRoute
   '/legal/$page': typeof LegalPageRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/portal-secure-x98f2k3': typeof PortalSecureX98f2k3Route
   '/shop': typeof ShopRoute
   '/legal/$page': typeof LegalPageRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/portal-secure-x98f2k3': typeof PortalSecureX98f2k3Route
   '/shop': typeof ShopRoute
   '/legal/$page': typeof LegalPageRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/faq'
     | '/portal-secure-x98f2k3'
     | '/shop'
     | '/legal/$page'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/faq'
     | '/portal-secure-x98f2k3'
     | '/shop'
     | '/legal/$page'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/faq'
     | '/portal-secure-x98f2k3'
     | '/shop'
     | '/legal/$page'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
   PortalSecureX98f2k3Route: typeof PortalSecureX98f2k3Route
   ShopRoute: typeof ShopRoute
   LegalPageRoute: typeof LegalPageRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/portal-secure-x98f2k3'
       fullPath: '/portal-secure-x98f2k3'
       preLoaderRoute: typeof PortalSecureX98f2k3RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
   PortalSecureX98f2k3Route: PortalSecureX98f2k3Route,
   ShopRoute: ShopRoute,
   LegalPageRoute: LegalPageRoute,

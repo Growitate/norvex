@@ -214,6 +214,8 @@ export function SocialVideoMarquee() {
                       <img
                         src={reel.poster}
                         alt={reel.title}
+                        loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-105"
                       />
                     )}

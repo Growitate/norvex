@@ -91,7 +91,8 @@ export type Product = {
     | "Totes & Backpacks"
     | "Mini Bags"
     | "Apparel"
-    | "Accessories";
+    | "Accessories"
+    | (string & {});
   department?: "female" | "male" | "unisex";
   isBag: boolean;
   isAccessory?: boolean;
@@ -985,6 +986,11 @@ export const products: Product[] = [
   },
 ];
 
+let serverProductLookup: ((id: string) => Product | undefined) | null = null;
+export function setServerProductLookup(fn: (id: string) => Product | undefined) {
+  serverProductLookup = fn;
+}
+
 export const getProduct = (id: string): Product | undefined => {
   const base = products.find((p) => p.id === id);
   if (typeof window !== "undefined") {
@@ -1009,6 +1015,9 @@ export const getProduct = (id: string): Product | undefined => {
     } catch {
       // fallback to static list
     }
+  } else if (serverProductLookup) {
+    const sFound = serverProductLookup(id);
+    if (sFound) return sFound;
   }
   return base;
 };

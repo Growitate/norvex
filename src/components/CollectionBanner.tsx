@@ -51,21 +51,25 @@ export function CollectionBanner({
         className="relative w-full h-[600px] xs:h-[720px] sm:h-[85vh] md:h-[90vh] lg:h-[95vh] min-h-[600px] max-h-[1100px] flex items-center justify-center overflow-hidden"
         style={{ backgroundColor: bgColor }}
       >
-        {/* Mobile View Image */}
-        <img
-          src={image}
-          alt={title}
-          loading="lazy"
-          className={`w-full h-full object-cover ${mobileImagePosition} ${desktopImage ? "md:hidden block" : `block md:${desktopImagePosition}`} pointer-events-none transition-transform duration-1000 ease-out hover:scale-105`}
-        />
-
-        {/* Dedicated Widescreen Desktop Image */}
-        {desktopImage && (
+        {/* Responsive Banner Image (Downloads ONLY the required viewport image) */}
+        {desktopImage ? (
+          <picture className="w-full h-full">
+            <source media="(min-width: 768px)" srcSet={desktopImage} />
+            <img
+              src={image}
+              alt={title}
+              loading="lazy"
+              decoding="async"
+              className={`w-full h-full object-cover ${mobileImagePosition} md:${desktopImagePosition} pointer-events-none transition-transform duration-1000 ease-out hover:scale-105`}
+            />
+          </picture>
+        ) : (
           <img
-            src={desktopImage}
+            src={image}
             alt={title}
             loading="lazy"
-            className={`hidden md:block absolute inset-0 w-full h-full object-cover ${desktopImagePosition} pointer-events-none transition-transform duration-1000 ease-out hover:scale-105`}
+            decoding="async"
+            className={`w-full h-full object-cover ${mobileImagePosition} pointer-events-none transition-transform duration-1000 ease-out hover:scale-105`}
           />
         )}
 

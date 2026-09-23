@@ -15,15 +15,15 @@ const PAGES: Record<string, LegalContent> = {
     sections: [
       {
         heading: "Returns",
-        body: "Unworn and unused accessory items in original packaging may be returned within 14 days of delivery. Return shipping is the customer's responsibility unless the item is defective or incorrect.",
+        body: "Return requests can only be raised after 2 days from the shipping date. Items must be unworn, unused, and in original packaging. Return shipping is the customer's responsibility unless the item is defective or incorrect.",
       },
       {
         heading: "Refunds",
-        body: "Once your return is received and inspected, we will notify you of the status. Approved refunds are processed within 5–10 business days to your original payment method.",
+        body: "Refunds are only applicable if the product is received damaged. Once your return is received and inspected, we will notify you of the status. Approved refunds are processed within 5–10 business days to your original payment method.",
       },
       {
         heading: "Exchanges",
-        body: "We replace items if they are defective or damaged upon arrival. Contact us via WhatsApp at 09971303047 or email norvastorex@gmail.com within 48 hours of delivery.",
+        body: "We replace items if they are defective or damaged upon arrival. Contact us via Instagram DM @norvaxstore or email norvastorex@gmail.com within 48 hours of delivery.",
       },
     ],
   },
